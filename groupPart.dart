@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:redit/groupPosts.dart';
+import 'package:redit/post.dart';
 import 'package:redit/user.dart';
 import 'group.dart';
 
@@ -11,15 +13,28 @@ class groupList extends StatefulWidget {
 
 
 class _groupListState extends State<groupList> {
-  Image i=Image.asset('assets/p1.gpj');
-  List<group> gList = [
-    group("g1", new user("user1", "111"),'assets/p1.jpg'),
-    group("g2", new user("user2", "222"),'assets/panda.jpg'),
-    group("g3", new user("user3", "333"),'assets/p3.jpg'),
-    group("g4", new user("user4", "444"),'assets/messi.jpg'),
-    group("g5", new user("user5", "555"),'assets/p2.jpg'),
-    group("g6", new user("user6", "666"),'assets/putin.jpg'),
+  List<post> posts1=[
+    post("art", "love painting", "assets/p1.jpg", )
   ];
+  List<group> gList = [
+    group("g1", new user("user1", "111"),'assets/p1.jpg', [
+      post("art", "love painting", "assets/p1.jpg", ),
+      post("art", "love painting", "assets/p1.jpg", ),
+      post("art", "love painting", "assets/p1.jpg", ),
+      post("art", "love painting", "assets/p1.jpg", ),
+        post("policy", "ukrain war", "assets/putin.jpg", )
+  ]
+    ),
+    group("g2", new user("user2", "222"),'assets/panda.jpg',[
+      post("art", "love painting", "assets/p1.jpg", ),
+      post("policy", "ukrain war", "assets/putin.jpg", )
+    ]),
+    //group("g3", new user("user3", "333"),'assets/p3.jpg'),
+    //group("g4", new user("user4", "444"),'assets/messi.jpg'),
+    //group("g5", new user("user5", "555"),'assets/p2.jpg'),
+    //group("g6", new user("user6", "666"),'assets/putin.jpg'),
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +53,22 @@ class _groupListState extends State<groupList> {
             }
         ),
       ),
+        bottomNavigationBar: Container(
+          child: Row(
+            children: [
+              /*
+              IconButton(
+                  onPressed:(){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>  feed)
+                  },
+                  icon: Icon(Icons.home)
+                  )
+               */
+            ],
+          ),
+        ),
+
     /*
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -63,7 +94,11 @@ class groupItem extends StatelessWidget {
     return Container(
       child: ListTile(
         onTap: (){
-          //go to detail g
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  groupPosts(grp))
+          );
+          //go to groupPosts
         },
         title: Text(grp.name),
         leading: CircleAvatar(

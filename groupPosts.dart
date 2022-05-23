@@ -40,7 +40,22 @@ class postItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
+      child: Column(
+        children: [
+          Container(
+            child: Text(pst.title),
+          ),
+          //Image(image: AssetImage(pst.imageURL)),
+          Image.asset(pst.imageURL),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(pst.caption,
+              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+            ),
+          ),
+        ],
+      ),
 
 
         //title
