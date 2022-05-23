@@ -44,16 +44,43 @@ class postItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            child: Text(pst.title),
-          ),
-          //Image(image: AssetImage(pst.imageURL)),
+            child: Align(
+              alignment: Alignment(-.9,0),
+              child: Text(pst.title,style:TextStyle(fontSize: 25)),
+            ),
+            ),
+          
           Image.asset(pst.imageURL),
-          Padding(
+          
+          Container(
+            width: 400,
             padding: const EdgeInsets.all(16.0),
             child: Text(pst.caption,
-              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+              style: TextStyle(color: Colors.white70, fontSize: 15),
             ),
           ),
+
+          Container(
+            child: Row(
+              children: [
+                Container(
+                  child: IconButton(icon: Icon(Icons.comment_outlined,size: 20,),onPressed: (){},),
+
+                ),
+                Container(
+                  child: IconButton(icon: Icon(Icons.favorite,size: 20,),onPressed: (){}),
+                ),
+                Container(
+                  child: IconButton(icon: Icon(Icons.face,size: 20,)),
+                )
+              ],
+
+
+            ),
+
+
+          )
+
         ],
       ),
 
