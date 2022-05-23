@@ -5,6 +5,7 @@ import 'package:redit/post.dart';
 
 class groupPosts extends StatefulWidget {
   final group grp;
+
   const groupPosts(this.grp);
 
   @override
@@ -19,18 +20,21 @@ class _groupPostsState extends State<groupPosts> {
         leading: CircleAvatar(
           backgroundImage: AssetImage(widget.grp.imageURL),
         ),
-        title: Text(widget.grp.name,style: TextStyle(fontSize: 20,),),
+        title: Text(
+          widget.grp.name,
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
       ),
-
       body: Center(
         child: ListView.builder(
             itemCount: widget.grp.posts.length,
-            itemBuilder:(contex,index){
+            itemBuilder: (contex, index) {
               return postItem(
                 pst: widget.grp.posts[index],
               );
-            }
-        ),
+            }),
       ),
     );
   }
@@ -49,9 +53,18 @@ class postItem extends StatelessWidget {
             child: Align(
               alignment: Alignment(-.9, 0),
               child: Text(pst.title, style: TextStyle(fontSize: 25)),
+
             ),
           ),
-          Image.asset(pst.imageURL),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: AssetImage(pst.imageURL),
+            )),
+          ),
           Container(
             width: 400,
             padding: const EdgeInsets.all(16.0),
