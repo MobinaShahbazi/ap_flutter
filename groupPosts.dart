@@ -5,8 +5,7 @@ import 'package:redit/post.dart';
 
 class groupPosts extends StatefulWidget {
   final group grp;
-  const groupPosts(this.grp) ;
-
+  const groupPosts(this.grp);
 
   @override
   State<groupPosts> createState() => _groupPostsState();
@@ -17,7 +16,10 @@ class _groupPostsState extends State<groupPosts> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Reddit"),
+        leading: CircleAvatar(
+          backgroundImage: AssetImage(widget.grp.imageURL),
+        ),
+        title: Text(widget.grp.name,style: TextStyle(fontSize: 20,),),
       ),
 
       body: Center(
@@ -45,51 +47,56 @@ class postItem extends StatelessWidget {
         children: [
           Container(
             child: Align(
-              alignment: Alignment(-.9,0),
-              child: Text(pst.title,style:TextStyle(fontSize: 25)),
+              alignment: Alignment(-.9, 0),
+              child: Text(pst.title, style: TextStyle(fontSize: 25)),
             ),
-            ),
-          
+          ),
           Image.asset(pst.imageURL),
-          
           Container(
             width: 400,
             padding: const EdgeInsets.all(16.0),
-            child: Text(pst.caption,
+            child: Text(
+              pst.caption,
               style: TextStyle(color: Colors.white70, fontSize: 15),
             ),
           ),
-
           Container(
             child: Row(
               children: [
                 Container(
-                  child: IconButton(icon: Icon(Icons.comment_outlined,size: 20,),onPressed: (){},),
-
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.comment_outlined,
+                      size: 20,
+                    ),
+                    onPressed: () {},
+                  ),
                 ),
                 Container(
-                  child: IconButton(icon: Icon(Icons.favorite,size: 20,),onPressed: (){}),
+                  child: IconButton(
+                      icon: Icon(
+                        Icons.favorite,
+                        size: 20,
+                      ),
+                      onPressed: () {}),
                 ),
                 Container(
-                  child: IconButton(icon: Icon(Icons.face,size: 20,)),
+                  child: IconButton(
+                      icon: Icon(
+                    Icons.face,
+                    size: 20,
+                  )),
                 )
               ],
-
-
             ),
-
-
           )
-
         ],
       ),
 
-
-        //title
-        // image
-        //caption
-        //icons
-
+      //title
+      // image
+      //caption
+      //icons
     );
   }
 }
