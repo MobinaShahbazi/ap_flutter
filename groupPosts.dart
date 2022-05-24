@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/addPost.dart';
+import 'package:redit/editPost.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 
@@ -78,7 +79,12 @@ class postItem extends StatelessWidget {
                   right: -5,
                   child: Container(child: IconButton(icon: Icon(Icons.edit, size: 16,),
                       //if usere
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>  editPost(pst))
+                        );
+                      },
                     ),
                   )),
               Positioned(
