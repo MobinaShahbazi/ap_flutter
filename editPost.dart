@@ -16,9 +16,9 @@ class _editPostState extends State<editPost> {
   @override
   void initState() {
     titleC=TextEditingController();//captionC
-    titleC.text=widget.pst.title;
+    //titleC.text=widget.pst.title;
     captionC=TextEditingController();//captionC
-    captionC.text=widget.pst.caption;
+    //captionC.text=widget.pst.caption;
     super.initState();
   }
 
@@ -60,10 +60,12 @@ class _editPostState extends State<editPost> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
                   onPressed: (){
-                    String title =titleC.text;
+                    String title =titleC.text;//ok
                     String caption =captionC.text;
+                    //print(titleC.text );
                     setState(() {
-                      widget.pst.setTitle(title);
+                      widget.pst.setTitle(title);//ok
+                      //print(widget.pst.title);
                       widget.pst.setCaption(caption);
                     });
                     titleC.clear();

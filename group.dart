@@ -9,7 +9,7 @@ class group{
   //List<user> members=[]; ??
   List<post> posts=[];
 
-  group(this._name, this._admin,this._imageURL,this.posts);
+  group(this._name, this._admin,this._imageURL,[this.posts]);
 
   String get imageURL =>_imageURL;
   set setImageURL(String val){

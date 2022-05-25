@@ -77,6 +77,7 @@ class _postItemState extends State<postItem> {
   }
   @override
   Widget build(BuildContext context) {
+    int vote=0;
     return Container(
       child: Column(
         children: [
@@ -133,28 +134,36 @@ class _postItemState extends State<postItem> {
             child: Row(
               children: [
                 Container(
-                  child: IconButton(icon: Icon(Icons.comment_outlined, size: 20),
+                  child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
                     onPressed: () {
-                      //go to ditails
+                      setState(() {
+                        vote++;
+                      });
                     },
                   ),
                 ),
                 Container(
-                  child: IconButton(icon: Icon(Icons.favorite, size: 20,),
+                  child: Text('$vote'),
+                ),
+                Container(
+                  child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
                       onPressed: () {
+                    setState(() {
+                      vote--;
+                    });
+
                       }),
                 ),
                 Container(
-                  child: IconButton(icon: Icon(Icons.face, size: 20,)
+                  child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,)
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 200),
+                  padding: EdgeInsets.only(left: 192),
                   child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
                     onPressed: (){
                     savePost(widget.pst);
                     },
-
                   ),
                 )
               ],
