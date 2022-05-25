@@ -172,11 +172,6 @@ class _postItemState extends State<postItem> {
 
         ],
       ),
-
-      //title
-      // image
-      //caption
-      //icons
     );
   }
 }

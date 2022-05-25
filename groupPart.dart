@@ -97,10 +97,16 @@ class _groupListState extends State<groupList> {
           "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg', ),
     ]
     ),
-    //group("g3", new user("user3", "333"),'assets/p3.jpg'),
-    //group("g4", new user("user4", "444"),'assets/messi.jpg'),
-    //group("g5", new user("user5", "555"),'assets/p2.jpg'),
-    //group("g6", new user("user6", "666"),'assets/putin.jpg'),
+    group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[]),
+    group("Best_Painters", new user("user4", "444"),'assets/art/p3.jpg',[]),
+    group("Soccer", new user("user6", "666"),'assets/football/messi.jpg',[]),
+    group("Cookery", new user("user5", "555"),'assets/food/pizza.jpg',[]),
+    group("Luxury Car2022", new user("user5", "555"),'assets/car/Lambor.jpg',[]),
+    group("Animal Photography", new user("user5", "555"),'assets/animals/panda.jpg',[]),
+    group("Moder Architecture", new user("user5", "555"),'assets/archi/p3.jpg',[]),
+    group("Digimoviez", new user("user5", "555"),'assets/movies/WorldWarZ.jpg',[]),
+    group("News", new user("user5", "555"),'assets/news/p1.jpg',[]),
+    group("Amazing ", new user("user5", "555"),'assets/Nature/Italy.jpg',[]),
 
   ];
   void addGrp(group g){
