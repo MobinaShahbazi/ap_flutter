@@ -17,6 +17,7 @@ class post{
   post(this._title,this._caption,this._imageURL);
 
   String get imageURL =>_imageURL;
+<<<<<<< HEAD
   void setImageURL(String val){
     _imageURL=val;
   }
@@ -26,6 +27,17 @@ class post{
   }
   String get caption =>_caption;
   void setCaption(String val){
+=======
+  set setImageURL(String val){
+    _imageURL=val;
+  }
+  String get title =>_title;
+  set setTitle(String val){
+    _title=val;
+  }
+  String get caption =>_caption;
+  set setBody(String val){
+>>>>>>> d46b896cf95e7e3267d86c750f9008f6674f10b7
     _caption=val;
   }
   group get groupPublisher =>_groupPublisher;
