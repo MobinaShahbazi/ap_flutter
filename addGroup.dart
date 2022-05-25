@@ -49,10 +49,9 @@ class _addGroupState extends State<addGroup> {
               height: 40,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
-
                 onPressed: (){
                   String name=nameC.text;
-                  group newGroup=group(name, user("",""), "asset/black.jpg", []);
+                  group newGroup=group(name, user("",""), "assets/black.jpg", []);
                   widget.addGrp(newGroup);
                   nameC.clear();
                   Navigator.pop(context);

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:redit/post.dart';
 
 class addPost extends StatefulWidget {
-  const addPost({Key key, this.addPst}) : super(key: key);
-  final Function addPst;
+  const addPost(this.addNewPst);
+  final Function addNewPst;
 
   @override
   State<addPost> createState() => _addPostState();
@@ -59,7 +59,7 @@ class _addPostState extends State<addPost> {
                   String title =titleC.text;
                   String caption =captionC.text;
                   post p=post(title,caption,'assets/newpost.jpg');
-                  widget.addPst(p);
+                  widget.addNewPst(p);
                   titleC.clear();
                   captionC.clear();
                   Navigator.pop(context);
