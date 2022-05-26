@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:redit/addGroup.dart';
 
 class settings extends StatefulWidget {
-  const settings(this.addGrp);
+  const settings(this.addGrp) ;
   final Function addGrp;
 
   @override

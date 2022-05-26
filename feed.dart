@@ -235,7 +235,7 @@ class _feedItemState extends State<feedItem> {
                   child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
                     onPressed: (){
                       savePost(widget.pst);
-                      print(widget.savedPst.length);
+                      //print(widget.savedPst.length);
                     },
                   ),
                 )
