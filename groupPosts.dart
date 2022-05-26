@@ -5,11 +5,14 @@ import 'package:redit/editPost.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 
-class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp, this.savedPst);
+import 'feed.dart';
+import 'groupPart.dart';
 
+class groupPosts extends StatefulWidget {
+  const groupPosts(this.grp, this.savedPst, this.allPst);
   final group grp;
   final List<post> savedPst;
+  final List<post> allPst;
 
 
   @override
@@ -55,6 +58,56 @@ class _groupPostsState extends State<groupPosts> {
 
               );
             }),
+      ),
+      bottomNavigationBar: Container(
+        child: Row(
+          children: [
+            Container(
+              width: 90,
+              child: IconButton(
+                  onPressed:(){
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => feed(allPosts,savedPosts))//////////////////////
+                    // );
+                  },
+                  icon: Icon(Icons.settings)
+              ),
+            ),
+            Container(
+              width: 100,
+              child: IconButton(
+                  onPressed:(){
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => addPost(addPostToAll))/////////////////
+                    // );
+                  },
+                  icon: Icon(Icons.add)
+              ),
+            ),
+            Container(
+              width: 100,
+              child: IconButton(
+                  onPressed:(){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => groupList())///////////////////////////
+                    );
+                  },
+                  icon: Icon(Icons.list_outlined)
+              ),
+            ),
+            Container(
+                width: 90,
+                child: IconButton(
+                  onPressed:(){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => feed(widget.savedPst,widget.allPst))
+                    );
+                  },
+                    icon: Icon(Icons.home)
+                )
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -163,6 +216,7 @@ class _postItemState extends State<postItem> {
                   child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
                     onPressed: (){
                     savePost(widget.pst);
+                    print(widget.saved.length);
                     },
                   ),
                 )
