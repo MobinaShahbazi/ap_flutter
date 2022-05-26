@@ -18,18 +18,28 @@ class _settingsState extends State<settings> {
       body:Container(
         child: Column(
           children: [
-            Container(
-              
-                    height: 100,
-                      padding: EdgeInsets.only(top: 10,bottom: 10),
-                      child: ListTile(
-                        title:  Text('Mobina Shahbazi',style: TextStyle(fontSize: 23),) ,
-                        leading: CircleAvatar(
-                          radius: 33,
-                          backgroundImage: AssetImage('assets/empty1.jpg'),
-                        ),
-                      ),
+            Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 10),
+                  child:ListTile(
+                    title:  Text('Mobina Shahbazi',style: TextStyle(fontSize: 23),) ,
+                    leading: CircleAvatar(
+                      radius: 33,
+                      backgroundImage: AssetImage('assets/empty1.jpg'),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 10,
+                    top: 10,
+                    child: IconButton(
+                      onPressed: (){
 
+                      },
+                    icon: Icon(Icons.edit,size: 20,)
+                ))
+              ],
             ),
             Container(
               padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 10),
