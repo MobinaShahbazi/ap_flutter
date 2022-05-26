@@ -16,7 +16,7 @@ class group{
     _imageURL=val;
   }
   String get name =>_name;
-  set setTitle(String val){
+  void setTitle(String val){
     _name=val;
   }
   user get admin =>_admin;

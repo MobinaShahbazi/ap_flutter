@@ -6,6 +6,7 @@ import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 
 import 'addGroup.dart';
+import 'editGroup.dart';
 import 'feed.dart';
 import 'groupPart.dart';
 
@@ -54,9 +55,11 @@ class _groupPostsState extends State<groupPosts> {
         ),
         actions: [IconButton(
             onPressed: (){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => addGroup(addGrp))//////////////////////
-              );
+              setState(() {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => editGroup(widget.grp))
+                );
+              });
             },
             icon: Icon(Icons.settings))
         ],

@@ -70,20 +70,6 @@ class _groupListState extends State<groupList> {
   ];
 
   List<group> gList = [
-    group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg', [
-      post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-          "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg", ),
-      post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-          "together to uncover a conspiracy.", "assets/anim/zoo.jpg", ),
-      post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-          "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", ),
-      post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
-          "family without magical powers.", "assets/anim/enc.jpg", ),
-      post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
-            " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg", )
-  ]
-    ),
-
     group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',[
       post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
           " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg', ),
@@ -95,6 +81,19 @@ class _groupListState extends State<groupList> {
           "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', ),
       post("China Wall", "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection "
           "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg', ),
+    ]
+    ),
+    group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg', [
+      post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
+          "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg", ),
+      post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
+          "together to uncover a conspiracy.", "assets/anim/zoo.jpg", ),
+      post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
+          "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", ),
+      post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
+          "family without magical powers.", "assets/anim/enc.jpg", ),
+      post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
+          " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg", )
     ]
     ),
     group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[]),

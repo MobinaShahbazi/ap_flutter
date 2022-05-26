@@ -72,7 +72,7 @@ class _editPostState extends State<editPost> {
                     captionC.clear();
                     Navigator.pop(context);
                   },
-                  child: Text('confirm',style: TextStyle(fontSize: 17),),
+                  child: Text('Confirm',style: TextStyle(fontSize: 17),),
                 )
             )
           ],
