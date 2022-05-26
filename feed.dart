@@ -1,16 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:redit/addGroup.dart';
+import 'package:redit/addPost.dart';
+import 'package:redit/groupPart.dart';
 import 'package:redit/post.dart';
+import 'package:redit/settings.dart';
 
 import 'editPost.dart';
 import 'group.dart';
 import 'groupPosts.dart';
 
 class feed extends StatefulWidget {
-  const feed(this.postList, this.savedPst, this.allPst);
-  final List<post> postList;
+  const feed( this.savedPst, this.allPst, this.gList);
   final List<post> savedPst;
   final List<post> allPst;
+  final List<group> gList;
 
   @override
   State<feed> createState() => _feedState();
@@ -22,6 +26,19 @@ class _feedState extends State<feed> {
       widget.allPst.remove(widget.allPst[index]);
     });
   }
+  void addPostToAll(post p){
+    setState(() {
+      widget.allPst.add(p);
+    });
+  }
+  void addPostTogList(post p){
+    //widget.
+  }
+  void addGrp(group g){
+    setState(() {
+      widget.gList.add(g);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,32 +47,89 @@ class _feedState extends State<feed> {
       ),
       body: Center(
         child: ListView.builder(
-            itemCount: widget.postList.length,
+            itemCount: widget.allPst.length,
             itemBuilder: (contex, index) {
               return feedItem(
-                pst: widget.postList[index],
+                pst: widget.allPst[index],
                 savedPst: widget.savedPst,
                 allPst: widget.allPst,
-                removePst: ()=> removePst(index),
+                gList: widget.gList,
+                removePst: () => removePst(index),
               );
             }),
+      ),
+      bottomNavigationBar: Container(
+        child: Row(
+          children: [
+            Container(
+              width: 90,
+              child: IconButton(
+                  onPressed:(){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => settings(addGrp))//////////////////////
+                    );
+                  },
+                  icon: Icon(Icons.settings)
+              ),
+            ),
+            Container(
+              width: 100,
+              child: IconButton(
+                  onPressed:(){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => addPost(addPostToAll))/////////////////
+                    );
+                  },
+                  icon: Icon(Icons.add)
+              ),
+            ),
+            Container(
+              width: 100,
+              child: IconButton(
+                  onPressed:(){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => groupList())///////////////////////////
+                    );
+                  },
+                  icon: Icon(Icons.list_outlined)
+              ),
+            ),
+            Container(
+                width: 90,
+                child: IconButton(
+                    // onPressed:(){
+                    //   Navigator.push(context,
+                    //       MaterialPageRoute(builder: (context) => feed(allPosts,savedPosts,allPosts))
+                    //   );
+                    // },
+                    icon: Icon(Icons.home)
+                )
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class feedItem extends StatefulWidget {
-  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst}) : super(key: key);
+  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.gList}) : super(key: key);
   final post pst;
   final List<post> savedPst;
   final List<post> allPst;
+  final List<group> gList;
   final Function removePst;
+
+
 
   @override
   State<feedItem> createState() => _feedItemState();
 }
 
 class _feedItemState extends State<feedItem> {
+  void savePost(post p){
+    widget.savedPst.add(p);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +144,7 @@ class _feedItemState extends State<feedItem> {
                   onTap: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.savedPst))
+                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.savedPst,widget.allPst,widget.gList))
                     );
                     //go to groupPosts
                   },
@@ -160,7 +234,8 @@ class _feedItemState extends State<feedItem> {
                   padding: EdgeInsets.only(left: 192),
                   child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
                     onPressed: (){
-                      //savePost(widget.pst);
+                      savePost(widget.pst);
+                      print(widget.savedPst.length);
                     },
                   ),
                 )

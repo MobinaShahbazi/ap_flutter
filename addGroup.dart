@@ -6,7 +6,7 @@ import 'package:redit/user.dart';
 import 'group.dart';
 
 class addGroup extends StatefulWidget {
-  const addGroup({Key key, this.addGrp}) : super(key: key);
+  const addGroup(this.addGrp);
   final Function addGrp;
 
   @override

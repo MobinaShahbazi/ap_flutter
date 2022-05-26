@@ -5,14 +5,16 @@ import 'package:redit/editPost.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 
+import 'addGroup.dart';
 import 'feed.dart';
 import 'groupPart.dart';
 
 class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp, this.savedPst, this.allPst);
+  const groupPosts(this.grp, this.savedPst, this.allPst, this.gList);
   final group grp;
   final List<post> savedPst;
   final List<post> allPst;
+  final List<group> gList;
 
 
   @override
@@ -31,6 +33,11 @@ class _groupPostsState extends State<groupPosts> {
       widget.grp.posts.add(p);
     });
   }
+  void addGrp(group g){
+    setState(() {
+      widget.gList.add(g);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +52,14 @@ class _groupPostsState extends State<groupPosts> {
             fontSize: 20,
           ),
         ),
+        actions: [IconButton(
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => addGroup(addGrp))//////////////////////
+              );
+            },
+            icon: Icon(Icons.settings))
+        ],
       ),
       body: Center(
         child: ListView.builder(
@@ -100,7 +115,7 @@ class _groupPostsState extends State<groupPosts> {
                 child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => feed(widget.savedPst,widget.allPst))
+                        MaterialPageRoute(builder: (context) => feed(widget.savedPst,widget.allPst,widget.gList))
                     );
                   },
                     icon: Icon(Icons.home)

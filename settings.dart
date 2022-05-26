@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:redit/addGroup.dart';
 
 class settings extends StatefulWidget {
-  const settings({Key key}) : super(key: key);
+  const settings(this.addGrp);
+  final Function addGrp;
 
   @override
   State<settings> createState() => _settingsState();
@@ -21,7 +23,7 @@ class _settingsState extends State<settings> {
             Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 10),
+                  padding: EdgeInsets.only(top: 15,bottom: 10,left: 0,right: 10),
                   child:ListTile(
                     title:  Text('Mobina Shahbazi',style: TextStyle(fontSize: 23),) ,
                     leading: CircleAvatar(
@@ -32,7 +34,7 @@ class _settingsState extends State<settings> {
                 ),
                 Positioned(
                   right: 10,
-                    top: 10,
+                    top: 17,
                     child: IconButton(
                       onPressed: (){
 
@@ -47,7 +49,9 @@ class _settingsState extends State<settings> {
                 children: [
                   IconButton(
                       onPressed:(){
-
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => addGroup(widget.addGrp))//////////////////////
+                        );
                   },
                       icon: Icon(Icons.add),
                   ),

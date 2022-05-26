@@ -68,8 +68,6 @@ class _addPostState extends State<addPost> {
                 child: Text('Add new post',style: TextStyle(fontSize: 17),),
               )
             )
-
-
           ],
         ),
       ),

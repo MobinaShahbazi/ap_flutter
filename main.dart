@@ -3,6 +3,7 @@ import 'package:redit/addGroup.dart';
 import 'package:redit/addPost.dart';
 import 'package:redit/editPost.dart';
 import 'package:redit/groupPart.dart';
+import 'package:redit/settings.dart';
 import 'logIn.dart';
 
 void main() {
