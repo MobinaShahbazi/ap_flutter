@@ -4,6 +4,7 @@ import 'package:redit/addPost.dart';
 import 'package:redit/editPost.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
+import 'package:redit/settings.dart';
 
 import 'addGroup.dart';
 import 'editGroup.dart';
@@ -11,11 +12,12 @@ import 'feed.dart';
 import 'groupPart.dart';
 
 class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp, this.savedPst, this.allPst, this.gList);
+  const groupPosts(this.grp, this.savedPst, this.allPst, this.gList, this.addGrp);
   final group grp;
   final List<post> savedPst;
   final List<post> allPst;
   final List<group> gList;
+  final Function addGrp;
 
 
   @override
@@ -34,11 +36,7 @@ class _groupPostsState extends State<groupPosts> {
       widget.grp.posts.add(p);
     });
   }
-  void addGrp(group g){
-    setState(() {
-      widget.gList.add(g);
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +82,9 @@ class _groupPostsState extends State<groupPosts> {
               width: 90,
               child: IconButton(
                   onPressed:(){
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => feed(allPosts,savedPosts))//////////////////////
-                    // );
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => settings(widget.addGrp))
+                    );
                   },
                   icon: Icon(Icons.settings)
               ),
@@ -118,7 +116,7 @@ class _groupPostsState extends State<groupPosts> {
                 child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => feed(widget.savedPst,widget.allPst,widget.gList))
+                        MaterialPageRoute(builder: (context) => feed(widget.savedPst,widget.allPst,widget.gList,widget.addGrp))
                     );
                   },
                     icon: Icon(Icons.home)

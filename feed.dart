@@ -11,10 +11,11 @@ import 'group.dart';
 import 'groupPosts.dart';
 
 class feed extends StatefulWidget {
-  const feed( this.savedPst, this.allPst, this.gList);
+  const feed( this.savedPst, this.allPst, this.gList, this.addGrp);
   final List<post> savedPst;
   final List<post> allPst;
   final List<group> gList;
+  final Function addGrp;
 
   @override
   State<feed> createState() => _feedState();
@@ -34,11 +35,7 @@ class _feedState extends State<feed> {
   void addPostTogList(post p){
     //widget.
   }
-  void addGrp(group g){
-    setState(() {
-      widget.gList.add(g);
-    });
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +52,7 @@ class _feedState extends State<feed> {
                 allPst: widget.allPst,
                 gList: widget.gList,
                 removePst: () => removePst(index),
+                addGrp: () => widget.addGrp,
               );
             }),
       ),
@@ -66,7 +64,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => settings(addGrp))//////////////////////
+                        MaterialPageRoute(builder: (context) => settings(widget.addGrp))//////////////////////
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -113,12 +111,13 @@ class _feedState extends State<feed> {
 }
 
 class feedItem extends StatefulWidget {
-  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.gList}) : super(key: key);
+  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.gList, this.addGrp}) : super(key: key);
   final post pst;
   final List<post> savedPst;
   final List<post> allPst;
   final List<group> gList;
   final Function removePst;
+  final Function addGrp;
 
 
 
@@ -144,7 +143,7 @@ class _feedItemState extends State<feedItem> {
                   onTap: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.savedPst,widget.allPst,widget.gList))
+                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.savedPst,widget.allPst,widget.gList,widget.addGrp))
                     );
                     //go to groupPosts
                   },

@@ -132,6 +132,7 @@ class _groupListState extends State<groupList> {
                 saved: savedPosts,
                 allPst: allPosts,
                 gList: gList,
+                addGrp: ()=>addGrp,
               );
             }
         ),
@@ -173,7 +174,7 @@ class _groupListState extends State<groupList> {
                   child: IconButton(
                     onPressed:(){
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => feed(savedPosts,allPosts,gList))
+                          MaterialPageRoute(builder: (context) => feed(savedPosts,allPosts,gList,addGrp))
                       );
                     },
                     icon: Icon(Icons.home)
@@ -187,11 +188,12 @@ class _groupListState extends State<groupList> {
 }
 
 class groupItem extends StatelessWidget {
-  const groupItem({Key key, this.grp, this.saved, this.allPst, this.gList}) : super(key: key);
+  const groupItem({Key key, this.grp, this.saved, this.allPst, this.gList, this.addGrp}) : super(key: key);
   final group grp;
   final List<post> saved;
   final List<post> allPst;
   final List<group> gList ;
+  final Function addGrp;
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +202,7 @@ class groupItem extends StatelessWidget {
         onTap: (){
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  groupPosts(grp,saved,allPst,gList))
+              MaterialPageRoute(builder: (context) =>  groupPosts(grp,saved,allPst,gList,addGrp))
           );
           //go to groupPosts
         },
