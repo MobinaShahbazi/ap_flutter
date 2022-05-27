@@ -64,7 +64,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => settings(widget.addGrp))//////////////////////
+                        MaterialPageRoute(builder: (context) => settings(widget.addGrp,widget.savedPst))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -129,6 +129,7 @@ class _feedItemState extends State<feedItem> {
   void savePost(post p){
     widget.savedPst.add(p);
   }
+
 
   @override
   Widget build(BuildContext context) {

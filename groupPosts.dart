@@ -83,7 +83,7 @@ class _groupPostsState extends State<groupPosts> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => settings(widget.addGrp))
+                        MaterialPageRoute(builder: (context) => settings(widget.addGrp,widget.savedPst))
                     );
                   },
                   icon: Icon(Icons.settings)

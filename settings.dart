@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/addGroup.dart';
+import 'package:redit/post.dart';
+import 'package:redit/savedPage.dart';
 
 class settings extends StatefulWidget {
-  const settings(this.addGrp) ;
+  const settings(this.addGrp, this.savedPst, ) ;
   final Function addGrp;
+  final List<post> savedPst;
 
   @override
   State<settings> createState() => _settingsState();
@@ -53,7 +56,7 @@ class _settingsState extends State<settings> {
                             MaterialPageRoute(builder: (context) => addGroup(widget.addGrp))//////////////////////
                         );
                   },
-                      icon: Icon(Icons.add),
+                      icon: Icon(Icons.add,color: Colors.deepOrange.shade200,),
                   ),
                   Container(
                     padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 10),
@@ -68,9 +71,12 @@ class _settingsState extends State<settings> {
                 children: [
                   IconButton(
                     onPressed:(){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => savedPage(widget.savedPst))
+                      );
 
                     },
-                    icon: Icon(Icons.save_outlined),
+                    icon: Icon(Icons.save_outlined,color: Colors.deepOrange.shade200,),
                   ),
                   Container(
                     padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 10),
@@ -87,7 +93,7 @@ class _settingsState extends State<settings> {
                     onPressed:(){
 
                     },
-                    icon: Icon(Icons.info_outline),
+                    icon: Icon(Icons.info_outline,color: Colors.deepOrange.shade200,),
                   ),
                   Container(
                     padding: EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 10),
