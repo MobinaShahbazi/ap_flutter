@@ -308,19 +308,19 @@ class _feedItemState extends State<feedItem> {
                   child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
                     onPressed: () {
                       setState(() {
-                        widget.pst.likesNum++;
+                        widget.pst.setlikesNum(widget.pst.likesNum+1);
                       });
                     },
                   ),
                 ),
                 Container(
-                  child: Text('${widget.pst.likesNum + widget.pst.disLikesNum}'),
+                  child: Text('${widget.pst.likesNum + widget.pst.disLikesNum }'),
                 ),
                 Container(
                   child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
                       onPressed: () {
                         setState(() {
-                          widget.pst.disLikesNum--;
+                          widget.pst.setDislikesNum(widget.pst.disLikesNum-1);
                         });
 
                       }),

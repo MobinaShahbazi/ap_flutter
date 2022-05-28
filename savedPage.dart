@@ -41,7 +41,6 @@ class savedItem extends StatefulWidget {
 class _savedItemState extends State<savedItem> {
   @override
   Widget build(BuildContext context) {
-    int vote;
     return Container(
       child: Column(
         children: [
@@ -88,19 +87,19 @@ class _savedItemState extends State<savedItem> {
                   child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
                     onPressed: () {
                       setState(() {
-                        vote++;
+                        widget.pst.setlikesNum(widget.pst.likesNum+1);
                       });
                     },
                   ),
                 ),
                 Container(
-                  child: Text('$vote'),
+                  child: Text('${widget.pst.likesNum + widget.pst.disLikesNum }'),
                 ),
                 Container(
                   child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
                       onPressed: () {
                         setState(() {
-                          vote--;
+                          widget.pst.setDislikesNum(widget.pst.disLikesNum-1);
                         });
 
                       }),
