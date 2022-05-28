@@ -2,39 +2,141 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/addGroup.dart';
 import 'package:redit/addPost.dart';
+import 'package:redit/editGroup.dart';
 import 'package:redit/groupPart.dart';
 import 'package:redit/post.dart';
 import 'package:redit/settings.dart';
+import 'package:redit/user.dart';
 
 import 'editPost.dart';
 import 'group.dart';
 import 'groupPosts.dart';
 
 class feed extends StatefulWidget {
-  const feed( this.savedPst, this.allPst, this.gList, this.addGrp);
-  final List<post> savedPst;
-  final List<post> allPst;
-  final List<group> gList;
-  final Function addGrp;
+  const feed( );
+  //final List<group> gList;
 
   @override
   State<feed> createState() => _feedState();
 }
 
 class _feedState extends State<feed> {
-  void removePst(int index){
+  List<post> savedPosts=[];
+  List<post> allPosts=[
+    post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
+        "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+        [
+          post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
+              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg", ),
+          post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
+              "together to uncover a conspiracy.", "assets/anim/zoo.jpg", ),
+          post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
+              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", ),
+          post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
+              "family without magical powers.", "assets/anim/enc.jpg", ),
+          post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
+              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg", )
+        ]
+    )),
+
+    post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
+        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
+        [
+          post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
+              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg', ),
+          post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
+              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg', ),
+          post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
+              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", ),
+          post("Pisa Tower", "TheLeaning Tower of Pisa is one of the most remarkable architectural structures from medieval Europe. "
+              "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', ),
+          post("China Wall", "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection "
+              "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg', ),
+        ]
+    ),),
+    post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
+        "together to uncover a conspiracy.", "assets/anim/zoo.jpg",group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+        [
+          post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
+              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg", ),
+          post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
+              "together to uncover a conspiracy.", "assets/anim/zoo.jpg", ),
+          post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
+              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", ),
+          post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
+              "family without magical powers.", "assets/anim/enc.jpg", ),
+          post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
+              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg", )
+        ]
+    )),
+
+
+
+
+  ];
+
+  List<group> gList = [
+    group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',[
+      post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
+          " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg', ),
+      post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
+          " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg', ),
+      post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
+          "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", ),
+      post("Pisa Tower", "TheLeaning Tower of Pisa is one of the most remarkable architectural structures from medieval Europe. "
+          "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', ),
+      post("China Wall", "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection "
+          "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg', ),
+    ]
+    ),
+    group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg', [
+      post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
+          "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg", ),
+      post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
+          "together to uncover a conspiracy.", "assets/anim/zoo.jpg", ),
+      post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
+          "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", ),
+      post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
+          "family without magical powers.", "assets/anim/enc.jpg", ),
+      post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
+          " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg", )
+    ]
+    ),
+    group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[]),
+    group("Best_Painters", new user("user4", "444"),'assets/art/p3.jpg',[]),
+    group("Soccer", new user("user6", "666"),'assets/football/messi.jpg',[]),
+    group("Cookery", new user("user5", "555"),'assets/food/pizza.jpg',[]),
+    group("Luxury Car2022", new user("user5", "555"),'assets/car/Lambor.jpg',[]),
+    group("Animal Photography", new user("user5", "555"),'assets/animals/panda.jpg',[]),
+    //group("Moder Architecture", new user("user5", "555"),'assets/archi/p3.jpg',[]),
+    //group("Digimoviez", new user("user5", "555"),'assets/movies/WorldWarZ.jpg',[]),
+    //group("News", new user("user5", "555"),'assets/news/p1.jpg',[]),
+    //group("Amazing ", new user("user5", "555"),'assets/Nature/Italy.jpg',[]),
+  ];
+  void addGrp(group g){
     setState(() {
-      widget.allPst.remove(widget.allPst[index]);
+      gList.add(g);
+    });
+  }
+  void editGrp(group g,String title){
+    setState(() {
+      g.setTitle(title);
+    });
+  }
+  void removePstFeed(int index){
+    setState(() {
+      allPosts.remove(allPosts[index]);
     });
   }
   void addPostToAll(post p){
     setState(() {
-      widget.allPst.add(p);
+      allPosts.add(p);
     });
   }
   void addPostTogList(post p){
     //widget.
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +146,15 @@ class _feedState extends State<feed> {
       ),
       body: Center(
         child: ListView.builder(
-            itemCount: widget.allPst.length,
+            itemCount: allPosts.length,
             itemBuilder: (contex, index) {
               return feedItem(
-                pst: widget.allPst[index],
-                savedPst: widget.savedPst,
-                allPst: widget.allPst,
-                gList: widget.gList,
-                removePst: () => removePst(index),
-                addGrp: () => widget.addGrp,
+                pst: allPosts[index],
+                savedPst:savedPosts,
+                allPst: allPosts,
+                removePst: () => removePstFeed(index),
+                addGrp: () => addGrp,
+                editGrp: editGrp,
               );
             }),
       ),
@@ -64,7 +166,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => settings(widget.addGrp,widget.savedPst))
+                        MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -86,7 +188,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList())///////////////////////////
+                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts))///////////////////////////
                     );
                   },
                   icon: Icon(Icons.list_outlined)
@@ -111,29 +213,26 @@ class _feedState extends State<feed> {
 }
 
 class feedItem extends StatefulWidget {
-  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.gList, this.addGrp}) : super(key: key);
+  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.addGrp, this.editGrp}) : super(key: key);
   final post pst;
-  final List<post> savedPst;
-  final List<post> allPst;
-  final List<group> gList;
-  final Function removePst;
-  final Function addGrp;
-
-
+  final List<post> savedPst;//
+  final List<post> allPst;//
+  final Function removePst;//
+  final Function addGrp;//
+  final Function editGrp;
 
   @override
   State<feedItem> createState() => _feedItemState();
 }
 
 class _feedItemState extends State<feedItem> {
+
   void savePost(post p){
     widget.savedPst.add(p);
   }
 
-
   @override
   Widget build(BuildContext context) {
-    int vote=0;
     return Container(
       child: Column(
         children: [
@@ -144,7 +243,7 @@ class _feedItemState extends State<feedItem> {
                   onTap: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.savedPst,widget.allPst,widget.gList,widget.addGrp))
+                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.savedPst))
                     );
                     //go to groupPosts
                   },
@@ -209,19 +308,19 @@ class _feedItemState extends State<feedItem> {
                   child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
                     onPressed: () {
                       setState(() {
-                        vote++;
+                        widget.pst.likesNum++;
                       });
                     },
                   ),
                 ),
                 Container(
-                  child: Text('$vote'),
+                  child: Text('${widget.pst.likesNum + widget.pst.disLikesNum}'),
                 ),
                 Container(
                   child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
                       onPressed: () {
                         setState(() {
-                          vote--;
+                          widget.pst.disLikesNum--;
                         });
 
                       }),
@@ -235,7 +334,6 @@ class _feedItemState extends State<feedItem> {
                   child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
                     onPressed: (){
                       savePost(widget.pst);
-                      //print(widget.savedPst.length);
                     },
                   ),
                 )

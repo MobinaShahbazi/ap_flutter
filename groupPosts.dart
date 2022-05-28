@@ -12,21 +12,18 @@ import 'feed.dart';
 import 'groupPart.dart';
 
 class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp, this.savedPst, this.allPst, this.gList, this.addGrp);
+  const groupPosts(this.grp, this.editGrp, this.savedPost);
   final group grp;
-  final List<post> savedPst;
-  final List<post> allPst;
-  final List<group> gList;
-  final Function addGrp;
-
+  final Function editGrp;
+  final List<post> savedPost;
 
   @override
   State<groupPosts> createState() => _groupPostsState();
 }
 
 class _groupPostsState extends State<groupPosts> {
-  
-  void removePst(int index){
+
+  void removePstGrp(int index){
     setState(() {
       widget.grp.posts.remove(widget.grp.posts[index]);
     });
@@ -55,7 +52,7 @@ class _groupPostsState extends State<groupPosts> {
             onPressed: (){
               setState(() {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => editGroup(widget.grp))
+                    MaterialPageRoute(builder: (context) => editGroup(widget.grp,widget.editGrp))
                 );
               });
             },
@@ -69,80 +66,30 @@ class _groupPostsState extends State<groupPosts> {
               return postItem(
                 pst: widget.grp.posts[index],
                 grp: widget.grp,
-                removePst: ()=> removePst(index),
-                saved: widget.savedPst,
+                removePst: ()=> removePstGrp(index),
+                savedPost: widget.savedPost,
 
               );
             }),
       ),
-      bottomNavigationBar: Container(
-        child: Row(
-          children: [
-            Container(
-              width: 90,
-              child: IconButton(
-                  onPressed:(){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => settings(widget.addGrp,widget.savedPst))
-                    );
-                  },
-                  icon: Icon(Icons.settings)
-              ),
-            ),
-            Container(
-              width: 100,
-              child: IconButton(
-                  onPressed:(){
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => addPost(addPostToAll))/////////////////
-                    // );
-                  },
-                  icon: Icon(Icons.add)
-              ),
-            ),
-            Container(
-              width: 100,
-              child: IconButton(
-                  onPressed:(){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList())///////////////////////////
-                    );
-                  },
-                  icon: Icon(Icons.list_outlined)
-              ),
-            ),
-            Container(
-                width: 90,
-                child: IconButton(
-                  onPressed:(){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => feed(widget.savedPst,widget.allPst,widget.gList,widget.addGrp))
-                    );
-                  },
-                    icon: Icon(Icons.home)
-                )
-            ),
-          ],
-        ),
-      ),
+
     );
   }
 }
 
 class postItem extends StatefulWidget {
-  const postItem({Key key, this.pst, this.grp, this.removePst, this.saved,}) : super(key: key);
+  const postItem({Key key, this.pst, this.grp, this.removePst, this.savedPost,}) : super(key: key);
   final post pst;
   final group grp;
-  final   Function removePst;
-  final List<post> saved;
-
+  final Function removePst;
+  final List<post> savedPost;
   @override
   State<postItem> createState() => _postItemState();
 }
 
 class _postItemState extends State<postItem> {
-  void savePost(post p){
-    widget.saved.add(p);
+  void savePostGrp(post p){
+    widget.savedPost.add(p);
   }
   @override
   Widget build(BuildContext context) {
@@ -231,8 +178,9 @@ class _postItemState extends State<postItem> {
                   padding: EdgeInsets.only(left: 192),
                   child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
                     onPressed: (){
-                    savePost(widget.pst);
-                    print(widget.saved.length);
+                        savePostGrp(widget.pst);
+                        print(widget.savedPost.length);
+
                     },
                   ),
                 )

@@ -4,6 +4,8 @@ import 'package:redit/addGroup.dart';
 import 'package:redit/post.dart';
 import 'package:redit/savedPage.dart';
 
+import 'aboutUs.dart';
+
 class settings extends StatefulWidget {
   const settings(this.addGrp, this.savedPst, ) ;
   final Function addGrp;
@@ -91,7 +93,10 @@ class _settingsState extends State<settings> {
                 children: [
                   IconButton(
                     onPressed:(){
-
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => aboutUs())
+                      );
                     },
                     icon: Icon(Icons.info_outline,color: Colors.deepOrange.shade200,),
                   ),

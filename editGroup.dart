@@ -4,8 +4,9 @@ import 'package:redit/group.dart';
 import 'package:redit/user.dart';
 
 class editGroup extends StatefulWidget {
-  const editGroup(this.grp) ;
+  const editGroup(this.grp, this.editGrp) ;
   final group grp;
+  final Function editGrp;
 
   @override
   State<editGroup> createState() => _editGroupState();
@@ -50,6 +51,7 @@ class _editGroupState extends State<editGroup> {
                   onPressed: (){
                     String name=nameC.text;
                     setState(() {
+                      widget.editGrp(widget.grp,name);
                       widget.grp.setTitle(name);
                     });
                     nameC.clear();

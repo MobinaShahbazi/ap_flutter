@@ -9,8 +9,8 @@ class post{
   group _groupPublisher;
   user _userPublisher;
   DateTime _date;
-  int _likesNum;
-  int _disLikesNum=0;
+  int likesNum=0;
+  int disLikesNum=0;
   int _commentsNum=0;
   List<comment> comments;
 
@@ -41,14 +41,20 @@ class post{
   set setDate(DateTime val){
     _date=val;
   }
+  /*
   int get likesNum => _likesNum;
   set setlikesNum(int val){
     _likesNum=val;
   }
+
+
   int get disLikesNum => _disLikesNum;
   set setDislikesNum(int val){
     _disLikesNum=val;
   }
+
+   */
+
   int get commentsNum => _commentsNum;
   set setCommentsNum(int val){
     _commentsNum=val;

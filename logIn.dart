@@ -140,7 +140,7 @@ class LoginState extends State<LoginWidget> {
                               ),
                               onPressed: () {
                                 //if valid
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => groupList() ));
+                                //Navigator.push(context, MaterialPageRoute(builder: (context) => groupList() ));
                               }
                             ),
                           ),
@@ -446,7 +446,7 @@ class SignUpState extends State<SignUpWidget> {
 
                                           //if valid
                                           // add to users
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => groupList() ));
+                                          //Navigator.push(context, MaterialPageRoute(builder: (context) => groupList() ));
 
                                       }
                                     },
