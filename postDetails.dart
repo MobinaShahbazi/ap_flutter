@@ -26,7 +26,9 @@ class _postDetailsState extends State<postDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar:AppBar(
-          title: Column(children: [
+          title: Text('Comments'),
+              /*
+          Column(children: [
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
@@ -56,29 +58,26 @@ class _postDetailsState extends State<postDetails> {
                 ],
               ),
             ),
-          ]),
-          leading: CircleAvatar(
-            backgroundImage: AssetImage(widget.grp.imageURL),
+          ]
           ),
+          */
         ),
         body:Card(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    child: Align(
-                      alignment: Alignment(-.9, 0),
-                      child: Text(widget.pst.title, style: TextStyle(fontSize: 25)),
+                  ListTile(
+                    title: Text(widget.grp.name),
+                    subtitle: Text( widget.pst.userPublisher.userName+' , '+ DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date), style: TextStyle(fontSize: 15)),
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage(widget.grp.imageURL),
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fitWidth,
-                          image: AssetImage(widget.pst.imageURL),
-                        )),
+                    child: Align(
+                      alignment: Alignment(-.85, 0),
+                      child: Text(widget.pst.title, style: TextStyle(fontSize: 20)),
+                    ),
                   ),
                   Container(
                     width: 400,
@@ -93,25 +92,24 @@ class _postDetailsState extends State<postDetails> {
                       children: [
                         Container(
                           child:  TextButton.icon(
-                            onPressed: (){
-                            },
+
                             icon: Icon(Icons.comment_outlined, size: 20, color: Colors.white,
                             ),
-                            label: Text(widget.pst.comments.length.toString()),
+                            label: Text(widget.pst.comments.length.toString(),style: TextStyle(color: Colors.white70),),
                           ),
                         ),
                         Container(
                           child:  TextButton.icon(
                               icon: Icon(Icons.thumb_up_alt_outlined, size: 20, color: Colors.white,
                               ),
-                              label: Text(widget.pst.likesNum.toString()),
+                              label: Text(widget.pst.likesNum.toString(),style: TextStyle(color: Colors.white70)),
                               onPressed: () {}),
                         ),
                         Container(
                           child:  TextButton.icon(
                               icon: Icon(Icons.thumb_down_alt_outlined, size: 20, color: Colors.white,
                               ),
-                              label: Text(widget.pst.disLikesNum.toString()),
+                              label: Text(widget.pst.disLikesNum.toString(),style: TextStyle(color: Colors.white70)),
                               onPressed:(){}),
                         )
                       ],

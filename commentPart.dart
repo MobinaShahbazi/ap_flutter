@@ -78,14 +78,14 @@ class _commentItemState extends State<commentItem> {
                   onPressed: (){ setState(() {
                     likeUser = !likeUser;
                   });like();},
-                  icon: Icon(likeUser?Icons.thumb_up:Icons.thumb_up_alt_outlined,size:20,),
-                  label: Text(widget.cmnt.likesNum.toString()),
+                  icon: Icon(likeUser?Icons.thumb_up:Icons.thumb_up_alt_outlined,size:16,color: Colors.white),
+                  label: Text(widget.cmnt.likesNum.toString(),style: TextStyle(color: Colors.white70)),
                 ),
                 TextButton.icon(
                   onPressed:(){setState(() {
                     disLikeUser = !disLikeUser;});unlike();},
-                  icon: Icon(disLikeUser?Icons.thumb_down:Icons.thumb_down_alt_outlined,size: 20,),
-                  label: Text(widget.cmnt.disLikesNum.toString()),
+                  icon: Icon(disLikeUser?Icons.thumb_down:Icons.thumb_down_alt_outlined,size: 16,color: Colors.white),
+                  label: Text(widget.cmnt.disLikesNum.toString(),style: TextStyle(color: Colors.white70)),
                 )
               ],
             ),
