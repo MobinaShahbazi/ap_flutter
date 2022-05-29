@@ -16,9 +16,11 @@ class editUser extends StatefulWidget {
 class _editUserState extends State<editUser> {
   static const snackBar = SnackBar(content: Text('This username has used before'));
   static const snackBar2 = SnackBar(content: Text('Invalid Password'));
-      TextEditingController userNameC;
+  static const snackBar3 = SnackBar(content: Text('Invalid e'));
+  TextEditingController userNameC;
   TextEditingController passC;
   TextEditingController emailC;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -59,65 +61,69 @@ class _editUserState extends State<editUser> {
         title: Text('Reddit'),
       ),
       body: Container(
-        padding: const EdgeInsets.all(50),
-        child: Column(
-          children: [
-            TextField(
-              cursorColor: Colors.teal,
-              decoration: const InputDecoration(hintText: "User Name"),
-              controller: userNameC,
-              keyboardType: TextInputType.text,
-            ),
-            TextField(
-              cursorColor: Colors.teal,
-              decoration: const InputDecoration(hintText: "Password"),
-              controller: passC,
-              keyboardType: TextInputType.text,
-            ),
+        child: Form(
+          key: formKey,
+          child: Column(
+        children: [
+        TextField(
+        cursorColor: Colors.teal,
+          decoration: const InputDecoration(hintText: "User Name"),
+          controller: userNameC,
+          keyboardType: TextInputType.text,
+        ),
+        TextField(
+          cursorColor: Colors.teal,
+          decoration: const InputDecoration(hintText: "Password"),
+          controller: passC,
+          keyboardType: TextInputType.text,
+        ),
 
-            Container(
-              height: 20,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-              child: EmailFieldWidget(controller: emailC),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 40,horizontal: 30),
-              width: 120,
-              height: 40,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
-                  onPressed: () {
-                    if(usedBefore(userNameC.text)){
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                    else if(!isValidPass(passC.text)){
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-                    }
-                    // else if(){
+        Container(
+          height: 20,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+          child: EmailFieldWidget(controller: emailC),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 40,horizontal: 30),
+          width: 120,
+          height: 40,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
+            onPressed: () {
+              final form = formKey.currentState;
+              if(usedBefore(userNameC.text)){
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+              else if(!isValidPass(passC.text)){
+                ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+              }
+              else if(!form.validate()){
+                ScaffoldMessenger.of(context).showSnackBar(snackBar3);
+              }
+              else if(form.validate() && isValidPass(passC.text) && !usedBefore(userNameC.text)) {
+                String userName = userNameC.text;
+                String pass = passC.text;
+                String email = emailC.text;
+                setState(() {
+                  widget.currentUser.setUserName(userName);
+                  widget.currentUser.setPassword(pass);
+                  widget.currentUser.setEmail(email);
+                });
+                userNameC.clear();
+                passC.clear();
+                emailC.clear();
+                Navigator.pop(context);
+              }
+            },
+            child: const Text("Confirm",style: TextStyle(fontSize: 17)),),
+          // color: Colors.teal,
+        )
 
-                    //}
-                    else {
-                      String userName = userNameC.text;
-                      String pass = passC.text;
-                      String email = emailC.text;
-                      setState(() {
-                        widget.currentUser.setUserName(userName);
-                        widget.currentUser.setPassword(pass);
-                        widget.currentUser.setEmail(email);
-                      });
-                      userNameC.clear();
-                      passC.clear();
-                      emailC.clear();
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: const Text("Confirm",style: TextStyle(fontSize: 17)),),
-              // color: Colors.teal,
-            )
+        ],
+      ),
 
-          ],
         ),
 
       ),
