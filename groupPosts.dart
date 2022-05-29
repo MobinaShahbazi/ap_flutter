@@ -147,47 +147,51 @@ class _postItemState extends State<postItem> {
             ),
           ),
           Container(
-            child: Row(
+            child: Stack(
               children: [
-                Container(
-                  child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
-                    onPressed: () {
-                      setState(() {
-                        widget.pst.setlikesNum(widget.pst.likesNum+1);
-                      });
-                    },
-                  ),
-                ),
-                Container(
-                  child: Text('${widget.pst.likesNum + widget.pst.disLikesNum }'),
-                ),
-                Container(
-                  child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
-                      onPressed: () {
-                    setState(() {
-                      widget.pst.setDislikesNum(widget.pst.disLikesNum-1);
-                    });
+                Row(
+                  children: [
+                    Container(
+                      child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
+                        onPressed: () {
+                          setState(() {
+                            widget.pst.setlikesNum(widget.pst.likesNum+1);
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      child: Text('${widget.pst.likesNum + widget.pst.disLikesNum }'),
+                    ),
+                    Container(
+                      child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
+                          onPressed: () {
+                            setState(() {
+                              widget.pst.setDislikesNum(widget.pst.disLikesNum-1);
+                            });
 
-                      }),
+                          }),
+                    ),
+                    Container(
+                      child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,)
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,)
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 192),
-                  child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
-                    onPressed: (){
-                        savePostGrp(widget.pst);
-                        print(widget.savedPost.length);
-
-                    },
-                  ),
+                Positioned(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 350),
+                      child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
+                        onPressed: (){
+                          savePostGrp(widget.pst);
+                          print(widget.savedPost.length);
+                        },
+                      ),
+                    )
                 )
               ],
-            ),
+            )
           ),
-
         ],
       ),
     );

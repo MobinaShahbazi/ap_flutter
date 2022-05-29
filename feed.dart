@@ -165,6 +165,7 @@ class _feedState extends State<feed> {
                 removePst: () => removePstFeed(index),
                 addGrp: () => addGrp,
                 editGrp: editGrp,
+                currentUser: widget.currentUser,
               );
             }),
       ),
@@ -207,12 +208,7 @@ class _feedState extends State<feed> {
             Container(
                 width: 90,
                 child: IconButton(
-                    // onPressed:(){
-                    //   Navigator.push(context,
-                    //       MaterialPageRoute(builder: (context) => feed(allPosts,savedPosts,allPosts))
-                    //   );
-                    // },
-                    icon: Icon(Icons.home)
+                    icon: Icon(Icons.home,color: Colors.white70,)
                 )
             ),
           ],
@@ -223,13 +219,14 @@ class _feedState extends State<feed> {
 }
 
 class feedItem extends StatefulWidget {
-  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.addGrp, this.editGrp}) : super(key: key);
+  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.addGrp, this.editGrp, this.currentUser}) : super(key: key);
   final post pst;
   final List<post> savedPst;//
   final List<post> allPst;//
   final Function removePst;//
   final Function addGrp;//
   final Function editGrp;
+  final user currentUser;
 
   @override
   State<feedItem> createState() => _feedItemState();
@@ -312,47 +309,53 @@ class _feedItemState extends State<feedItem> {
             ),
           ),
           Container(
-            child: Row(
+            child: Stack(
               children: [
-                Container(
-                  child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
-                    onPressed: () {
-                      setState(() {
-                        widget.pst.setlikesNum(widget.pst.likesNum+1);
-                      });
-                    },
-                  ),
-                ),
-                Container(
-                  child: Text('${widget.pst.likesNum + widget.pst.disLikesNum }'),
-                ),
-                Container(
-                  child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
-                      onPressed: () {
-                        setState(() {
-                          widget.pst.setDislikesNum(widget.pst.disLikesNum-1);
-                        });
+                Row(
+                  children: [
+                    Container(
+                      child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
+                        onPressed: () {
+                          setState(() {
+                            widget.pst.setlikesNum(widget.pst.likesNum+1);
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      child: Text('${widget.pst.likesNum + widget.pst.disLikesNum }'),
+                    ),
+                    Container(
+                      child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
+                          onPressed: () {
+                            setState(() {
+                              widget.pst.setDislikesNum(widget.pst.disLikesNum-1);
+                            });
 
-                      }),
-                ),
-                Container(
-                  child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,),
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher)));
-                    },
+                          }),
+                    ),
+                    Container(
+                      child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher,widget.currentUser)));
+                        },
 
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  padding: EdgeInsets.only(left: 192),
-                  child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
-                    onPressed: (){
-                      savePost(widget.pst);
-                    },
-                  ),
+                Positioned(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 350),
+                      child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
+                        onPressed: (){
+                          savePost(widget.pst);
+                        },
+                      ),
+                    ),
                 )
               ],
-            ),
+            )
           ),
         ],
       ),

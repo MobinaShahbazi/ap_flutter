@@ -65,10 +65,8 @@ class _commentItemState extends State<commentItem> {
   Widget build(BuildContext context) { ///how to show comment?
     return Container(
       child: ListTile(
-        onTap: (){
-          //go to detail g
-        },
-        title: Text(widget.cmnt.content),
+
+        title: Text(widget.cmnt.commentOwner.userName+' :  '+widget.cmnt.content),
         trailing: GestureDetector(
           child: Container(
             child: Row(

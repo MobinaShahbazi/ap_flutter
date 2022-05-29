@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 import 'commentPart.dart';
 
 class postDetails extends StatefulWidget {
-  const postDetails(this.pst,this.grp);
+  const postDetails(this.pst,this.grp, this.currentUser);
   final post pst;
   final group grp;
+  final user currentUser;
   @override
   State<postDetails> createState() => _postDetailsState();
 }
@@ -27,40 +28,6 @@ class _postDetailsState extends State<postDetails> {
     return Scaffold(
         appBar:AppBar(
           title: Text('Comments'),
-              /*
-          Column(children: [
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                child: Text(
-                  widget.grp.name ,
-                ),
-              ),
-            ),
-            GestureDetector(
-              child: Row(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                      child: Text(
-                        widget.pst.userPublisher.userName+':', style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                        child: Text(
-                            (DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date)),style: TextStyle(fontSize: 15))
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ]
-          ),
-          */
         ),
         body:Card(
             child: SingleChildScrollView(
@@ -134,10 +101,10 @@ class _postDetailsState extends State<postDetails> {
         bottomSheet:Container(
           child:TextField(
             controller: com,
-            decoration:  InputDecoration(hintText: 'new comment',  suffixIcon: IconButton(
+            decoration:  InputDecoration(hintText: 'Add a comment',  suffixIcon: IconButton(
               icon: Icon(Icons.add),
               onPressed:(){setState(() {
-                comment cm=comment(new user("u1", "111"),com.text);
+                comment cm=comment(new user("you", "111"),com.text);
                 addComment(cm);
                 com.clear();
               });},

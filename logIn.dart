@@ -21,7 +21,7 @@ class LoginState extends State<LoginWidget> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  List<user> users=[new user('u1','123')];
+  List<user> users=[new user('1','1')];
   user currentUser;
   static const snackBar = SnackBar(content: Text('incorrect password'));
   bool correctPass(String name,String pass){
