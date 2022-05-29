@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:redit/addGroup.dart';
 import 'package:redit/post.dart';
 import 'package:redit/savedPage.dart';
+import 'package:redit/user.dart';
 
 import 'aboutUs.dart';
 
 class settings extends StatefulWidget {
-  const settings(this.addGrp, this.savedPst, ) ;
+  const settings(this.addGrp, this.savedPst, this.currentUser, ) ;
   final Function addGrp;
   final List<post> savedPst;
+  final user currentUser;
 
   @override
   State<settings> createState() => _settingsState();
@@ -42,6 +44,7 @@ class _settingsState extends State<settings> {
                     top: 17,
                     child: IconButton(
                       onPressed: (){
+
 
                       },
                     icon: Icon(Icons.edit,size: 20,)

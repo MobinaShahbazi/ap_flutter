@@ -6,20 +6,20 @@ class user{
   String _userName;
   String _password;
   String _email;
-  List<post>  saved=[];
+  //List<post>  saved=[];
 
   user(this._userName,this._password);
 
   String get userName =>_userName;
-  set setUserName(String val){
+  void setUserName(String val){
     _userName=val;
   }
   String get password =>_password;
-  set setPassword(String val){
+  void setPassword(String val){
     _password=val;
   }
   String get email =>_email;
-  set setEmail(String val){
+  void setEmail(String val){
     _email=val;
   }
 }

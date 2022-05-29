@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/post.dart';
+import 'package:redit/user.dart';
 
 class addPost extends StatefulWidget {
-  const addPost(this.addNewPst);
+  const addPost(this.addNewPst, this.currentUser);
   final Function addNewPst;
+  final user currentUser;
 
   @override
   State<addPost> createState() => _addPostState();
@@ -58,7 +60,7 @@ class _addPostState extends State<addPost> {
                 onPressed: (){
                   String title =titleC.text;
                   String caption =captionC.text;
-                  post p=post(title,caption,'assets/newpost.jpg',DateTime.now());
+                  post p=post(title,caption,'assets/newpost.jpg',DateTime.now(),widget.currentUser);
                   widget.addNewPst(p);
                   titleC.clear();
                   captionC.clear();

@@ -14,7 +14,7 @@ class post{
   int _commentsNum=0;
   List<comment> comments=[];
 
-  post(this._title,this._caption,this._imageURL,this._date,[this._groupPublisher]);
+  post(this._title,this._caption,this._imageURL,this._date,this._userPublisher,[this._groupPublisher]);
 
   String get imageURL =>_imageURL;
   void setImageURL(String val){
@@ -73,11 +73,11 @@ class comment{
     _content=val;
   }
   int get likesNum => _likesNum;
-  set setLikesNum(int val){
+  void setLikesNum(int val){
     _likesNum=val;
   }
   int get disLikesNum => _disLikesNum;
-  set setDislikesNum(int val){
+  void setDislikesNum(int val){
     _disLikesNum=val;
   }
   user get commentOwner =>_commentOwner;
