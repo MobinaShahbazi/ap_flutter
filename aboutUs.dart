@@ -19,7 +19,7 @@ class aboutUs extends StatelessWidget {
               decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.fitWidth,
-                    image: AssetImage('assets/contact1.jpg'),
+                    image: AssetImage('assets/contact3.jpg'),
                   )),
             ),
             //Image.asset('assets/contact1.jpg'),

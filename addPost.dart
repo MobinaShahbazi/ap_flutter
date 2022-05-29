@@ -58,7 +58,7 @@ class _addPostState extends State<addPost> {
                 onPressed: (){
                   String title =titleC.text;
                   String caption =captionC.text;
-                  post p=post(title,caption,'assets/newpost.jpg');
+                  post p=post(title,caption,'assets/newpost.jpg',DateTime.now());
                   widget.addNewPst(p);
                   titleC.clear();
                   captionC.clear();

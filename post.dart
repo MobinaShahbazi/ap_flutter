@@ -12,9 +12,9 @@ class post{
   int _likesNum=0;
   int _disLikesNum=0;
   int _commentsNum=0;
-  List<comment> comments;
+  List<comment> comments=[];
 
-  post(this._title,this._caption,this._imageURL,[this._groupPublisher]);
+  post(this._title,this._caption,this._imageURL,this._date,[this._groupPublisher]);
 
   String get imageURL =>_imageURL;
   void setImageURL(String val){

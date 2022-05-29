@@ -15,7 +15,6 @@ class _commentListState extends State<commentList> {
     comment(new user("u1", "111"),"bah bah1"),
     comment(new user("u2", "222"),"bah bah2"),
     comment(new user("u2", "333"),"bah bah3"),
-
   ];
   @override
   Widget build(BuildContext context) {

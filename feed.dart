@@ -13,9 +13,8 @@ import 'group.dart';
 import 'groupPosts.dart';
 
 class feed extends StatefulWidget {
-  const feed( );
-  //final List<group> gList;
-
+  const feed(this.currentUsr );
+  final user currentUsr;
   @override
   State<feed> createState() => _feedState();
 }
@@ -24,49 +23,49 @@ class _feedState extends State<feed> {
   List<post> savedPosts=[];
   List<post> allPosts=[
     post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-        "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+        "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-11-10'),group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
         [
           post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg", ),
+              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-01-10') ),
           post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-              "together to uncover a conspiracy.", "assets/anim/zoo.jpg", ),
+              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10') ),
           post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", ),
+              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14')),
           post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
-              "family without magical powers.", "assets/anim/enc.jpg", ),
+              "family without magical powers.", "assets/anim/enc.jpg",DateTime.parse('2022-05-23') ),
           post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
-              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg", )
+              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg",DateTime.parse('2020-10-10') )
         ]
     )),
 
     post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
+        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
         [
           post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg', ),
+              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10') ),
           post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
-              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg', ),
+              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2014-12-10') ),
           post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
-              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", ),
+              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2019-03-16')),
           post("Pisa Tower", "TheLeaning Tower of Pisa is one of the most remarkable architectural structures from medieval Europe. "
-              "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', ),
+              "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', DateTime.parse('1999-11-10')),
           post("China Wall", "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection "
-              "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg', ),
+              "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg',DateTime.parse('2010-10-30') ),
         ]
     ),),
     post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-        "together to uncover a conspiracy.", "assets/anim/zoo.jpg",group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+        "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
         [
           post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg", ),
+              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-01-10') ),
           post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-              "together to uncover a conspiracy.", "assets/anim/zoo.jpg", ),
+              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10') ),
           post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", ),
+              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14')),
           post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
-              "family without magical powers.", "assets/anim/enc.jpg", ),
+              "family without magical powers.", "assets/anim/enc.jpg",DateTime.parse('2022-05-23') ),
           post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
-              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg", )
+              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg",DateTime.parse('2020-10-10') )
         ]
     )),
 
@@ -76,31 +75,33 @@ class _feedState extends State<feed> {
   ];
 
   List<group> gList = [
-    group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',[
-      post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-          " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg', ),
-      post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
-          " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg', ),
-      post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
-          "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", ),
-      post("Pisa Tower", "TheLeaning Tower of Pisa is one of the most remarkable architectural structures from medieval Europe. "
-          "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', ),
-      post("China Wall", "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection "
-          "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg', ),
-    ]
+    group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
+        [
+          post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
+              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10') ),
+          post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
+              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2014-12-10') ),
+          post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
+              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2019-03-16')),
+          post("Pisa Tower", "TheLeaning Tower of Pisa is one of the most remarkable architectural structures from medieval Europe. "
+              "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', DateTime.parse('1999-11-10')),
+          post("China Wall", "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection "
+              "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg',DateTime.parse('2010-10-30') ),
+        ]
     ),
-    group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg', [
-      post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-          "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg", ),
-      post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-          "together to uncover a conspiracy.", "assets/anim/zoo.jpg", ),
-      post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-          "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", ),
-      post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
-          "family without magical powers.", "assets/anim/enc.jpg", ),
-      post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
-          " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg", )
-    ]
+    group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+        [
+          post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
+              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-01-10') ),
+          post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
+              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10') ),
+          post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
+              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14')),
+          post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
+              "family without magical powers.", "assets/anim/enc.jpg",DateTime.parse('2022-05-23') ),
+          post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
+              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg",DateTime.parse('2020-10-10') )
+        ]
     ),
     group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[]),
     group("Best_Painters", new user("user4", "444"),'assets/art/p3.jpg',[]),
@@ -113,6 +114,11 @@ class _feedState extends State<feed> {
     //group("News", new user("user5", "555"),'assets/news/p1.jpg',[]),
     //group("Amazing ", new user("user5", "555"),'assets/Nature/Italy.jpg',[]),
   ];
+  @override
+  void initState() {
+    sortFeed();
+    super.initState();
+  }
   void addGrp(group g){
     setState(() {
       gList.add(g);
@@ -135,6 +141,9 @@ class _feedState extends State<feed> {
   }
   void addPostTogList(post p){
     //widget.
+  }
+  void sortFeed(){
+
   }
 
 
