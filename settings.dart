@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/addGroup.dart';
+import 'package:redit/editUser.dart';
 import 'package:redit/post.dart';
 import 'package:redit/savedPage.dart';
 import 'package:redit/user.dart';
@@ -8,10 +9,12 @@ import 'package:redit/user.dart';
 import 'aboutUs.dart';
 
 class settings extends StatefulWidget {
-  const settings(this.addGrp, this.savedPst, this.currentUser, ) ;
+  const settings(this.addGrp, this.savedPst, this.currentUser, this.users, ) ;
   final Function addGrp;
   final List<post> savedPst;
   final user currentUser;
+  final List<user> users;
+
 
   @override
   State<settings> createState() => _settingsState();
@@ -32,7 +35,7 @@ class _settingsState extends State<settings> {
                 Container(
                   padding: EdgeInsets.only(top: 15,bottom: 10,left: 0,right: 10),
                   child:ListTile(
-                    title:  Text('Mobina Shahbazi',style: TextStyle(fontSize: 23),) ,
+                    title:  Text(widget.currentUser.userName,style: TextStyle(fontSize: 23),) ,
                     leading: CircleAvatar(
                       radius: 33,
                       backgroundImage: AssetImage('assets/empty1.jpg'),
@@ -44,8 +47,9 @@ class _settingsState extends State<settings> {
                     top: 17,
                     child: IconButton(
                       onPressed: (){
-
-
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => editUser(widget.currentUser,widget.users))//////////////////////
+                        );
                       },
                     icon: Icon(Icons.edit,size: 20,)
                 ))

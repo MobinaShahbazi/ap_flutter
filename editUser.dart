@@ -1,17 +1,22 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/user.dart';
 
 class editUser extends StatefulWidget {
-  const editUser(this.currentUser) ;
+  const editUser(this.currentUser, this.users) ;
   final user currentUser;
+  final List<user> users;
+
 
   @override
   State<editUser> createState() => _editUserState();
 }
 
 class _editUserState extends State<editUser> {
-  TextEditingController userNameC;
+  static const snackBar = SnackBar(content: Text('This username has used before'));
+  static const snackBar2 = SnackBar(content: Text('Invalid Password'));
+      TextEditingController userNameC;
   TextEditingController passC;
   TextEditingController emailC;
 
@@ -31,7 +36,21 @@ class _editUserState extends State<editUser> {
     passC.dispose();
     emailC.dispose();
     super.dispose();
-
+  }
+  bool usedBefore(String name){
+    for(int i=0;i<widget.users.length;i++)
+    {
+      if(widget.users[i].userName==name)
+        return true;
+    }
+    return false;
+  }
+  bool isValidPass(String str) {
+    RegExp Rg = new RegExp(r'(?=.*?[A-Z])(?=.*?[a-z])(?=.*[0-9]).{8,}$');
+    if (Rg.hasMatch(str))
+      return true;
+    else
+      return false;
   }
   @override
   Widget build(BuildContext context) {
@@ -55,33 +74,46 @@ class _editUserState extends State<editUser> {
               controller: passC,
               keyboardType: TextInputType.text,
             ),
-            TextField(
-              cursorColor: Colors.teal,
-              decoration: const InputDecoration(hintText: "Email"),
-              controller: emailC,
-              keyboardType: TextInputType.text,
+
+            Container(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+              child: EmailFieldWidget(controller: emailC),
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 40,horizontal: 30),
               width: 120,
               height: 40,
               child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
                   onPressed: () {
-                    String userName =userNameC.text;
-                    String pass =passC.text;
-                    String email =emailC.text;
-                    setState(() {
-                      //if ha
-                      widget.currentUser.setUserName(userName);
-                      widget.currentUser.setPassword(pass);
-                      widget.currentUser.setEmail(email);
-                    });
-                    userNameC.clear();
-                    passC.clear();
-                    emailC.clear();
-                    Navigator.pop(context);
+                    if(usedBefore(userNameC.text)){
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                    else if(!isValidPass(passC.text)){
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+                    }
+                    // else if(){
+
+                    //}
+                    else {
+                      String userName = userNameC.text;
+                      String pass = passC.text;
+                      String email = emailC.text;
+                      setState(() {
+                        widget.currentUser.setUserName(userName);
+                        widget.currentUser.setPassword(pass);
+                        widget.currentUser.setEmail(email);
+                      });
+                      userNameC.clear();
+                      passC.clear();
+                      emailC.clear();
+                      Navigator.pop(context);
+                    }
                   },
-                  child: const Text("Confirm")),
+                  child: const Text("Confirm",style: TextStyle(fontSize: 17)),),
               // color: Colors.teal,
             )
 
@@ -89,9 +121,29 @@ class _editUserState extends State<editUser> {
         ),
 
       ),
-
-
-
     );
   }
+}
+
+class EmailFieldWidget extends StatefulWidget {
+  final TextEditingController controller;
+
+  const EmailFieldWidget({Key key, this.controller}) : super(key: key);
+
+  @override
+  _EmailFieldWidgetState createState() => _EmailFieldWidgetState();
+}
+
+class _EmailFieldWidgetState extends State<EmailFieldWidget> {
+  @override
+  Widget build(BuildContext context) => TextFormField(
+    controller: widget.controller,
+    decoration: InputDecoration(
+      hintText: 'Email',
+      border: OutlineInputBorder(),
+    ),
+    keyboardType: TextInputType.emailAddress,
+    validator: (email) =>
+    !EmailValidator.validate(email) ? 'Enter a valid email' : null,
+  );
 }

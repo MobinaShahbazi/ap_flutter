@@ -83,6 +83,11 @@ class _postDetailsState extends State<postDetails> {
                     ),
                   ),
                   Container(
+                    width: 250.0,
+                    height: 1.0,
+                    color: Colors.grey,
+                  ),
+                  Container(
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,

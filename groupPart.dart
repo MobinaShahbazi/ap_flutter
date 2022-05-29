@@ -8,10 +8,11 @@ import 'feed.dart';
 import 'group.dart';
 
 class groupList extends StatefulWidget {
-  const groupList(this.gList, this.editGrp, this.savedPost);
+  const groupList(this.gList, this.editGrp, this.savedPost, this.currentUser);
   final List<group> gList;
   final Function editGrp;
   final List<post> savedPost;
+  final user currentUser;
 
   @override
   State<groupList> createState() => _groupListState();
@@ -35,6 +36,7 @@ class _groupListState extends State<groupList> {
                 gList: widget.gList,
                 editGrp: widget.editGrp,
                 savedPost: widget.savedPost,
+                currentUser: widget.currentUser,
               );
             }
         ),
@@ -44,11 +46,12 @@ class _groupListState extends State<groupList> {
 }
 
 class groupItem extends StatefulWidget {
-  const groupItem({Key key, this.grp, this.gList, this.editGrp, this.savedPost}) : super(key: key);
+  const groupItem({Key key, this.grp, this.gList, this.editGrp, this.savedPost, this.currentUser}) : super(key: key);
   final group grp;
   final List<group> gList ;
   final Function editGrp;
   final List<post> savedPost;
+  final user currentUser;
 
   @override
   State<groupItem> createState() => _groupItemState();
@@ -62,7 +65,7 @@ class _groupItemState extends State<groupItem> {
         onTap: (){
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.savedPost))
+              MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.savedPost,widget.currentUser))
           );
           //go to groupPosts
         },

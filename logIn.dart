@@ -21,7 +21,7 @@ class LoginState extends State<LoginWidget> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  List<user> users=[new user('1','1')];
+  List<user> users=[user('',''),user('ali','111')];
   user currentUser;
   static const snackBar = SnackBar(content: Text('incorrect password'));
   bool correctPass(String name,String pass){
@@ -126,7 +126,7 @@ class LoginState extends State<LoginWidget> {
                                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                       else if(correctPass(nameController.text,passwordController.text)){
                                         currentUser=user(nameController.text, passwordController.text);
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser) ));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users) ));
                                       }
                                     }
                                 ),
@@ -225,8 +225,7 @@ class SignUpState extends State<SignUpWidget> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  static const snackBar = SnackBar(
-    content: Text('username used before'),
+  static const snackBar = SnackBar(content: Text('This username has used before'),
   );
   bool addOrNot=false;
   bool usedBefore(String name){
@@ -295,13 +294,8 @@ class SignUpState extends State<SignUpWidget> {
                                   color: Colors.grey,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 20.0,
-                                      bottom: 20.0,
-                                      left: 25.0,
-                                      right: 25.0),
-                                  child: EmailFieldWidget(
-                                      controller: emailController),
+                                  padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                                  child: EmailFieldWidget(controller: emailController),
                                 ),
                                 Container(
                                   width: 250.0,
@@ -377,7 +371,7 @@ class SignUpState extends State<SignUpWidget> {
                                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                         if (isValidOrnot(passwordController.text) && addOrNot){
                                           currentUser=user(nameController.text, passwordController.text);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser) ));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,widget.users1) ));
                                         }
                                       }
                                     },

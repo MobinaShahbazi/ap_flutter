@@ -14,8 +14,9 @@ import 'group.dart';
 import 'groupPosts.dart';
 
 class feed extends StatefulWidget {
-  const feed(this.currentUser );
+  const feed(this.currentUser, this.users );
   final user currentUser;
+  final List<user> users;
   @override
   State<feed> createState() => _feedState();
 }
@@ -40,7 +41,7 @@ class _feedState extends State<feed> {
     )),
 
     post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('master','435'),group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
+        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('',''),group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
         [
           post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
               " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali','12') ),
@@ -76,7 +77,7 @@ class _feedState extends State<feed> {
   ];
 
   List<group> gList = [
-    group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
+    group("Tourism", new user("", ""),'assets/tourism/traveller.jpg',
         [
           post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
               " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali','12') ),
@@ -177,7 +178,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser))
+                        MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -199,7 +200,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts))///////////////////////////
+                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts,widget.currentUser))///////////////////////////
                     );
                   },
                   icon: Icon(Icons.list_outlined)
@@ -227,17 +228,22 @@ class feedItem extends StatefulWidget {
   final Function addGrp;//
   final Function editGrp;
   final user currentUser;
-
   @override
   State<feedItem> createState() => _feedItemState();
 }
 
 class _feedItemState extends State<feedItem> {
+  static const snackBar = SnackBar(content: Text('Access denied'));
 
   void savePost(post p){
     widget.savedPst.add(p);
   }
-
+  bool isEqual(user u1,user u2){
+    if(u1.userName == u2.userName && u1.password==u2.password)
+      return true;
+    else
+      return false;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -250,7 +256,7 @@ class _feedItemState extends State<feedItem> {
                   onTap: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.savedPst))
+                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.savedPst,widget.currentUser))
                     );
                     //go to groupPosts
                   },
@@ -262,14 +268,19 @@ class _feedItemState extends State<feedItem> {
               Positioned(
                   right: -5,
                   child: Container(child: IconButton(icon: Icon(Icons.edit, size: 16,),
-                    //if usere
+
                     onPressed: () {
+                    if(isEqual(widget.currentUser, widget.pst.userPublisher)){
                       setState(() {
                         Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) =>  editPost(widget.pst))
                         );
                       });
+                    }
+                    else{
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
                     },
                   ),
                   )),
@@ -278,7 +289,10 @@ class _feedItemState extends State<feedItem> {
                   child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
                     //if usere
                     onPressed: () {
-                     widget.removePst();
+                      if(isEqual(widget.currentUser, widget.pst.userPublisher))
+                        widget.removePst();
+                      else
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
                   ),
                   )),

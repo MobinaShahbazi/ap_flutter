@@ -4,7 +4,9 @@ import 'package:redit/addPost.dart';
 import 'package:redit/editPost.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
+import 'package:redit/postDetails.dart';
 import 'package:redit/settings.dart';
+import 'package:redit/user.dart';
 
 import 'addGroup.dart';
 import 'editGroup.dart';
@@ -12,10 +14,11 @@ import 'feed.dart';
 import 'groupPart.dart';
 
 class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp, this.editGrp, this.savedPost);
+  const groupPosts(this.grp, this.editGrp, this.savedPost, this.currentUser);
   final group grp;
   final Function editGrp;
   final List<post> savedPost;
+  final user currentUser;
 
   @override
   State<groupPosts> createState() => _groupPostsState();
@@ -68,6 +71,7 @@ class _groupPostsState extends State<groupPosts> {
                 grp: widget.grp,
                 removePst: ()=> removePstGrp(index),
                 savedPost: widget.savedPost,
+                currentUser: widget.currentUser,
 
               );
             }),
@@ -78,18 +82,26 @@ class _groupPostsState extends State<groupPosts> {
 }
 
 class postItem extends StatefulWidget {
-  const postItem({Key key, this.pst, this.grp, this.removePst, this.savedPost,}) : super(key: key);
+  const postItem({Key key, this.pst, this.grp, this.removePst, this.savedPost, this.currentUser,}) : super(key: key);
   final post pst;
   final group grp;
   final Function removePst;
   final List<post> savedPost;
+  final user currentUser;
   @override
   State<postItem> createState() => _postItemState();
 }
 
 class _postItemState extends State<postItem> {
+  static const snackBar = SnackBar(content: Text('Access denied'),);
   void savePostGrp(post p){
     widget.savedPost.add(p);
+  }
+  bool isEqual(user u1,user u2){
+    if(u1.userName == u2.userName && u1.password==u2.password)
+      return true;
+    else
+      return false;
   }
   @override
   Widget build(BuildContext context) {
@@ -109,12 +121,15 @@ class _postItemState extends State<postItem> {
                   child: Container(child: IconButton(icon: Icon(Icons.edit, size: 16,),
                     //if usere
                     onPressed: () {
-                      setState(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>  editPost(widget.pst))
-                        );
-                      });
+                      if(isEqual(widget.currentUser, widget.grp.admin)) {
+                        setState(() {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => editPost(widget.pst))
+                          );
+                        });
+                      }
+                      else
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
                   ),
                   )),
@@ -123,7 +138,10 @@ class _postItemState extends State<postItem> {
                   child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
                     //if usere
                     onPressed: () {
-                      widget.removePst();
+                      if(isEqual(widget.currentUser, widget.grp.admin))
+                        widget.removePst();
+                      else
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
                   ),
                   )),
@@ -173,7 +191,10 @@ class _postItemState extends State<postItem> {
                           }),
                     ),
                     Container(
-                      child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,)
+                      child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.grp,widget.currentUser)));
+                        },
                       ),
                     ),
                   ],
