@@ -363,15 +363,16 @@ class SignUpState extends State<SignUpWidget> {
                                       ),
                                     ),
                                     onPressed: () {
+                                      //print(currentUser.email);
                                       final form = formKey.currentState;
                                       if (form.validate()) {
                                         final email = emailController.text;
                                         if(!usedBefore(nameController.text) && form.validate()&& isValidOrnot(passwordController.text))
-                                          addUser(new user(nameController.text,passwordController.text));
+                                          addUser(new user(nameController.text,passwordController.text,emailController.text));
                                         if(!addOrNot)
                                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                         if (isValidOrnot(passwordController.text) && addOrNot){
-                                          currentUser=user(nameController.text, passwordController.text);
+                                          currentUser=user(nameController.text, passwordController.text,emailController.text);
                                           Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,widget.users1) ));
                                         }
                                       }

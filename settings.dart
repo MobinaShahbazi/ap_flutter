@@ -47,6 +47,8 @@ class _settingsState extends State<settings> {
                     top: 17,
                     child: IconButton(
                       onPressed: (){
+                        print(widget.currentUser.email);
+                        print(widget.currentUser.userName);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => editUser(widget.currentUser,widget.users))//////////////////////
                         );
