@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 import 'package:redit/user.dart';
 
 class addPost extends StatefulWidget {
-  const addPost(this.addNewPst, this.currentUser);
+  const addPost(this.addNewPst, this.currentUser, this.grp);
+  final group grp;
   final Function addNewPst;
   final user currentUser;
 
@@ -13,6 +15,7 @@ class addPost extends StatefulWidget {
 }
 
 class _addPostState extends State<addPost> {
+  bool isEnable=true;
   TextEditingController titleC;
   TextEditingController captionC;
   @override
@@ -27,6 +30,9 @@ class _addPostState extends State<addPost> {
     titleC.dispose();
     captionC.dispose();
     super.dispose();
+  }
+  void add(){
+
   }
 
   @override
@@ -60,8 +66,8 @@ class _addPostState extends State<addPost> {
                 onPressed: (){
                   String title =titleC.text;
                   String caption =captionC.text;
-                  post p=post(title,caption,'assets/newpost.jpg',DateTime.now(),widget.currentUser);
-                  widget.addNewPst(p);
+                  post p=post(title,caption,'assets/newpost.jpg',DateTime.now(),widget.currentUser,[],widget.grp);
+                  widget.addNewPst(p,widget.grp);
                   titleC.clear();
                   captionC.clear();
                   Navigator.pop(context);

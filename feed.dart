@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/addGroup.dart';
 import 'package:redit/addPost.dart';
+import 'package:redit/chooseGroup.dart';
 import 'package:redit/editGroup.dart';
 import 'package:redit/groupPart.dart';
 import 'package:redit/post.dart';
@@ -154,14 +155,18 @@ class _feedState extends State<feed> {
       allPosts.remove(allPosts[index]);
     });
   }
-  void addPostToAll(post p){
+  void addPst(post p,group g){
     setState(() {
       allPosts.add(p);
+      int index=0;
+      for(int i=0;i<gList.length;i++){
+        if(gList[i].name==g.name)
+          index=i;
+      }
+      gList[index].posts.add(p);
     });
   }
-  void addPostTogList(post p){
-    //widget.
-  }
+
   void sortFeed(){
   }
 
@@ -207,7 +212,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => addPost(addPostToAll,widget.currentUser))/////////////////
+                        MaterialPageRoute(builder: (context) => chooseGroup(gList, widget.currentUser, addPst))/////////////////
                     );
                   },
                   icon: Icon(Icons.add)
