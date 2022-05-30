@@ -9,11 +9,15 @@ import 'package:redit/user.dart';
 import 'aboutUs.dart';
 
 class settings extends StatefulWidget {
-  const settings(this.addGrp, this.savedPst, this.currentUser, this.users, ) ;
+  const settings(this.addGrp, this.savedPst, this.currentUser, this.users, this.editGrp, this.saveFromGrp, this.unSaveFromGrp, ) ;
   final Function addGrp;
   final List<post> savedPst;
   final user currentUser;
   final List<user> users;
+  final Function editGrp;
+  final Function saveFromGrp;
+  final Function unSaveFromGrp;
+
 
 
   @override
@@ -83,7 +87,7 @@ class _settingsState extends State<settings> {
                   IconButton(
                     onPressed:(){
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => savedPage(widget.savedPst))
+                          MaterialPageRoute(builder: (context) => savedPage(widget.savedPst,widget.editGrp,widget.saveFromGrp,widget.currentUser,widget.unSaveFromGrp))
                       );
 
                     },

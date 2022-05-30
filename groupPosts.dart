@@ -1,24 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:redit/addPost.dart';
 import 'package:redit/editPost.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 import 'package:redit/postDetails.dart';
-import 'package:redit/settings.dart';
 import 'package:redit/user.dart';
-
-import 'addGroup.dart';
 import 'editGroup.dart';
-import 'feed.dart';
-import 'groupPart.dart';
+
 
 class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp, this.editGrp, this.savedPost, this.currentUser);
+  const groupPosts(this.grp, this.editGrp, this.currentUser, this.saveFromGrp, this.unSaveFromGrp);
   final group grp;
   final Function editGrp;
-  final List<post> savedPost;
+  final Function saveFromGrp;
   final user currentUser;
+  final Function unSaveFromGrp;
+
 
   @override
   State<groupPosts> createState() => _groupPostsState();
@@ -70,8 +67,10 @@ class _groupPostsState extends State<groupPosts> {
                 pst: widget.grp.posts[index],
                 grp: widget.grp,
                 removePst: ()=> removePstGrp(index),
-                savedPost: widget.savedPost,
+                //savedPost: widget.savedPost,
                 currentUser: widget.currentUser,
+                saveFromGrp: widget.saveFromGrp,
+                unSaveFromGrp: widget.unSaveFromGrp,
 
               );
             }),
@@ -82,11 +81,12 @@ class _groupPostsState extends State<groupPosts> {
 }
 
 class postItem extends StatefulWidget {
-  const postItem({Key key, this.pst, this.grp, this.removePst, this.savedPost, this.currentUser,}) : super(key: key);
+  const postItem({Key key, this.pst, this.grp, this.removePst, this.currentUser, this.saveFromGrp, this.unSaveFromGrp,}) : super(key: key);
   final post pst;
   final group grp;
   final Function removePst;
-  final List<post> savedPost;
+  final Function saveFromGrp;
+  final Function unSaveFromGrp;
   final user currentUser;
   @override
   State<postItem> createState() => _postItemState();
@@ -94,9 +94,7 @@ class postItem extends StatefulWidget {
 
 class _postItemState extends State<postItem> {
   static const snackBar = SnackBar(content: Text('Access denied'),);
-  void savePostGrp(post p){
-    widget.savedPost.add(p);
-  }
+
   bool isLiked=false;
   bool isDisliked=false;
   void like(){
@@ -153,6 +151,7 @@ class _postItemState extends State<postItem> {
     else
       return false;
   }
+  bool isSaved=false;
   @override
   Widget build(BuildContext context) {
     int vote=0;
@@ -244,7 +243,7 @@ class _postItemState extends State<postItem> {
                     Container(
                       child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,),
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.grp,widget.currentUser)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.grp,widget.currentUser,isLiked,isDisliked)));
                         },
                       ),
                     ),
@@ -253,10 +252,18 @@ class _postItemState extends State<postItem> {
                 Positioned(
                     child: Container(
                       padding: EdgeInsets.only(left: 350),
-                      child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
+                      child: IconButton(icon: Icon(isSaved? Icons.save:Icons.save_outlined, size: 20,),
                         onPressed: (){
-                          savePostGrp(widget.pst);
-                          print(widget.savedPost.length);
+                        setState(() {
+                          isSaved=!isSaved;
+                        });
+                        if(isSaved){
+                          widget.saveFromGrp(widget.pst,widget.grp);
+                        }
+                        else{
+                          widget.unSaveFromGrp(widget.pst,widget.grp);
+                        }
+
                         },
                       ),
                     )

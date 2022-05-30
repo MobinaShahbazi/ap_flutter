@@ -15,13 +15,13 @@ class addPost extends StatefulWidget {
 }
 
 class _addPostState extends State<addPost> {
-  bool isEnable=true;
+  bool isActive=false;
   TextEditingController titleC;
   TextEditingController captionC;
   @override
   void initState() {
-    titleC=TextEditingController();//captionC
-    captionC=TextEditingController();//captionC
+    titleC=TextEditingController();
+    captionC=TextEditingController();
     super.initState();
   }
 
@@ -64,14 +64,19 @@ class _addPostState extends State<addPost> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
                 onPressed: (){
-                  String title =titleC.text;
-                  String caption =captionC.text;
-                  post p=post(title,caption,'assets/newpost.jpg',DateTime.now(),widget.currentUser,[],widget.grp);
+                  if(!titleC.text.isEmpty && !captionC.text.isEmpty)
+                  {
+                  setState(()=> isActive=false );
+                  post p=post(titleC.text,captionC.text,'assets/newpost.jpg',DateTime.now(),widget.currentUser,[],widget.grp);
                   widget.addNewPst(p,widget.grp);
                   titleC.clear();
                   captionC.clear();
                   Navigator.pop(context);
                   //widget.sort();
+                 }
+                  else{
+                    null;
+                  }
                 },
                 child: Text('Add new post',style: TextStyle(fontSize: 17),),
               )

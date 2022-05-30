@@ -7,10 +7,12 @@ import 'package:intl/intl.dart';
 import 'commentPart.dart';
 
 class postDetails extends StatefulWidget {
-  const postDetails(this.pst,this.grp, this.currentUser);
+  const postDetails(this.pst,this.grp, this.currentUser, this.isLiked, this.isDisliked);
   final post pst;
   final group grp;
   final user currentUser;
+  final bool isLiked;
+  final bool isDisliked;
   @override
   State<postDetails> createState() => _postDetailsState();
 }
@@ -21,6 +23,63 @@ class _postDetailsState extends State<postDetails> {
     setState(() {
       widget.pst.comments.add(cm);
     });
+  }
+  bool isL=false;
+  bool isD=false;
+  @override
+  void initState() {
+    isL=widget.isLiked?true:false;
+    isD=widget.isDisliked?true:false;
+    super.initState();
+  }
+
+  void like(){
+    if(!isL) {
+      int num = widget.pst.likesNum;
+      num--;
+      setState(() {
+        widget.pst.setlikesNum(num);
+      });
+    }
+    else {
+      int num = widget.pst.likesNum;
+      num++;
+      setState(() {
+        widget.pst.setlikesNum(num);
+      });
+      if(isD) {
+        int num = widget.pst.disLikesNum;
+        num--;
+        setState(() {
+          widget.pst.setDislikesNum(num);
+        });
+        isD=!isD;
+      }
+    }
+  }
+  void dislike(){
+    if(!isD) {
+      int num = widget.pst.disLikesNum;
+      num--;
+      setState(() {
+        widget.pst.setDislikesNum(num);
+      });
+    }
+    else {
+      int num = widget.pst.disLikesNum;
+      num++;
+      setState(() {
+        widget.pst.setDislikesNum(num);
+      });
+      if(isL) {
+        int num = widget.pst.likesNum;
+        num--;
+        setState(() {
+          widget.pst.setlikesNum(num);
+        });
+        isL=!isL;
+      }
+    }
   }
 
   @override
@@ -35,7 +94,7 @@ class _postDetailsState extends State<postDetails> {
                 children: [
                   ListTile(
                     title: Text(widget.grp.name),
-                    subtitle: Text( widget.pst.userPublisher.userName+' , '+ DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date), style: TextStyle(fontSize: 15)),
+                    subtitle: Text( widget.pst.userPublisher.userName+' / '+ DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date), style: TextStyle(fontSize: 15)),
                     leading: CircleAvatar(
                       backgroundImage: AssetImage(widget.grp.imageURL),
                     ),
@@ -59,7 +118,6 @@ class _postDetailsState extends State<postDetails> {
                       children: [
                         Container(
                           child:  TextButton.icon(
-
                             icon: Icon(Icons.comment_outlined, size: 20, color: Colors.white,
                             ),
                             label: Text(widget.pst.comments.length.toString(),style: TextStyle(color: Colors.white70),),
@@ -67,17 +125,18 @@ class _postDetailsState extends State<postDetails> {
                         ),
                         Container(
                           child:  TextButton.icon(
-                              icon: Icon(Icons.thumb_up_alt_outlined, size: 20, color: Colors.white,
+                              icon: Icon(isL?Icons.thumb_up:Icons.thumb_up_alt_outlined, size: 20, color: Colors.white,
                               ),
                               label: Text(widget.pst.likesNum.toString(),style: TextStyle(color: Colors.white70)),
-                              onPressed: () {}),
+                              ),
                         ),
                         Container(
                           child:  TextButton.icon(
-                              icon: Icon(Icons.thumb_down_alt_outlined, size: 20, color: Colors.white,
+                              icon: Icon(isD?Icons.thumb_down:Icons.thumb_down_alt_outlined,size: 20, color: Colors.white,
                               ),
                               label: Text(widget.pst.disLikesNum.toString(),style: TextStyle(color: Colors.white70)),
-                              onPressed:(){}),
+
+                              ),
                         )
                       ],
                     ),

@@ -48,13 +48,13 @@ class _feedState extends State<feed> {
     )),
 
     post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('',''),
+        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('q','q'),
       [
         comment(user('amin','12'), 'great'),
         comment(user('sahar','000'), 'nice'),
         comment(user('ali', 'asd'), 'masterpiece :))'),
       ]
-  ,group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
+  ,group("Tourism", user('',''),'assets/tourism/traveller.jpg',
         [
           post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
               " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali','12') ),
@@ -99,29 +99,29 @@ class _feedState extends State<feed> {
     group("Tourism", new user("", ""),'assets/tourism/traveller.jpg',
         [
           post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali','12') ),
+              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('','') ,[]),
           post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
-              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2014-12-10'),user('mmd','400') ),
+              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2014-12-10'),user('mmd','400') ,[]),
           post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
-              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2019-03-16'),user('mbn','123')),
+              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2019-03-16'),user('mbn','123'),[]),
           post("Pisa Tower", "TheLeaning Tower of Pisa is one of the most remarkable architectural structures from medieval Europe. "
-              "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', DateTime.parse('1999-11-10'),user('mmd','400')),
+              "It is located in the Italian town of Pisa, one of the most visited European cities.", 'assets/tourism/italy.jpg', DateTime.parse('1999-11-10'),user('mmd','400'),[]),
           post("China Wall", "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection "
-              "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg',DateTime.parse('2010-10-30'),user('mds','400') ),
+              "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg',DateTime.parse('2010-10-30'),user('mds','400') ,[]),
         ]
     ),
     group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
         [
           post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-01-10'),user('zrh','11') ),
+              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-01-10'),user('zrh','11') ,[]),
           post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123') ),
+              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123'),[] ),
           post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717')),
+              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),[]),
           post("Encanto", "A Colombian teenage girl has to face the frustration of being the only member of her "
-              "family without magical powers.", "assets/anim/enc.jpg",DateTime.parse('2022-05-23'),user('mbn','123') ),
+              "family without magical powers.", "assets/anim/enc.jpg",DateTime.parse('2022-05-23'),user('mbn','123') ,[]),
           post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
-              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg",DateTime.parse('2020-10-10'),user('mds','1717') )
+              " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg",DateTime.parse('2020-10-10'),user('mds','1717'),[] )
         ]
     ),
     group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[]),
@@ -169,7 +169,16 @@ class _feedState extends State<feed> {
 
   void sortFeed(){
   }
-
+void savefromGrp(post p,group g) {
+    post p2=post(p.title, p.caption, p.imageURL, p.date, p.userPublisher,p.comments,g);
+    savedPosts.add(p2);
+}
+void unSaveGrp(post p,group g){
+    post p2=post(p.title, p.caption, p.imageURL, p.date, p.userPublisher,p.comments,g);
+    setState(() {
+      savedPosts.remove(p2);
+    });
+}
 
 
   @override
@@ -190,6 +199,8 @@ class _feedState extends State<feed> {
                 addGrp: () => addGrp,
                 editGrp: editGrp,
                 currentUser: widget.currentUser,
+                saveFromGrp: savefromGrp,
+                unSaveFromGrp: unSaveGrp,
               );
             }),
       ),
@@ -201,7 +212,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users))
+                        MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,editGrp,savefromGrp,unSaveGrp))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -223,7 +234,7 @@ class _feedState extends State<feed> {
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts,widget.currentUser))///////////////////////////
+                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts,widget.currentUser,savefromGrp,unSaveGrp))///////////////////////////
                     );
                   },
                   icon: Icon(Icons.list_outlined)
@@ -243,7 +254,7 @@ class _feedState extends State<feed> {
 }
 
 class feedItem extends StatefulWidget {
-  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.addGrp, this.editGrp, this.currentUser}) : super(key: key);
+  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.addGrp, this.editGrp, this.currentUser, this.saveFromGrp, this.unSaveFromGrp}) : super(key: key);
   final post pst;
   final List<post> savedPst;//
   final List<post> allPst;//
@@ -251,6 +262,10 @@ class feedItem extends StatefulWidget {
   final Function addGrp;//
   final Function editGrp;
   final user currentUser;
+  final Function saveFromGrp;
+  final Function unSaveFromGrp;
+
+
   @override
   State<feedItem> createState() => _feedItemState();
 }
@@ -259,8 +274,14 @@ class _feedItemState extends State<feedItem> {
   static const snackBar = SnackBar(content: Text('Access denied'));
 
   void savePost(post p){
-    widget.savedPst.add(p);
+    setState(() {
+      widget.savedPst.add(p);
+    });
   }
+  void unSaveFeed(post p){
+    widget.savedPst.remove(p);
+  }
+  bool isSaved=false;
   bool isLiked=false;
   bool isDisliked=false;
   void like(){
@@ -329,7 +350,7 @@ class _feedItemState extends State<feedItem> {
                   onTap: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.savedPst,widget.currentUser))
+                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp))
                     );
                     //go to groupPosts
                   },
@@ -343,7 +364,7 @@ class _feedItemState extends State<feedItem> {
                   child: Container(child: IconButton(icon: Icon(Icons.edit, size: 16,),
 
                     onPressed: () {
-                    if(isEqual(widget.currentUser, widget.pst.userPublisher)){
+                    if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin)){
                       setState(() {
                         Navigator.push(
                             context,
@@ -362,7 +383,7 @@ class _feedItemState extends State<feedItem> {
                   child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
                     //if usere
                     onPressed: () {
-                      if(isEqual(widget.currentUser, widget.pst.userPublisher))
+                      if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin))
                         widget.removePst();
                       else
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -425,7 +446,7 @@ class _feedItemState extends State<feedItem> {
                     Container(
                       child: IconButton(icon: Icon(Icons.comment_outlined, size: 20,),
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher,widget.currentUser)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher,widget.currentUser,isLiked,isDisliked)));
                         },
 
                       ),
@@ -435,9 +456,17 @@ class _feedItemState extends State<feedItem> {
                 Positioned(
                     child: Container(
                       padding: EdgeInsets.only(left: 350),
-                      child: IconButton(icon: Icon(Icons.save_outlined, size: 20,),
+                      child: IconButton(icon: Icon(isSaved? Icons.save:Icons.save_outlined, size: 20,),
                         onPressed: (){
+                        setState(() {
+                          isSaved=!isSaved;
+                        });
+                        if(isSaved){
                           savePost(widget.pst);
+                        }
+                        else{
+                          unSaveFeed(widget.pst);
+                        }
                         },
                       ),
                     ),
