@@ -97,6 +97,56 @@ class _postItemState extends State<postItem> {
   void savePostGrp(post p){
     widget.savedPost.add(p);
   }
+  bool isLiked=false;
+  bool isDisliked=false;
+  void like(){
+    if(!isLiked) {
+      int num = widget.pst.likesNum;
+      num--;
+      setState(() {
+        widget.pst.setlikesNum(num);
+      });
+    }
+    else {
+      int num = widget.pst.likesNum;
+      num++;
+      setState(() {
+        widget.pst.setlikesNum(num);
+      });
+      if(isDisliked) {
+        int num = widget.pst.disLikesNum;
+        num--;
+        setState(() {
+          widget.pst.setDislikesNum(num);
+        });
+        isDisliked=!isDisliked;
+      }
+    }
+  }
+  void dislike(){
+    if(!isDisliked) {
+      int num = widget.pst.disLikesNum;
+      num--;
+      setState(() {
+        widget.pst.setDislikesNum(num);
+      });
+    }
+    else {
+      int num = widget.pst.disLikesNum;
+      num++;
+      setState(() {
+        widget.pst.setDislikesNum(num);
+      });
+      if(isLiked) {
+        int num = widget.pst.likesNum;
+        num--;
+        setState(() {
+          widget.pst.setlikesNum(num);
+        });
+        isLiked=!isLiked;
+      }
+    }
+  }
   bool isEqual(user u1,user u2){
     if(u1.userName == u2.userName && u1.password==u2.password)
       return true;
@@ -170,24 +220,25 @@ class _postItemState extends State<postItem> {
                 Row(
                   children: [
                     Container(
-                      child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
+                      child: IconButton(icon: Icon(isLiked ?Icons.thumb_up:Icons.thumb_up_alt_outlined , size: 20,),
                         onPressed: () {
                           setState(() {
-                            widget.pst.setlikesNum(widget.pst.likesNum+1);
+                            isLiked = ! isLiked;
                           });
+                          like();
                         },
                       ),
                     ),
                     Container(
-                      child: Text('${widget.pst.likesNum + widget.pst.disLikesNum }'),
+                      child: Text('${widget.pst.likesNum - widget.pst.disLikesNum }'),
                     ),
                     Container(
-                      child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
+                      child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),
                           onPressed: () {
                             setState(() {
-                              widget.pst.setDislikesNum(widget.pst.disLikesNum-1);
+                              isDisliked = ! isDisliked;
                             });
-
+                            dislike();
                           }),
                     ),
                     Container(

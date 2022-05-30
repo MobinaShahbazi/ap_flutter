@@ -25,7 +25,13 @@ class _feedState extends State<feed> {
   List<post> savedPosts=[];
   List<post> allPosts=[
     post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-        "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-11-10'),user('mbn','123'),group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+        "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-11-10'),user('mbn','123'),
+  [
+    comment(user('ali', 'asd'), 'masterpiece!!!'),
+    comment(user('maryam','12'), 'bah bah'),
+    comment(user('anxious soul','000'), 'fantastic :))'),
+  ]
+  ,group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
         [
           post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
               "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-01-10'),user('zrh','11') ),
@@ -41,7 +47,13 @@ class _feedState extends State<feed> {
     )),
 
     post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('',''),group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
+        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('',''),
+      [
+        comment(user('amin','12'), 'great'),
+        comment(user('sahar','000'), 'nice'),
+        comment(user('ali', 'asd'), 'masterpiece :))'),
+      ]
+  ,group("Tourism", new user("user2", "Ba222222"),'assets/tourism/traveller.jpg',
         [
           post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
               " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali','12') ),
@@ -56,7 +68,13 @@ class _feedState extends State<feed> {
         ]
     ),),
     post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-        "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('sed','233'),group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+        "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('sed','233'),
+        [
+        comment(user('maryam','12'), 'so cute'),
+        comment(user('ali', 'asd'), 'my favorite animated film'),
+        comment(user('anxious soul','000'), 'I love it'),
+        ],
+        group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
         [
           post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
               "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2021-01-10'),user('zrh','11') ),
@@ -145,8 +163,8 @@ class _feedState extends State<feed> {
     //widget.
   }
   void sortFeed(){
-
   }
+
 
 
   @override
@@ -238,6 +256,56 @@ class _feedItemState extends State<feedItem> {
   void savePost(post p){
     widget.savedPst.add(p);
   }
+  bool isLiked=false;
+  bool isDisliked=false;
+  void like(){
+    if(!isLiked) {
+      int num = widget.pst.likesNum;
+      num--;
+      setState(() {
+        widget.pst.setlikesNum(num);
+      });
+    }
+    else {
+      int num = widget.pst.likesNum;
+      num++;
+      setState(() {
+        widget.pst.setlikesNum(num);
+      });
+      if(isDisliked) {
+        int num = widget.pst.disLikesNum;
+        num--;
+        setState(() {
+          widget.pst.setDislikesNum(num);
+        });
+        isDisliked=!isDisliked;
+      }
+    }
+  }
+  void dislike(){
+    if(!isDisliked) {
+      int num = widget.pst.disLikesNum;
+      num--;
+      setState(() {
+        widget.pst.setDislikesNum(num);
+      });
+    }
+    else {
+      int num = widget.pst.disLikesNum;
+      num++;
+      setState(() {
+        widget.pst.setDislikesNum(num);
+      });
+      if(isLiked) {
+        int num = widget.pst.likesNum;
+        num--;
+        setState(() {
+          widget.pst.setlikesNum(num);
+        });
+        isLiked=!isLiked;
+      }
+    }
+  }
   bool isEqual(user u1,user u2){
     if(u1.userName == u2.userName && u1.password==u2.password)
       return true;
@@ -328,24 +396,25 @@ class _feedItemState extends State<feedItem> {
                 Row(
                   children: [
                     Container(
-                      child: IconButton(icon: Icon(Icons.thumb_up_alt_outlined, size: 20,semanticLabel: '1',),
+                      child: IconButton(icon: Icon(isLiked ?Icons.thumb_up:Icons.thumb_up_alt_outlined , size: 20,),
                         onPressed: () {
                           setState(() {
-                            widget.pst.setlikesNum(widget.pst.likesNum+1);
+                            isLiked = ! isLiked;
                           });
+                          like();
                         },
                       ),
                     ),
                     Container(
-                      child: Text('${widget.pst.likesNum + widget.pst.disLikesNum }'),
+                      child: Text('${widget.pst.likesNum - widget.pst.disLikesNum }'),
                     ),
                     Container(
-                      child: IconButton(icon: Icon(Icons.thumb_down_alt_outlined, size: 20,),
+                      child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),
                           onPressed: () {
                             setState(() {
-                              widget.pst.setDislikesNum(widget.pst.disLikesNum-1);
+                              isDisliked = ! isDisliked;
                             });
-
+                            dislike();
                           }),
                     ),
                     Container(

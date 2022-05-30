@@ -27,14 +27,14 @@ class _commentItemState extends State<commentItem> {
       setState(() {
         widget.cmnt.setLikesNum(num);
       });
-      if(disLikeUser) {
-        int num = widget.cmnt.disLikesNum;
-        num--;
-        setState(() {
-          widget.cmnt.setDislikesNum(num);
-        });
-        disLikeUser=!disLikeUser;
-      }
+        if(disLikeUser) {
+          int num = widget.cmnt.disLikesNum;
+          num--;
+          setState(() {
+            widget.cmnt.setDislikesNum(num);
+          });
+          disLikeUser=!disLikeUser;
+        }
     }
   }
   void unlike(){
@@ -75,7 +75,8 @@ class _commentItemState extends State<commentItem> {
                 TextButton.icon(
                   onPressed: (){ setState(() {
                     likeUser = !likeUser;
-                  });like();},
+                  });
+                    like();},
                   icon: Icon(likeUser?Icons.thumb_up:Icons.thumb_up_alt_outlined,size:16,color: Colors.white),
                   label: Text(widget.cmnt.likesNum.toString(),style: TextStyle(color: Colors.white70)),
                 ),
