@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:passwordfield/passwordfield.dart';
 import 'package:redit/user.dart';
 
 class editUser extends StatefulWidget {
@@ -16,7 +17,6 @@ class editUser extends StatefulWidget {
 class _editUserState extends State<editUser> {
   static const snackBar = SnackBar(content: Text('This username has used before'));
   static const snackBar2 = SnackBar(content: Text('Invalid Password'));
-  static const snackBar3 = SnackBar(content: Text('Invalid e'));
   TextEditingController userNameC;
   TextEditingController passC;
   TextEditingController emailC;
@@ -61,6 +61,8 @@ class _editUserState extends State<editUser> {
         title: Text('Reddit'),
       ),
       body: Container(
+        //padding: EdgeInsets.all(50),
+        padding: EdgeInsets.all(50),
         child: Form(
           key: formKey,
           child: Column(
@@ -71,22 +73,26 @@ class _editUserState extends State<editUser> {
           controller: userNameC,
           keyboardType: TextInputType.text,
         ),
-        TextField(
-          cursorColor: Colors.teal,
-          decoration: const InputDecoration(hintText: "Password"),
-          controller: passC,
-          keyboardType: TextInputType.text,
-        ),
-
-        Container(
-          height: 20,
-        ),
+          Padding(
+            padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 2, right: 2),
+            child: PasswordField(
+              passwordConstraint: r'(?=.*?[A-Z])(?=.*?[a-z])(?=.*[0-9]).{8,}$',
+              controller: passC,
+              inputDecoration: PasswordDecoration(),
+              hintText: 'at least 8 characters',
+              border: PasswordBorder(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red.shade200),
+                  )),
+              errorMessage: 'must contains small and capital and numbers\$',
+            ),
+          ),
         Padding(
-          padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+          padding: EdgeInsets.only(top: 2, bottom: 2, left: 2, right: 2),
           child: EmailFieldWidget(controller: emailC),
         ),
         Container(
-          margin: EdgeInsets.symmetric(vertical: 40,horizontal: 30),
+          margin: EdgeInsets.symmetric(vertical: 20,horizontal: 30),
           width: 120,
           height: 40,
           child: ElevatedButton(
@@ -98,9 +104,6 @@ class _editUserState extends State<editUser> {
               }
               else if(!isValidPass(passC.text)){
                 ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-              }
-              else if(!form.validate()){
-                ScaffoldMessenger.of(context).showSnackBar(snackBar3);
               }
               else if(form.validate() && isValidPass(passC.text) && !usedBefore(userNameC.text)) {
                 String userName = userNameC.text;
