@@ -184,7 +184,18 @@ class _feedState extends State<feed> {
   }
 
   void sortFeed(){
-
+    final DateFormat formatter = DateFormat('yyyyMMdd');
+    for(int i=0;i<allPosts.length-1;i++){
+      for(int j=0;j<allPosts.length-1-i;j++) {
+        if(int.parse(formatter.format(allPosts[j].date)) < int.parse(formatter.format(allPosts[j+1].date))){
+          setState( () {
+            post p=allPosts[j];
+            allPosts[j]=allPosts[j+1];
+            allPosts[j+1]=p;
+          });
+        }
+      }
+    }
   }
 void savefromGrp(post p,group g) {
     post p2=post(p.title, p.caption, p.imageURL, p.date, p.userPublisher,p.comments,g);
@@ -238,7 +249,7 @@ void unSaveGrp(post p,group g){
               width: 100,
               child: IconButton(
                   onPressed:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => chooseGroup(gList, widget.currentUser, addPst))/////////////////
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => chooseGroup(gList, widget.currentUser, addPst,sortFeed))/////////////////
                     );
                   },
                   icon: Icon(Icons.add)

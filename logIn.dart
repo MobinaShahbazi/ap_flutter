@@ -23,7 +23,8 @@ class LoginState extends State<LoginWidget> {
 
   List<user> users=[user('',''),user('ali','111'),user('mahsa','12')];
   user currentUser;
-  static const snackBar = SnackBar(content: Text('incorrect password'));
+  static const snackBar = SnackBar(content: Text('incorrect password',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey),);
+
   bool correctPass(String name,String pass){
     int index=0;
     for(int i=0;i<users.length;i++){
@@ -226,8 +227,7 @@ class SignUpState extends State<SignUpWidget> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  static const snackBar = SnackBar(content: Text('This username has used before'),
-  );
+  static const snackBar = SnackBar(content: Text('This username has used before',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey));
   bool addOrNot=false;
   bool usedBefore(String name){
     for(int i=0;i<widget.users1.length;i++)

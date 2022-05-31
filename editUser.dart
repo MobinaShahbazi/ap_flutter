@@ -22,8 +22,8 @@ class editUser extends StatefulWidget {
 }
 
 class _editUserState extends State<editUser> {
-  static const snackBar = SnackBar(content: Text('This username has used before'));
-  static const snackBar2 = SnackBar(content: Text('Invalid Password'));
+  static const snackBar = SnackBar(content: Text('This username has used before',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey),);
+  static const snackBar2 = SnackBar(content: Text('Invalid Password',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey),);
   TextEditingController userNameC;
   TextEditingController passC;
   TextEditingController emailC;

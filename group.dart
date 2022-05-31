@@ -22,7 +22,7 @@ class group{
     _imageURL=val;
   }
   String get name =>_name;
-  void setTitle(String val){
+  void setName(String val){
     _name=val;
   }
   user get admin =>_admin;

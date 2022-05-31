@@ -41,7 +41,7 @@ class _groupListState extends State<groupList> {
     return Scaffold(
       appBar: EasySearchBar(
     title: const Text('Search'),
-    onSearch: (value) => setState(() =>  (){}),//go to that gpage
+    onSearch: (value) => setState(() => (){}),
     suggestions: widget.grpNames
     ),
       body: Container(

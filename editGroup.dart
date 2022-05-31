@@ -24,6 +24,10 @@ class _editGroupState extends State<editGroup> {
     nameC.dispose();
     super.dispose();
   }
+  int findIndex(group g){
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +55,8 @@ class _editGroupState extends State<editGroup> {
                   onPressed: (){
                     String name=nameC.text;
                     setState(() {
-                      widget.editGrp(widget.grp,name);
-                      widget.grp.setTitle(name);
+                      widget.editGrp(name);
+
                     });
                     nameC.clear();
                     Navigator.pop(context);

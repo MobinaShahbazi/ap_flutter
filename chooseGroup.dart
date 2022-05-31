@@ -9,10 +9,12 @@ import 'package:redit/user.dart';
 import 'feed.dart';
 import 'group.dart';
 class chooseGroup extends StatefulWidget {
-  const chooseGroup(this.gList,this.currentUser, this.addPst);
+  const chooseGroup(this.gList,this.currentUser, this.addPst, this.sortFeed);
   final List<group> gList;
   final Function addPst;
   final user currentUser;
+  final Function sortFeed;
+
 
   @override
   State<chooseGroup> createState() => _chooseGroupState();
@@ -35,6 +37,7 @@ class _chooseGroupState extends State<chooseGroup> {
                 gList: widget.gList,
                 addPst: widget.addPst,
                 currentUser: widget.currentUser,
+                sortFeed: widget.sortFeed,
               );
             }
         ),
@@ -44,11 +47,12 @@ class _chooseGroupState extends State<chooseGroup> {
 }
 
 class availableItem extends StatefulWidget {
-  const availableItem({Key key, this.grp, this.gList, this.addPst, this.currentUser}) : super(key: key);
+  const availableItem({Key key, this.grp, this.gList, this.addPst, this.currentUser, this.sortFeed}) : super(key: key);
   final group grp;
   final List<group> gList ;
   final Function addPst;
   final user currentUser;
+  final Function sortFeed;
 
   @override
   State<availableItem> createState() => _availableItemState();
@@ -62,7 +66,7 @@ class _availableItemState extends State<availableItem> {
         onTap: (){
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  addPost(widget.addPst, widget.currentUser,widget.grp))
+              MaterialPageRoute(builder: (context) =>  addPost(widget.addPst, widget.currentUser,widget.grp,widget.sortFeed))
           );
           //go to groupPosts
         },

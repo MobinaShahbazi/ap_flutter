@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 import 'package:redit/user.dart';
 
 class addPost extends StatefulWidget {
-  const addPost(this.addNewPst, this.currentUser, this.grp);
+  const addPost(this.addNewPst, this.currentUser, this.grp, this.sortFeed);
   final group grp;
   final Function addNewPst;
   final user currentUser;
+  final Function sortFeed;
+
 
   @override
   State<addPost> createState() => _addPostState();
@@ -80,8 +81,8 @@ class _addPostState extends State<addPost> {
                   widget.addNewPst(p,widget.grp);
                   titleC.clear();
                   captionC.clear();
+                  widget.sortFeed();
                   Navigator.pop(context);
-                  //widget.sort();
                  }
                   else{
                     null;
