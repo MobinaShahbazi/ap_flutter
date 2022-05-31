@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 import 'package:redit/user.dart';
@@ -15,6 +16,8 @@ class addPost extends StatefulWidget {
 }
 
 class _addPostState extends State<addPost> {
+  static const snackBar1 = SnackBar(content: Text('Title can not be empty',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey),);
+  static const snackBar2 = SnackBar(content: Text('Caption can not be empty',style: TextStyle(fontSize: 16)),backgroundColor: (Colors.grey),);
   bool isActive=false;
   TextEditingController titleC;
   TextEditingController captionC;
@@ -64,6 +67,12 @@ class _addPostState extends State<addPost> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
                 onPressed: (){
+                  if(titleC.text.isEmpty ){
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar1);
+                  }
+                  if(captionC.text.isEmpty ){
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+                  }
                   if(!titleC.text.isEmpty && !captionC.text.isEmpty)
                   {
                   setState(()=> isActive=false );
