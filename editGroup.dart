@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/group.dart';
-import 'package:redit/user.dart';
 
 class editGroup extends StatefulWidget {
   const editGroup(this.grp, this.editGrp) ;
@@ -25,9 +24,8 @@ class _editGroupState extends State<editGroup> {
     super.dispose();
   }
   int findIndex(group g){
-
-
   }
+
 
   @override
   Widget build(BuildContext context) {

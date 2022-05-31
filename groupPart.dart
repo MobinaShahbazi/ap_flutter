@@ -89,7 +89,7 @@ class _groupItemState extends State<groupItem> {
      children: [
        ListTile(
          onTap: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp)));
+           Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost)));
            //go to groupPosts
          },
          title: Text(widget.grp.name),
@@ -105,6 +105,7 @@ class _groupItemState extends State<groupItem> {
              setState(() {
                widget.grp.setStared(!widget.grp.stared);
                widget.starSort();
+               //
              });
              widget.starSort();
          },

@@ -10,12 +10,14 @@ import 'editGroup.dart';
 
 
 class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp, this.editGrp, this.currentUser, this.saveFromGrp, this.unSaveFromGrp);
+  const groupPosts(this.grp, this.editGrp, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.savedPost);
   final group grp;
   final Function editGrp;
   final Function saveFromGrp;
   final user currentUser;
   final Function unSaveFromGrp;
+  final List<post> savedPost;
+
 
 
   @override
@@ -38,6 +40,9 @@ class _groupPostsState extends State<groupPosts> {
     setState(() {
       widget.grp.posts.add(p);
     });
+  }
+  void unsave1(int index){
+    widget.savedPost.remove(widget.savedPost[index]);
   }
   String groupName='';
   @override
@@ -89,6 +94,7 @@ class _groupPostsState extends State<groupPosts> {
                 currentUser: widget.currentUser,
                 saveFromGrp: widget.saveFromGrp,
                 unSaveFromGrp: widget.unSaveFromGrp,
+                unSave1: ()=> unsave1(index),
 
               );
             }),
@@ -99,12 +105,13 @@ class _groupPostsState extends State<groupPosts> {
 }
 
 class postItem extends StatefulWidget {
-  const postItem({Key key, this.pst, this.grp, this.removePst, this.currentUser, this.saveFromGrp, this.unSaveFromGrp,}) : super(key: key);
+  const postItem({Key key, this.pst, this.grp, this.removePst, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.unSave1,}) : super(key: key);
   final post pst;
   final group grp;
   final Function removePst;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
+  final Function unSave1;
   final user currentUser;
   @override
   State<postItem> createState() => _postItemState();
@@ -289,7 +296,7 @@ class _postItemState extends State<postItem> {
                           widget.saveFromGrp(widget.pst,widget.grp);
                         }
                         else{
-                          widget.unSaveFromGrp(widget.pst,widget.grp);
+                          widget.unSave1();
                         }
 
                         },

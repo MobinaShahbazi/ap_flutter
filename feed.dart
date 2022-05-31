@@ -374,7 +374,7 @@ class _feedItemState extends State<feedItem> {
                   onTap: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp))
+                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst))
                     );
                     //go to groupPosts
                   },

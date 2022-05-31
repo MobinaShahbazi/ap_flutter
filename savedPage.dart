@@ -148,7 +148,7 @@ class _savedItemState extends State<savedItem> {
             onTap: (){
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSave))
+                  MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst))
               );
 
             },
