@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:redit/editPost.dart';
 import 'package:redit/group.dart';
 import 'package:redit/post.dart';
@@ -23,6 +24,11 @@ class groupPosts extends StatefulWidget {
 
 class _groupPostsState extends State<groupPosts> {
 
+  @override
+  void initState() {
+    sortGrp(widget.grp);
+    super.initState();
+  }
   void removePstGrp(int index){
     setState(() {
       widget.grp.posts.remove(widget.grp.posts[index]);
@@ -35,9 +41,21 @@ class _groupPostsState extends State<groupPosts> {
   }
   String groupName='';
   @override
-  void initState() {
-    groupName=widget.grp.name;
-    super.initState();
+  void sortGrp(group g){
+    setState(() {
+      final DateFormat formatter = DateFormat('yyyyMMdd');
+      for(int i=0;i<g.posts.length-1;i++){
+        for(int j=0;j<g.posts.length-1-i;j++) {
+          if(int.parse(formatter.format(g.posts[j].date)) < int.parse(formatter.format(g.posts[j+1].date))){
+            setState( () {
+              post p=g.posts[j];
+              g.posts[j]=g.posts[j+1];
+              g.posts[j+1]=p;
+            });
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -161,10 +179,19 @@ class _postItemState extends State<postItem> {
         children: [
           Stack(
             children: [
-              Align(
-                heightFactor: 1.7,
-                alignment: Alignment(-.9, 0),
-                child: Text(widget.pst.title, style: TextStyle(fontSize: 25)),
+              Column(
+                children: [
+                  Align(
+                    //heightFactor: 1,
+                    alignment: Alignment(-.9,0),
+                    child: Text(widget.pst.title, style: TextStyle(fontSize: 25)),
+                  ),
+                  Align(
+                    //heightFactor: 1.7,
+                      alignment: Alignment(-.9,0),
+                    child:  Text((DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date)),style: TextStyle(fontSize: 15,color: Colors.white70))
+                  ),
+                ],
               ),
               Positioned(
                   right: -5,

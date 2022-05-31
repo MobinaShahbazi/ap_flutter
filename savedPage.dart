@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:redit/post.dart';
 import 'package:redit/postDetails.dart';
 import 'package:redit/user.dart';
 
+import 'group.dart';
 import 'groupPosts.dart';
 
 class savedPage extends StatefulWidget {
@@ -20,6 +22,25 @@ class savedPage extends StatefulWidget {
 }
 
 class _savedPageState extends State<savedPage> {
+  @override
+  void initState() {
+    sortSaved();
+    super.initState();
+  }
+  void sortSaved(){
+    final DateFormat formatter = DateFormat('yyyyMMdd');
+    for(int i=0;i<widget.savedPst.length-1;i++){
+      for(int j=0;j<widget.savedPst.length-1-i;j++) {
+        if(int.parse(formatter.format(widget.savedPst[j].date)) < int.parse(formatter.format(widget.savedPst[j+1].date))){
+          setState( () {
+            post p=widget.savedPst[j];
+            widget.savedPst[j]=widget.savedPst[j+1];
+            widget.savedPst[j+1]=p;
+          });
+        }
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,6 +151,11 @@ class _savedItemState extends State<savedItem> {
               alignment: Alignment(-.9, 0),
               child: Text(widget.pst.title, style: TextStyle(fontSize: 19,color: Colors.white70)),
             ),
+          ),
+          Align(
+            //heightFactor: 1.7,
+              alignment: Alignment(-.9,0),
+              child:  Text((DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date)),style: TextStyle(fontSize: 15,color: Colors.white70))
           ),
           Container(
             width: MediaQuery.of(context).size.width,
