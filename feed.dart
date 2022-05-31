@@ -89,8 +89,6 @@ class _feedState extends State<feed> {
     )),
 
 
-
-
   ];
 
   List<group> gList = [
@@ -124,16 +122,16 @@ class _feedState extends State<feed> {
         ]
         ,true
     ),
-    group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[],false),
-    group("Best_Painters", new user("user4", "444"),'assets/art/p3.jpg',[],false),
-    group("Soccer", new user("user6", "666"),'assets/football/messi.jpg',[],false),
-    group("Cookery", new user("user5", "555"),'assets/food/pizza.jpg',[],false),
-    group("Luxury Car2022", new user("user5", "555"),'assets/car/Lambor.jpg',[],false),
-    group("Animal Photography", new user("user5", "555"),'assets/animals/panda.jpg',[],true),
-    group("Moder Architecture", new user("user5", "555"),'assets/archi/p3.jpg',[],false),
-    group("Digimoviez", new user("user5", "555"),'assets/movies/WorldWarZ.jpg',[],false),
-    group("News", new user("user5", "555"),'assets/news/p1.jpg',[],false),
-    group("Amazing Nature", new user("user5", "555"),'assets/Nature/Italy.jpg',[],false),
+    // group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[],false),
+    // group("Best_Painters", new user("user4", "444"),'assets/art/p3.jpg',[],false),
+    // group("Soccer", new user("user6", "666"),'assets/football/messi.jpg',[],false),
+    // group("Cookery", new user("user5", "555"),'assets/food/pizza.jpg',[],false),
+    // group("Luxury Car2022", new user("user5", "555"),'assets/car/Lambor.jpg',[],false),
+    // group("Animal Photography", new user("user5", "555"),'assets/animals/panda.jpg',[],true),
+    // group("Moder Architecture", new user("user5", "555"),'assets/archi/p3.jpg',[],false),
+    // group("Digimoviez", new user("user5", "555"),'assets/movies/WorldWarZ.jpg',[],false),
+    // group("News", new user("user5", "555"),'assets/news/p1.jpg',[],false),
+    // group("Amazing Nature", new user("user5", "555"),'assets/Nature/Italy.jpg',[],false),
   ];
   List<String> grpNames=["Tourism","IMDb","Novel Novels","Best_Painters","Soccer","Cookery","Luxury Car2022","Animal Photography","Moder Architecture","Digimoviez","News","Amazing Nature",];
   @override
@@ -198,11 +196,11 @@ class _feedState extends State<feed> {
     }
   }
 void savefromGrp(post p,group g) {
-    post p2=post(p.title, p.caption, p.imageURL, p.date, p.userPublisher,p.comments,g);
+    post p2=post(p.title, p.caption, p.imageURL, p.date, p.userPublisher,[],g);
     savedPosts.add(p2);
 }
 void unSaveGrp(post p,group g){
-    post p2=post(p.title, p.caption, p.imageURL, p.date, p.userPublisher,p.comments,g);
+    post p2=post(p.title, p.caption, p.imageURL, p.date, p.userPublisher,[],g);
     setState(() {
       savedPosts.remove(p2);
     });

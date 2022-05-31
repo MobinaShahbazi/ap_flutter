@@ -27,6 +27,11 @@ class _savedPageState extends State<savedPage> {
     sortSaved();
     super.initState();
   }
+  void unSave(int index){
+    setState(() {
+      widget.savedPst.remove(widget.savedPst[index]);
+    });
+  }
   void sortSaved(){
     final DateFormat formatter = DateFormat('yyyyMMdd');
     for(int i=0;i<widget.savedPst.length-1;i++){
@@ -56,7 +61,8 @@ class _savedPageState extends State<savedPage> {
                 saveFromGrp: widget.saveFromGrp,
                 editGrp: widget.editGrp,
                 currentUser: widget.currentUser,
-                unSave: widget.unSave,
+                unSave:()=> unSave(index),
+                savedPst: widget.savedPst,
               );
             }),
       ),
@@ -66,12 +72,14 @@ class _savedPageState extends State<savedPage> {
 
 
 class savedItem extends StatefulWidget {
-  const savedItem({Key key, this.pst, this.editGrp, this.saveFromGrp, this.currentUser, this.unSave}) : super(key: key);
+  const savedItem({Key key, this.pst, this.editGrp, this.saveFromGrp, this.currentUser, this.unSave, this.savedPst}) : super(key: key);
   final post pst;
   final Function editGrp;
   final Function saveFromGrp;
   final user currentUser;
   final Function unSave;
+  final List<post> savedPst;
+
 
   @override
   State<savedItem> createState() => _savedItemState();
@@ -128,6 +136,9 @@ class _savedItemState extends State<savedItem> {
       }
     }
   }
+  void unSave(post p){
+      widget.savedPst.remove(p);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -175,46 +186,58 @@ class _savedItemState extends State<savedItem> {
             ),
           ),
           Container(
-            child: Row(
+            child: Stack(
               children: [
-                Container(
-                  child: IconButton(icon: Icon(isLiked ?Icons.thumb_up:Icons.thumb_up_alt_outlined , size: 20,),
-                    onPressed: () {
-                      setState(() {
-                        isLiked = ! isLiked;
-                      });
-                      like();
-                    },
-                  ),
-                ),
-                Container(
-                  child: Text('${widget.pst.likesNum - widget.pst.disLikesNum }'),
-                ),
-                Container(
-                  child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),
-                      onPressed: () {
-                        setState(() {
-                          isDisliked = ! isDisliked;
-                        });
-                        dislike();
-                      }),
-                ),
-                Container(
-                  child: IconButton(
-                    onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher,widget.currentUser,isLiked,isDisliked)));
-                    },
-                      icon: Icon(Icons.comment_outlined, size: 20,)
+                Row(
+                  children: [
+                    Container(
+                      child: IconButton(icon: Icon(isLiked ?Icons.thumb_up:Icons.thumb_up_alt_outlined , size: 20,),
+                        onPressed: () {
+                          setState(() {
+                            isLiked = ! isLiked;
+                          });
+                          like();
+                        },
+                      ),
+                    ),
+                    Container(
+                      child: Text('${widget.pst.likesNum - widget.pst.disLikesNum }'),
+                    ),
+                    Container(
+                      child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),
+                          onPressed: () {
+                            setState(() {
+                              isDisliked = ! isDisliked;
+                            });
+                            dislike();
+                          }),
+                    ),
+                    Container(
+                      child: IconButton(
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher,widget.currentUser,isLiked,isDisliked)));
+                          },
+                          icon: Icon(Icons.comment_outlined, size: 20,)
 
-                  ),
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 350),
+                      child: IconButton(icon: Icon(Icons.save, size: 20,),
+                        onPressed: (){
+                        setState(() {
+                          widget.unSave();
+                        });
+                        },
+                      ),
+                    ),
                 ),
               ],
-            ),
-
+            )
           )
-
-
-
         ],
       ),
     );
