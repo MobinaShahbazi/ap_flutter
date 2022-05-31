@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/groupPosts.dart';
 import 'package:redit/post.dart';
-import 'package:redit/settings.dart';
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:redit/user.dart';
 import 'feed.dart';
 import 'group.dart';
 
 class groupList extends StatefulWidget {
-  const groupList(this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort);
+  const groupList(this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.grpNames);
   final List<group> gList;
   final Function editGrp;
   final Function saveFromGrp;
@@ -16,6 +16,7 @@ class groupList extends StatefulWidget {
   final Function starSort;
   final List<post> savedPost;
   final user currentUser;
+  final List<String> grpNames;
 
   @override
   State<groupList> createState() => _groupListState();
@@ -27,14 +28,22 @@ class _groupListState extends State<groupList> {
     widget.starSort();
     super.initState();
   }
+  group findGrp(String name){
+    for(int i=0;i<widget.gList.length;i++){
+      if(name==widget.gList[i].name){
+        return widget.gList[i];
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Reddit"),
-      ),
-
+      appBar: EasySearchBar(
+    title: const Text('Search'),
+    onSearch: (value) => setState(() =>  (){}),//go to that gpage
+    suggestions: widget.grpNames
+    ),
       body: Container(
         child: ListView.builder(
             itemCount: widget.gList.length,
@@ -80,10 +89,7 @@ class _groupItemState extends State<groupItem> {
      children: [
        ListTile(
          onTap: (){
-           Navigator.push(
-               context,
-               MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp))
-           );
+           Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp)));
            //go to groupPosts
          },
          title: Text(widget.grp.name),

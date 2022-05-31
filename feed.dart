@@ -137,6 +137,7 @@ class _feedState extends State<feed> {
     group("News", new user("user5", "555"),'assets/news/p1.jpg',[],false),
     group("Amazing ", new user("user5", "555"),'assets/Nature/Italy.jpg',[],false),
   ];
+  List<String> grpNames=["Tourism","IMDb","Novel Novels","Best_Painters","Soccer","Cookery","Luxury Car2022","Animal Photography","Moder Architecture","Digimoviez","News","Amazing ",];
   @override
   void initState() {
     sortFeed();
@@ -248,7 +249,7 @@ void unSaveGrp(post p,group g){
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort))///////////////////////////
+                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames))///////////////////////////
                     );
                   },
                   icon: Icon(Icons.list_outlined)
