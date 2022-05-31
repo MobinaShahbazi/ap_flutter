@@ -109,6 +109,7 @@ class _feedState extends State<feed> {
           post("China Wall", "The Great Wall of China is a series of fortifications that were built across the historical northern borders of ancient Chinese states and Imperial China as protection "
               "against various nomadic groups from the Eurasian Steppe.", 'assets/tourism/china.jpg',DateTime.parse('2010-10-30'),user('mds','400') ,[]),
         ]
+        ,false
     ),
     group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
         [
@@ -123,17 +124,18 @@ class _feedState extends State<feed> {
           post("Wish Dragon", "Determined teen Din is longing to reconnect with his childhood best friend when he meets a wish-granting"
               " dragon who shows him the magic of possibilities.", "assets/anim/wish.jpg",DateTime.parse('2020-10-10'),user('mds','1717'),[] )
         ]
+        ,true
     ),
-    group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[]),
-    group("Best_Painters", new user("user4", "444"),'assets/art/p3.jpg',[]),
-    group("Soccer", new user("user6", "666"),'assets/football/messi.jpg',[]),
-    group("Cookery", new user("user5", "555"),'assets/food/pizza.jpg',[]),
-    group("Luxury Car2022", new user("user5", "555"),'assets/car/Lambor.jpg',[]),
-    group("Animal Photography", new user("user5", "555"),'assets/animals/panda.jpg',[]),
-    //group("Moder Architecture", new user("user5", "555"),'assets/archi/p3.jpg',[]),
-    //group("Digimoviez", new user("user5", "555"),'assets/movies/WorldWarZ.jpg',[]),
-    //group("News", new user("user5", "555"),'assets/news/p1.jpg',[]),
-    //group("Amazing ", new user("user5", "555"),'assets/Nature/Italy.jpg',[]),
+    group("Novel Novels", new user("user3", "333"),'assets/books/prof.jpg',[],false),
+    group("Best_Painters", new user("user4", "444"),'assets/art/p3.jpg',[],false),
+    group("Soccer", new user("user6", "666"),'assets/football/messi.jpg',[],false),
+    group("Cookery", new user("user5", "555"),'assets/food/pizza.jpg',[],false),
+    group("Luxury Car2022", new user("user5", "555"),'assets/car/Lambor.jpg',[],false),
+    group("Animal Photography", new user("user5", "555"),'assets/animals/panda.jpg',[],true),
+    group("Moder Architecture", new user("user5", "555"),'assets/archi/p3.jpg',[],false),
+    group("Digimoviez", new user("user5", "555"),'assets/movies/WorldWarZ.jpg',[],false),
+    group("News", new user("user5", "555"),'assets/news/p1.jpg',[],false),
+    group("Amazing ", new user("user5", "555"),'assets/Nature/Italy.jpg',[],false),
   ];
   @override
   void initState() {
@@ -165,6 +167,20 @@ class _feedState extends State<feed> {
       }
       gList[index].posts.add(p);
     });
+  }
+  void starSort(){
+      List<group> copy=[];
+      for(int i=0;i<gList.length;i++){
+        if(gList[i].stared)
+          copy.add(gList[i]);
+      }
+      for(int i=0;i<gList.length;i++){
+        if(!gList[i].stared)
+          copy.add(gList[i]);
+      }
+
+      gList.clear();
+      gList.addAll(copy);
   }
 
   void sortFeed(){
@@ -211,8 +227,7 @@ void unSaveGrp(post p,group g){
               width: 90,
               child: IconButton(
                   onPressed:(){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,editGrp,savefromGrp,unSaveGrp))
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,editGrp,savefromGrp,unSaveGrp))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -222,8 +237,7 @@ void unSaveGrp(post p,group g){
               width: 100,
               child: IconButton(
                   onPressed:(){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => chooseGroup(gList, widget.currentUser, addPst))/////////////////
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => chooseGroup(gList, widget.currentUser, addPst))/////////////////
                     );
                   },
                   icon: Icon(Icons.add)
@@ -234,7 +248,7 @@ void unSaveGrp(post p,group g){
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts,widget.currentUser,savefromGrp,unSaveGrp))///////////////////////////
+                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort))///////////////////////////
                     );
                   },
                   icon: Icon(Icons.list_outlined)

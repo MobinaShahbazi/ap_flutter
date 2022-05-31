@@ -2,12 +2,19 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:passwordfield/passwordfield.dart';
+import 'package:redit/post.dart';
+import 'package:redit/settings.dart';
 import 'package:redit/user.dart';
 
 class editUser extends StatefulWidget {
-  const editUser(this.currentUser, this.users) ;
+  const editUser(this.currentUser, this.users, this.addGrp, this.savedPst, this.editGrp, this.saveFromGrp, this.unSaveFromGrp) ;
+  final Function addGrp;
+  final List<post> savedPst;
   final user currentUser;
   final List<user> users;
+  final Function editGrp;
+  final Function saveFromGrp;
+  final Function unSaveFromGrp;
 
 
   @override
@@ -118,6 +125,7 @@ class _editUserState extends State<editUser> {
                 passC.clear();
                 emailC.clear();
                 Navigator.pop(context);
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => settings(widget.addGrp,widget.savedPst,widget.currentUser,widget.users,widget.editGrp,widget.saveFromGrp,widget.unSaveFromGrp)));
               }
             },
             child: const Text("Confirm",style: TextStyle(fontSize: 17)),),

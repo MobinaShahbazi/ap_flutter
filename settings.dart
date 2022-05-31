@@ -54,7 +54,7 @@ class _settingsState extends State<settings> {
                         print(widget.currentUser.email);
                         print(widget.currentUser.userName);
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => editUser(widget.currentUser,widget.users))//////////////////////
+                            MaterialPageRoute(builder: (context) => editUser(widget.currentUser,widget.users,widget.addGrp,widget.savedPst,widget.editGrp,widget.saveFromGrp,widget.unSaveFromGrp))//////////////////////
                         );
                       },
                     icon: Icon(Icons.edit,size: 20,)

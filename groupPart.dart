@@ -8,11 +8,12 @@ import 'feed.dart';
 import 'group.dart';
 
 class groupList extends StatefulWidget {
-  const groupList(this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp);
+  const groupList(this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort);
   final List<group> gList;
   final Function editGrp;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
+  final Function starSort;
   final List<post> savedPost;
   final user currentUser;
 
@@ -21,6 +22,11 @@ class groupList extends StatefulWidget {
 }
 
 class _groupListState extends State<groupList> {
+  @override
+  void initState() {
+    widget.starSort();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +47,7 @@ class _groupListState extends State<groupList> {
                 currentUser: widget.currentUser,
                 saveFromGrp: widget.saveFromGrp,
                 unSaveFromGrp: widget.unSaveFromGrp,
+                starSort: widget.starSort,
               );
             }
         ),
@@ -50,7 +57,7 @@ class _groupListState extends State<groupList> {
 }
 
 class groupItem extends StatefulWidget {
-  const groupItem({Key key, this.grp, this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp}) : super(key: key);
+  const groupItem({Key key, this.grp, this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort}) : super(key: key);
   final group grp;
   final List<group> gList ;
   final Function editGrp;
@@ -58,6 +65,8 @@ class groupItem extends StatefulWidget {
   final user currentUser;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
+  final Function starSort;
+
 
 
   @override
@@ -67,20 +76,35 @@ class groupItem extends StatefulWidget {
 class _groupItemState extends State<groupItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListTile(
-        onTap: (){
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp))
-          );
-          //go to groupPosts
-        },
-        title: Text(widget.grp.name),
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(widget.grp.imageURL),
-        ),
-      ),
+    return Stack(
+     children: [
+       ListTile(
+         onTap: (){
+           Navigator.push(
+               context,
+               MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp))
+           );
+           //go to groupPosts
+         },
+         title: Text(widget.grp.name),
+         leading: CircleAvatar(
+           backgroundImage: AssetImage(widget.grp.imageURL),
+         ),
+       ),
+       Positioned(
+         right: 10,
+           child: IconButton(
+           icon: Icon(widget.grp.stared? Icons.star:Icons.star_border,size: 20,color: Colors.white70,),
+         onPressed: (){
+             setState(() {
+               widget.grp.setStared(!widget.grp.stared);
+               widget.starSort();
+             });
+             widget.starSort();
+         },
+       )
+       )
+     ],
     );
   }
 }

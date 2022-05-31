@@ -33,7 +33,12 @@ class _groupPostsState extends State<groupPosts> {
       widget.grp.posts.add(p);
     });
   }
-
+  String groupName='';
+  @override
+  void initState() {
+    groupName=widget.grp.name;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +47,7 @@ class _groupPostsState extends State<groupPosts> {
         leading: CircleAvatar(
           backgroundImage: AssetImage(widget.grp.imageURL),
         ),
-        title: Text(
-          widget.grp.name,
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
+        title: Text(widget.grp.name, style: TextStyle(fontSize: 20,),),
         actions: [IconButton(
             onPressed: (){
               setState(() {
@@ -97,6 +97,7 @@ class _postItemState extends State<postItem> {
 
   bool isLiked=false;
   bool isDisliked=false;
+
   void like(){
     if(!isLiked) {
       int num = widget.pst.likesNum;
