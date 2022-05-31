@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:redit/addGroup.dart';
-import 'package:redit/addPost.dart';
+import 'package:intl/intl.dart';
 import 'package:redit/chooseGroup.dart';
-import 'package:redit/editGroup.dart';
 import 'package:redit/groupPart.dart';
 import 'package:redit/post.dart';
 import 'package:redit/postDetails.dart';
@@ -135,9 +133,9 @@ class _feedState extends State<feed> {
     group("Moder Architecture", new user("user5", "555"),'assets/archi/p3.jpg',[],false),
     group("Digimoviez", new user("user5", "555"),'assets/movies/WorldWarZ.jpg',[],false),
     group("News", new user("user5", "555"),'assets/news/p1.jpg',[],false),
-    group("Amazing ", new user("user5", "555"),'assets/Nature/Italy.jpg',[],false),
+    group("Amazing Nature", new user("user5", "555"),'assets/Nature/Italy.jpg',[],false),
   ];
-  List<String> grpNames=["Tourism","IMDb","Novel Novels","Best_Painters","Soccer","Cookery","Luxury Car2022","Animal Photography","Moder Architecture","Digimoviez","News","Amazing ",];
+  List<String> grpNames=["Tourism","IMDb","Novel Novels","Best_Painters","Soccer","Cookery","Luxury Car2022","Animal Photography","Moder Architecture","Digimoviez","News","Amazing Nature",];
   @override
   void initState() {
     sortFeed();
@@ -146,11 +144,12 @@ class _feedState extends State<feed> {
   void addGrp(group g){
     setState(() {
       gList.add(g);
+      grpNames.add(g.name);
     });
   }
-  void editGrp(group g,String title){
+  void editGrp(int index,String title){
     setState(() {
-      g.setTitle(title);
+      gList[index].setName(title);
     });
   }
   void removePstFeed(int index){
@@ -185,6 +184,7 @@ class _feedState extends State<feed> {
   }
 
   void sortFeed(){
+
   }
 void savefromGrp(post p,group g) {
     post p2=post(p.title, p.caption, p.imageURL, p.date, p.userPublisher,p.comments,g);
@@ -369,7 +369,23 @@ class _feedItemState extends State<feedItem> {
                     );
                     //go to groupPosts
                   },
-                  title: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
+                  title: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          child: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                          child: Text((DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date)),style: TextStyle(fontSize: 15,color: Colors.white70))
+                        ),
+                      ),
+                    ],
+                  ),
+                  //title: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
                   leading: CircleAvatar(backgroundImage: AssetImage(widget.pst.groupPublisher.imageURL),
                   ),
                 ),
@@ -411,7 +427,7 @@ class _feedItemState extends State<feedItem> {
             child:  Align(
               heightFactor: 1.7,
               alignment: Alignment(-.9, 0),
-              child: Text(widget.pst.title, style: TextStyle(fontSize: 19,color: Colors.white70)),
+              child: Text(widget.pst.title, style: TextStyle(fontSize: 19,color: Colors.white)),
             ),
           ),
           Container(
