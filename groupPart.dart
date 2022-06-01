@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/groupPosts.dart';
@@ -35,6 +37,29 @@ class _groupListState extends State<groupList> {
       }
     }
   }
+  void insert(int index){
+    int staredCount=0;
+    for(int i=0;i<widget.gList.length;i++){
+      if(widget.gList[i].stared)
+        staredCount++;
+    }
+    setState(() {
+      widget.gList.insert(staredCount-1, widget.gList[index]);
+      widget.gList.removeAt(index+1);
+    });
+  }
+  Void unInsert(int index){
+    print('hi w');
+    int staredCount=0;
+    for(int i=0;i<widget.gList.length;i++){
+      if(widget.gList[i].stared)
+        staredCount++;
+    }
+    setState(() {
+      widget.gList.insert(staredCount+1, widget.gList[index]);
+      widget.gList.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +82,8 @@ class _groupListState extends State<groupList> {
                 saveFromGrp: widget.saveFromGrp,
                 unSaveFromGrp: widget.unSaveFromGrp,
                 starSort: widget.starSort,
+                insert: ()=> insert(index),
+                uninsert: ()=> unInsert(index),
               );
             }
         ),
@@ -66,7 +93,7 @@ class _groupListState extends State<groupList> {
 }
 
 class groupItem extends StatefulWidget {
-  const groupItem({Key key, this.grp, this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort}) : super(key: key);
+  const groupItem({Key key, this.grp, this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.insert, this.uninsert}) : super(key: key);
   final group grp;
   final List<group> gList ;
   final Function editGrp;
@@ -75,6 +102,8 @@ class groupItem extends StatefulWidget {
   final Function saveFromGrp;
   final Function unSaveFromGrp;
   final Function starSort;
+  final Function insert;
+  final Function uninsert;
 
 
 
@@ -104,10 +133,11 @@ class _groupItemState extends State<groupItem> {
          onPressed: (){
              setState(() {
                widget.grp.setStared(!widget.grp.stared);
-               widget.starSort();
-               //
+               if(widget.grp.stared)
+                  widget.insert();
+               else
+                 widget.uninsert();
              });
-             widget.starSort();
          },
        )
        )
