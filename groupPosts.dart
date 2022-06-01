@@ -194,23 +194,6 @@ class _postItemState extends State<postItem> {
               ),
               Positioned(
                   right: -5,
-                  child: Container(child: IconButton(icon: Icon(Icons.edit, size: 16,),
-                    //if usere
-                    onPressed: () {
-                      if(isEqual(widget.currentUser, widget.grp.admin)) {
-                        setState(() {
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => editPost(widget.pst))
-                          );
-                        });
-                      }
-                      else
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                  ),
-                  )),
-              Positioned(
-                  right: 25,
                   child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
                     //if usere
                     onPressed: () {

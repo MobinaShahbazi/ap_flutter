@@ -368,83 +368,66 @@ class _feedItemState extends State<feedItem> {
       child: Column(
         children: [
           Container(
-            height: 7,
-          ),
-          Stack(
-            children: [
-              Container(
-                child: ListTile(
-                  onTap: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst))
-                    );
-                    //go to groupPosts
-                  },
-                  title: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          child: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
-                        ),
-                      ),
-                    ],
-                  ),
-                  //title: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
-                  leading: CircleAvatar(backgroundImage: AssetImage(widget.pst.groupPublisher.imageURL),
-                  ),
-                ),
-              ),
-              // Positioned(
-              //     right: -5,
-              //     child: Container(child: IconButton(icon: Icon(Icons.edit, size: 16,),
-              //
-              //       onPressed: () {
-              //       if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin)){
-              //         setState(() {
-              //           Navigator.push(
-              //               context,
-              //               MaterialPageRoute(builder: (context) =>  editPost(widget.pst))
-              //           );
-              //         });
-              //       }
-              //       else{
-              //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              //       }
-              //       },
-              //     ),
-              //     )),
-              Positioned(
-                  right: -5,
-                  child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
-                    //if usere
-                    onPressed: () {
-                      if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin))
-                        widget.removePst();
-                      else
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                  ),
-                  )),
-            ],
+            height: 5,
           ),
           Container(
-            child: Column(
-              children: [
-                Align(
-                  heightFactor: 1.7,
-                  alignment: Alignment(-.9, 0),
-                  child: Text(widget.pst.title, style: TextStyle(fontSize: 19,color: Colors.white)),
-                ),
-                Align(
-                  alignment: Alignment(-.9, 0),
-                  child: Container(
-                      child: Text((DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date)),style: TextStyle(fontSize: 15,color: Colors.white70))
+            child: ListTile(
+              onTap: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst))
+                );
+                //go to groupPosts
+              },
+              title: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      child: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
+                    ),
                   ),
+                ],
+              ),
+              //title: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
+              leading: CircleAvatar(backgroundImage: AssetImage(widget.pst.groupPublisher.imageURL),
+              ),
+            ),
+          ),
+          Container(
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    Align(
+                      heightFactor: 1.7,
+                      alignment: Alignment(-.9, 0),
+                      child: Text(widget.pst.title, style: TextStyle(fontSize: 19,color: Colors.white)),
+                    ),
+                    Align(
+                      alignment: Alignment(-.9, 0),
+                      child: Container(
+                          child: Text((DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date)),style: TextStyle(fontSize: 15,color: Colors.white70))
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                    right: -5,
+                    bottom: 0,
+                    child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
+                      //if usere
+                      onPressed: () {
+                        if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin))
+                          widget.removePst();
+                        else
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                    ),
+                    )
                 ),
               ],
-            ),
+            )
           ),
           Container(
             width: MediaQuery.of(context).size.width,

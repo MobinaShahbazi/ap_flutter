@@ -60,12 +60,10 @@ class _editPostState extends State<editPost> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
                   onPressed: (){
-                    String title =titleC.text;//ok
+                    String title =titleC.text;
                     String caption =captionC.text;
-                    //print(titleC.text );
                     setState(() {
-                      widget.pst.setTitle(title);//ok
-                      //print(widget.pst.title);
+                      widget.pst.setTitle(title);
                       widget.pst.setCaption(caption);
                     });
                     titleC.clear();
