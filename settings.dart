@@ -9,21 +9,39 @@ import 'package:redit/user.dart';
 import 'aboutUs.dart';
 
 class settings extends StatefulWidget {
-  const settings(this.addGrp, this.savedPst, this.currentUser, this.users,this.saveFromGrp, this.unSaveFromGrp, ) ;
+  const settings(this.addGrp, this.savedPst, this.currentUser, this.users,this.saveFromGrp, this.unSaveFromGrp, this.setCurrentUser, ) ;
   final Function addGrp;
   final List<post> savedPst;
   final user currentUser;
   final List<user> users;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
-
-
+  final Function setCurrentUser;
 
   @override
   State<settings> createState() => _settingsState();
 }
 
 class _settingsState extends State<settings> {
+  String u,p,e;
+  List<user> cUser=[];
+  @override
+  void initState() {
+    u=widget.currentUser.userName;
+    p=widget.currentUser.password;
+    e=widget.currentUser.email;
+    cUser.insert(0, user(u,p,e));
+    super.initState();
+  }
+  void changeUser(int index,String u,String p,String e){
+    setState(() {
+      cUser[index].setUserName(u);
+      cUser[index].setPassword(p);
+      cUser[index].setEmail(e);
+      widget.setCurrentUser(u,p,e);
+      print(widget.currentUser.userName);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +56,7 @@ class _settingsState extends State<settings> {
                 Container(
                   padding: EdgeInsets.only(top: 15,bottom: 10,left: 0,right: 10),
                   child:ListTile(
-                    title:  Text(widget.currentUser.userName,style: TextStyle(fontSize: 23),) ,
+                    title:  Text(cUser[0].userName,style: TextStyle(fontSize: 23),) ,
                     leading: CircleAvatar(
                       radius: 33,
                       backgroundImage: AssetImage('assets/empty1.jpg'),
@@ -53,7 +71,7 @@ class _settingsState extends State<settings> {
                         print(widget.currentUser.email);
                         print(widget.currentUser.userName);
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => editUser(widget.currentUser,widget.users,widget.addGrp,widget.savedPst,widget.saveFromGrp,widget.unSaveFromGrp))//////////////////////
+                            MaterialPageRoute(builder: (context) => editUser(widget.currentUser,widget.users,widget.addGrp,widget.savedPst,widget.saveFromGrp,widget.unSaveFromGrp,widget.setCurrentUser,changeUser))//////////////////////
                         );
                       },
                     icon: Icon(Icons.edit,size: 20,)

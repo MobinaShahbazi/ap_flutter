@@ -21,8 +21,15 @@ class LoginState extends State<LoginWidget> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  List<user> users=[user('',''),user('ali','111'),user('mahsa','12')];
-  user currentUser;
+  List<user> users=[user('','',''),user('ali','111'),user('mahsa','12')];
+  user currentUser=user('', '','');
+  void setCurrentUser(String u,String p,String e){
+    setState(() {
+      currentUser.setUserName(u);
+      currentUser.setPassword(p);
+      currentUser.setEmail(e);
+    });
+  }
   static const snackBar = SnackBar(content: Text('incorrect password',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey),);
 
   bool correctPass(String name,String pass){
@@ -128,7 +135,7 @@ class LoginState extends State<LoginWidget> {
                                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                       else if(correctPass(nameController.text,passwordController.text)){
                                         currentUser=user(nameController.text, passwordController.text);
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users) ));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
                                       }
                                     }
                                 ),
@@ -165,7 +172,7 @@ class LoginState extends State<LoginWidget> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpWidget(users1:users,)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpWidget(users1:users,currentUser: currentUser,setCurrentUser: setCurrentUser,)));
                       },
                     ),
                   ),
@@ -213,15 +220,17 @@ class LoginState extends State<LoginWidget> {
 }
 
 class SignUpWidget extends StatefulWidget {
-  SignUpWidget({Key key, this.users1}) : super(key: key);
+  SignUpWidget({Key key, this.users1, this.currentUser, this.setCurrentUser}) : super(key: key);
   final List<user> users1;
+  final  user currentUser;
+  final Function setCurrentUser;
 
   @override
   State<SignUpWidget> createState()=> SignUpState();
 
 }
 class SignUpState extends State<SignUpWidget> {
-  user currentUser;
+
   final FocusNode focusName = FocusNode();
   final emailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -372,8 +381,9 @@ class SignUpState extends State<SignUpWidget> {
                                         if(!addOrNot)
                                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                         if (isValidOrnot(passwordController.text) && addOrNot){
-                                          currentUser=user(nameController.text, passwordController.text,emailController.text);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,widget.users1) ));
+                                          //widget.currentUser=user(nameController.text, passwordController.text,emailController.text);
+                                          widget.setCurrentUser(nameController.text,passwordController.text,emailController.text);
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser,widget.users1,widget.setCurrentUser) ));
                                         }
                                       }
                                     },

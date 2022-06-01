@@ -7,13 +7,16 @@ import 'package:redit/settings.dart';
 import 'package:redit/user.dart';
 
 class editUser extends StatefulWidget {
-  const editUser(this.currentUser, this.users, this.addGrp, this.savedPst, this.saveFromGrp, this.unSaveFromGrp) ;
+  const editUser(this.currentUser, this.users, this.addGrp, this.savedPst, this.saveFromGrp, this.unSaveFromGrp, this.setCurrentUser, this.changeUser) ;
   final Function addGrp;
   final List<post> savedPst;
   final user currentUser;
   final List<user> users;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
+  final Function setCurrentUser;
+  final Function changeUser;
+
 
 
   @override
@@ -116,15 +119,12 @@ class _editUserState extends State<editUser> {
                 String pass = passC.text;
                 String email = emailC.text;
                 setState(() {
-                  widget.currentUser.setUserName(userName);
-                  widget.currentUser.setPassword(pass);
-                  widget.currentUser.setEmail(email);
+                  widget.changeUser(0,userName,pass,email);
                 });
                 userNameC.clear();
                 passC.clear();
                 emailC.clear();
                 Navigator.pop(context);
-                //Navigator.push(context, MaterialPageRoute(builder: (context) => settings(widget.addGrp,widget.savedPst,widget.currentUser,widget.users,widget.editGrp,widget.saveFromGrp,widget.unSaveFromGrp)));
               }
             },
             child: const Text("Confirm",style: TextStyle(fontSize: 17)),),

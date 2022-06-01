@@ -13,9 +13,10 @@ import 'group.dart';
 import 'groupPosts.dart';
 
 class feed extends StatefulWidget {
-  const feed(this.currentUser, this.users );
+  const feed(this.currentUser, this.users, this.setCurrentUser );
   final user currentUser;
   final List<user> users;
+  final Function setCurrentUser;
   @override
   State<feed> createState() => _feedState();
 }
@@ -236,7 +237,7 @@ void unSaveGrp(post p,group g){
               width: 90,
               child: IconButton(
                   onPressed:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,savefromGrp,unSaveGrp))
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,savefromGrp,unSaveGrp,widget.setCurrentUser))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -395,27 +396,27 @@ class _feedItemState extends State<feedItem> {
                   ),
                 ),
               ),
+              // Positioned(
+              //     right: -5,
+              //     child: Container(child: IconButton(icon: Icon(Icons.edit, size: 16,),
+              //
+              //       onPressed: () {
+              //       if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin)){
+              //         setState(() {
+              //           Navigator.push(
+              //               context,
+              //               MaterialPageRoute(builder: (context) =>  editPost(widget.pst))
+              //           );
+              //         });
+              //       }
+              //       else{
+              //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              //       }
+              //       },
+              //     ),
+              //     )),
               Positioned(
                   right: -5,
-                  child: Container(child: IconButton(icon: Icon(Icons.edit, size: 16,),
-
-                    onPressed: () {
-                    if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin)){
-                      setState(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>  editPost(widget.pst))
-                        );
-                      });
-                    }
-                    else{
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                    },
-                  ),
-                  )),
-              Positioned(
-                  right: 25,
                   child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
                     //if usere
                     onPressed: () {
