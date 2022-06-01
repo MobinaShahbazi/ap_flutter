@@ -156,6 +156,11 @@ class _feedState extends State<feed> {
       allPosts.remove(allPosts[index]);
     });
   }
+  void removePstFeedGlist(int gindex,int pindex){
+    setState(() {
+      gList[gindex].posts.removeAt(pindex);
+    });
+  }
   void addPst(post p,group g){
     setState(() {
       allPosts.add(p);
@@ -227,6 +232,9 @@ void unSaveGrp(post p,group g){
                 currentUser: widget.currentUser,
                 saveFromGrp: savefromGrp,
                 unSaveFromGrp: unSaveGrp,
+                removePstFeedGlist: removePstFeedGlist,
+                gList: gList,
+
               );
             }),
       ),
@@ -237,7 +245,7 @@ void unSaveGrp(post p,group g){
               width: 90,
               child: IconButton(
                   onPressed:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,savefromGrp,unSaveGrp,widget.setCurrentUser))
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,savefromGrp,unSaveGrp,widget.setCurrentUser,removePstFeed,allPosts))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -258,7 +266,7 @@ void unSaveGrp(post p,group g){
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList(gList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed))///////////////////////////
+                        MaterialPageRoute(builder: (context) => groupList(gList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed,removePstFeed))///////////////////////////
                     );
                   },
                   icon: Icon(Icons.list_outlined)
@@ -278,13 +286,15 @@ void unSaveGrp(post p,group g){
 }
 
 class feedItem extends StatefulWidget {
-  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.addGrp, this.editGrp, this.currentUser, this.saveFromGrp, this.unSaveFromGrp}) : super(key: key);
+  const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.addGrp, this.editGrp, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.removePstFeedGlist, this.gList}) : super(key: key);
   final post pst;
   final List<post> savedPst;//
+  final List<group> gList;//
   final List<post> allPst;//
   final Function removePst;//
-  final Function addGrp;//
+  final Function addGrp;//removePstFeed
   final Function editGrp;
+  final Function removePstFeedGlist;
   final user currentUser;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
@@ -304,6 +314,24 @@ class _feedItemState extends State<feedItem> {
   }
   void unSaveFeed(post p){
     widget.savedPst.remove(p);
+  }
+  int gIndex(post p){
+    int index=0;
+    for(int i=0;i<widget.gList.length;i++){
+      if(p.groupPublisher.name==widget.gList[i].name){
+        index=i;
+      }
+    }
+    return index;
+  }
+  int pIndex(post p){
+    int indexg=gIndex(p);
+    int pIndex=0;
+    for(int i=0;i<widget.gList[indexg].posts.length;i++){
+      if(p.title==widget.gList[indexg].posts[i].title && p.caption==widget.gList[indexg].posts[i].caption)
+        pIndex=i;
+    }
+    return pIndex;
   }
   bool isSaved=false;
   bool isLiked=false;
@@ -375,9 +403,8 @@ class _feedItemState extends State<feedItem> {
               onTap: (){
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst))
+                    MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst,widget.removePst,widget.allPst))
                 );
-                //go to groupPosts
               },
               title: Column(
                 children: [
@@ -389,7 +416,6 @@ class _feedItemState extends State<feedItem> {
                   ),
                 ],
               ),
-              //title: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
               leading: CircleAvatar(backgroundImage: AssetImage(widget.pst.groupPublisher.imageURL),
               ),
             ),
@@ -418,8 +444,10 @@ class _feedItemState extends State<feedItem> {
                     child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
                       //if usere
                       onPressed: () {
-                        if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin))
+                        if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin)){
                           widget.removePst();
+                          widget.removePstFeedGlist(gIndex(widget.pst),pIndex(widget.pst));
+                        }
                         else
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       },

@@ -6,20 +6,21 @@ import 'package:redit/groupPosts.dart';
 import 'package:redit/post.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:redit/user.dart';
-import 'feed.dart';
 import 'group.dart';
 
 class groupList extends StatefulWidget {
-  const groupList(this.gList,this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.grpNames, this.allPosts, this.editGrpFromFeed);
+  const groupList(this.gList,this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.grpNames, this.allPosts, this.editGrpFromFeed, this.removePstFeed);
   final List<group> gList;
   final List<post> allPosts;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
   final Function starSort;
+  final Function removePstFeed;
   final Function editGrpFromFeed;
   final List<post> savedPost;
   final user currentUser;
   final List<String> grpNames;
+
 
   @override
   State<groupList> createState() => _groupListState();
@@ -93,6 +94,7 @@ class _groupListState extends State<groupList> {
                 indexOfEdit: index,
                 allPosts: widget.allPosts,
                 editGrpFromFeed: widget.editGrpFromFeed,
+                removePstFeed: widget.removePstFeed,
               );
             }
         ),
@@ -102,7 +104,7 @@ class _groupListState extends State<groupList> {
 }
 
 class groupItem extends StatefulWidget {
-  const groupItem({Key key, this.grp, this.gList,this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.insert, this.uninsert, this.editGrp, this.indexOfEdit, this.allPosts, this.editGrpFromFeed}) : super(key: key);
+  const groupItem({Key key, this.grp, this.gList,this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.insert, this.uninsert, this.editGrp, this.indexOfEdit, this.allPosts, this.editGrpFromFeed, this.removePstFeed}) : super(key: key);
   final group grp;
   final List<group> gList ;
   final List<post> savedPost;
@@ -112,6 +114,7 @@ class groupItem extends StatefulWidget {
   final Function starSort;
   final Function insert;
   final Function uninsert;
+  final Function removePstFeed;
   final Function editGrp;
   final Function editGrpFromFeed;
   final int indexOfEdit;
@@ -139,7 +142,7 @@ class _groupItemState extends State<groupItem> {
      children: [
        ListTile(
          onTap: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost)));
+           Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost,widget.removePstFeed,widget.allPosts)));
            //go to groupPosts
          },
          title: Text(widget.grp.name),

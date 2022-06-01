@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:redit/addPost.dart';
 import 'package:redit/post.dart';
 import 'package:redit/postDetails.dart';
 import 'package:redit/user.dart';
@@ -9,11 +10,14 @@ import 'group.dart';
 import 'groupPosts.dart';
 
 class savedPage extends StatefulWidget {
-  const savedPage(this.savedPst, this.saveFromGrp, this.currentUser, this.unSave) ;
+  const savedPage(this.savedPst, this.saveFromGrp, this.currentUser, this.unSave, this.removePstFeed, this.allPosts) ;
   final List<post> savedPst;
+  final List<post> allPosts;
   final Function saveFromGrp;
   final user currentUser;
   final Function unSave;
+  final Function removePstFeed;
+
 
 
   @override
@@ -61,6 +65,8 @@ class _savedPageState extends State<savedPage> {
                 currentUser: widget.currentUser,
                 unSave:()=> unSave(index),
                 savedPst: widget.savedPst,
+                removePstFeed: widget.removePstFeed,
+                allPosts: widget.allPosts,
               );
             }),
       ),
@@ -70,12 +76,14 @@ class _savedPageState extends State<savedPage> {
 
 
 class savedItem extends StatefulWidget {
-  const savedItem({Key key, this.pst, this.saveFromGrp, this.currentUser, this.unSave, this.savedPst}) : super(key: key);
+  const savedItem({Key key, this.pst, this.saveFromGrp, this.currentUser, this.unSave, this.savedPst, this.removePstFeed, this.allPosts}) : super(key: key);
   final post pst;
   final Function saveFromGrp;
   final user currentUser;
   final Function unSave;
   final List<post> savedPst;
+  final List<post> allPosts;
+  final Function removePstFeed;
 
 
   @override
@@ -145,7 +153,7 @@ class _savedItemState extends State<savedItem> {
             onTap: (){
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst))
+                  MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst,widget.removePstFeed,widget.allPosts))
               );
 
             },

@@ -10,12 +10,16 @@ import 'editGroup.dart';
 
 
 class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp,this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.savedPost);
+  const groupPosts(this.grp,this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.savedPost, this.removePstFeed, this.allPosts);
   final group grp;
   final Function saveFromGrp;
   final user currentUser;
   final Function unSaveFromGrp;
   final List<post> savedPost;
+  final Function removePstFeed;
+  final List<post> allPosts;
+
+
 
 
 
@@ -85,6 +89,8 @@ class _groupPostsState extends State<groupPosts> {
                 saveFromGrp: widget.saveFromGrp,
                 unSaveFromGrp: widget.unSaveFromGrp,
                 unSave1: ()=> unsave1(index),
+                removePstFeed: widget.removePstFeed,
+                allPosts: widget.allPosts,
 
               );
             }),
@@ -95,7 +101,7 @@ class _groupPostsState extends State<groupPosts> {
 }
 
 class postItem extends StatefulWidget {
-  const postItem({Key key, this.pst, this.grp, this.removePst, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.unSave1,}) : super(key: key);
+  const postItem({Key key, this.pst, this.grp, this.removePst, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.unSave1, this.removePstFeed, this.allPosts,}) : super(key: key);
   final post pst;
   final group grp;
   final Function removePst;
@@ -103,6 +109,9 @@ class postItem extends StatefulWidget {
   final Function unSaveFromGrp;
   final Function unSave1;
   final user currentUser;
+  final Function removePstFeed;
+  final List<post> allPosts;
+
   @override
   State<postItem> createState() => _postItemState();
 }
@@ -113,6 +122,15 @@ class _postItemState extends State<postItem> {
   bool isLiked=false;
   bool isDisliked=false;
 
+  int indexOfPdt(post p){
+    int index=0;
+    for(int i=0;i<widget.allPosts.length;i++){
+      if(p.title==widget.allPosts[i].title && p.caption==widget.allPosts[i].caption ){
+        index=i;
+      }
+    }
+    return index;
+  }
   void like(){
     if(!isLiked) {
       int num = widget.pst.likesNum;
@@ -197,8 +215,10 @@ class _postItemState extends State<postItem> {
                   child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
                     //if usere
                     onPressed: () {
-                      if(isEqual(widget.currentUser, widget.grp.admin))
+                      if(isEqual(widget.currentUser, widget.grp.admin)){
                         widget.removePst();
+                        widget.removePstFeed(indexOfPdt(widget.pst));
+                      }
                       else
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
