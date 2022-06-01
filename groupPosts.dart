@@ -10,13 +10,13 @@ import 'editGroup.dart';
 
 
 class groupPosts extends StatefulWidget {
-  const groupPosts(this.grp, this.editGrp, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.savedPost);
+  const groupPosts(this.grp,this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.savedPost);
   final group grp;
-  final Function editGrp;
   final Function saveFromGrp;
   final user currentUser;
   final Function unSaveFromGrp;
   final List<post> savedPost;
+
 
 
 
@@ -71,16 +71,6 @@ class _groupPostsState extends State<groupPosts> {
           backgroundImage: AssetImage(widget.grp.imageURL),
         ),
         title: Text(widget.grp.name, style: TextStyle(fontSize: 20,),),
-        actions: [IconButton(
-            onPressed: (){
-              setState(() {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => editGroup(widget.grp,widget.editGrp))
-                );
-              });
-            },
-            icon: Icon(Icons.settings))
-        ],
       ),
       body: Center(
         child: ListView.builder(
@@ -180,10 +170,12 @@ class _postItemState extends State<postItem> {
   bool isSaved=false;
   @override
   Widget build(BuildContext context) {
-    int vote=0;
     return Container(
       child: Column(
         children: [
+          Container(
+            height: 10,
+          ),
           Stack(
             children: [
               Column(
@@ -305,6 +297,11 @@ class _postItemState extends State<postItem> {
                 )
               ],
             )
+          ),
+          Container(
+            height: .7,
+            width: 300,
+            color: Colors.white24,
           ),
         ],
       ),

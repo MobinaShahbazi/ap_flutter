@@ -7,12 +7,11 @@ import 'package:redit/settings.dart';
 import 'package:redit/user.dart';
 
 class editUser extends StatefulWidget {
-  const editUser(this.currentUser, this.users, this.addGrp, this.savedPst, this.editGrp, this.saveFromGrp, this.unSaveFromGrp) ;
+  const editUser(this.currentUser, this.users, this.addGrp, this.savedPst, this.saveFromGrp, this.unSaveFromGrp) ;
   final Function addGrp;
   final List<post> savedPst;
   final user currentUser;
   final List<user> users;
-  final Function editGrp;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
 

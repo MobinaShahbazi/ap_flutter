@@ -145,9 +145,9 @@ class _feedState extends State<feed> {
       grpNames.add(g.name);
     });
   }
-  void editGrp(int index,String title){
+  void editGrpFromFeed(int index,String name){
     setState(() {
-      gList[index].setName(title);
+      allPosts[index].groupPublisher.setName(name);
     });
   }
   void removePstFeed(int index){
@@ -223,7 +223,6 @@ void unSaveGrp(post p,group g){
                 allPst: allPosts,
                 removePst: () => removePstFeed(index),
                 addGrp: () => addGrp,
-                editGrp: editGrp,
                 currentUser: widget.currentUser,
                 saveFromGrp: savefromGrp,
                 unSaveFromGrp: unSaveGrp,
@@ -237,7 +236,7 @@ void unSaveGrp(post p,group g){
               width: 90,
               child: IconButton(
                   onPressed:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,editGrp,savefromGrp,unSaveGrp))
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,savefromGrp,unSaveGrp))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -258,7 +257,7 @@ void unSaveGrp(post p,group g){
               child: IconButton(
                   onPressed:(){
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList(gList,editGrp,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames))///////////////////////////
+                        MaterialPageRoute(builder: (context) => groupList(gList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed))///////////////////////////
                     );
                   },
                   icon: Icon(Icons.list_outlined)
@@ -367,6 +366,9 @@ class _feedItemState extends State<feedItem> {
     return Container(
       child: Column(
         children: [
+          Container(
+            height: 7,
+          ),
           Stack(
             children: [
               Container(
@@ -374,7 +376,7 @@ class _feedItemState extends State<feedItem> {
                   onTap: (){
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst))
+                        MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst))
                     );
                     //go to groupPosts
                   },
@@ -384,12 +386,6 @@ class _feedItemState extends State<feedItem> {
                         alignment: Alignment.topLeft,
                         child: Container(
                           child: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Container(
-                          child: Text((DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date)),style: TextStyle(fontSize: 15,color: Colors.white70))
                         ),
                       ),
                     ],
@@ -433,10 +429,20 @@ class _feedItemState extends State<feedItem> {
             ],
           ),
           Container(
-            child:  Align(
-              heightFactor: 1.7,
-              alignment: Alignment(-.9, 0),
-              child: Text(widget.pst.title, style: TextStyle(fontSize: 19,color: Colors.white)),
+            child: Column(
+              children: [
+                Align(
+                  heightFactor: 1.7,
+                  alignment: Alignment(-.9, 0),
+                  child: Text(widget.pst.title, style: TextStyle(fontSize: 19,color: Colors.white)),
+                ),
+                Align(
+                  alignment: Alignment(-.9, 0),
+                  child: Container(
+                      child: Text((DateFormat('yyyy-MM-dd kk:mm').format(widget.pst.date)),style: TextStyle(fontSize: 15,color: Colors.white70))
+                  ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -513,6 +519,11 @@ class _feedItemState extends State<feedItem> {
                 )
               ],
             )
+          ),
+          Container(
+            height: .7,
+            width: 300,
+            color: Colors.white24,
           ),
         ],
       ),

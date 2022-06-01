@@ -1,7 +1,7 @@
 import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:redit/editGroup.dart';
 import 'package:redit/groupPosts.dart';
 import 'package:redit/post.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
@@ -10,12 +10,13 @@ import 'feed.dart';
 import 'group.dart';
 
 class groupList extends StatefulWidget {
-  const groupList(this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.grpNames);
+  const groupList(this.gList,this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.grpNames, this.allPosts, this.editGrpFromFeed);
   final List<group> gList;
-  final Function editGrp;
+  final List<post> allPosts;
   final Function saveFromGrp;
   final Function unSaveFromGrp;
   final Function starSort;
+  final Function editGrpFromFeed;
   final List<post> savedPost;
   final user currentUser;
   final List<String> grpNames;
@@ -60,6 +61,11 @@ class _groupListState extends State<groupList> {
       widget.gList.removeAt(index);
     });
   }
+  void editGrp(int index,String title){
+    setState(() {
+      widget.gList[index].setName(title);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +82,6 @@ class _groupListState extends State<groupList> {
               return groupItem(
                 grp: widget.gList[index],
                 gList: widget.gList,
-                editGrp: widget.editGrp,
                 savedPost: widget.savedPost,
                 currentUser: widget.currentUser,
                 saveFromGrp: widget.saveFromGrp,
@@ -84,6 +89,10 @@ class _groupListState extends State<groupList> {
                 starSort: widget.starSort,
                 insert: ()=> insert(index),
                 uninsert: ()=> unInsert(index),
+                editGrp: editGrp,
+                indexOfEdit: index,
+                allPosts: widget.allPosts,
+                editGrpFromFeed: widget.editGrpFromFeed,
               );
             }
         ),
@@ -93,10 +102,9 @@ class _groupListState extends State<groupList> {
 }
 
 class groupItem extends StatefulWidget {
-  const groupItem({Key key, this.grp, this.gList, this.editGrp, this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.insert, this.uninsert}) : super(key: key);
+  const groupItem({Key key, this.grp, this.gList,this.savedPost, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.starSort, this.insert, this.uninsert, this.editGrp, this.indexOfEdit, this.allPosts, this.editGrpFromFeed}) : super(key: key);
   final group grp;
   final List<group> gList ;
-  final Function editGrp;
   final List<post> savedPost;
   final user currentUser;
   final Function saveFromGrp;
@@ -104,6 +112,11 @@ class groupItem extends StatefulWidget {
   final Function starSort;
   final Function insert;
   final Function uninsert;
+  final Function editGrp;
+  final Function editGrpFromFeed;
+  final int indexOfEdit;
+  final List<post> allPosts;
+
 
 
 
@@ -112,13 +125,21 @@ class groupItem extends StatefulWidget {
 }
 
 class _groupItemState extends State<groupItem> {
+  static const snackBar = SnackBar(content: Text('Access denied',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey),);
+
+  bool isEqual(user u1,user u2){
+    if(u1.userName == u2.userName && u1.password==u2.password)
+      return true;
+    else
+      return false;
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
      children: [
        ListTile(
          onTap: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost)));
+           Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost)));
            //go to groupPosts
          },
          title: Text(widget.grp.name),
@@ -127,7 +148,7 @@ class _groupItemState extends State<groupItem> {
          ),
        ),
        Positioned(
-         right: 10,
+         right: 30,
            child: IconButton(
            icon: Icon(widget.grp.stared? Icons.star:Icons.star_border,size: 20,color: Colors.white70,),
          onPressed: (){
@@ -140,6 +161,19 @@ class _groupItemState extends State<groupItem> {
              });
          },
        )
+       ),
+       Positioned(
+           right: -10,
+           child: IconButton(
+             icon: Icon(Icons.edit,size: 15,color: Colors.white70,),
+             onPressed: (){
+               if(!isEqual(widget.currentUser, widget.grp.admin)){
+                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
+               }
+               else
+               Navigator.push(context, MaterialPageRoute(builder: (context) => editGroup(widget.grp, widget.editGrp, widget.indexOfEdit,widget.allPosts,widget.editGrpFromFeed) ));
+             },
+           )
        )
      ],
     );

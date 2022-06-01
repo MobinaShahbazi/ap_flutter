@@ -9,9 +9,8 @@ import 'group.dart';
 import 'groupPosts.dart';
 
 class savedPage extends StatefulWidget {
-  const savedPage(this.savedPst, this.editGrp, this.saveFromGrp, this.currentUser, this.unSave) ;
+  const savedPage(this.savedPst, this.saveFromGrp, this.currentUser, this.unSave) ;
   final List<post> savedPst;
-  final Function editGrp;
   final Function saveFromGrp;
   final user currentUser;
   final Function unSave;
@@ -59,7 +58,6 @@ class _savedPageState extends State<savedPage> {
               return savedItem(
                 pst: widget.savedPst[index],
                 saveFromGrp: widget.saveFromGrp,
-                editGrp: widget.editGrp,
                 currentUser: widget.currentUser,
                 unSave:()=> unSave(index),
                 savedPst: widget.savedPst,
@@ -72,9 +70,8 @@ class _savedPageState extends State<savedPage> {
 
 
 class savedItem extends StatefulWidget {
-  const savedItem({Key key, this.pst, this.editGrp, this.saveFromGrp, this.currentUser, this.unSave, this.savedPst}) : super(key: key);
+  const savedItem({Key key, this.pst, this.saveFromGrp, this.currentUser, this.unSave, this.savedPst}) : super(key: key);
   final post pst;
-  final Function editGrp;
   final Function saveFromGrp;
   final user currentUser;
   final Function unSave;
@@ -148,7 +145,7 @@ class _savedItemState extends State<savedItem> {
             onTap: (){
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.editGrp,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst))
+                  MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst))
               );
 
             },
