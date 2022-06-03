@@ -5,7 +5,6 @@ import 'package:redit/editUser.dart';
 import 'package:redit/post.dart';
 import 'package:redit/savedPage.dart';
 import 'package:redit/user.dart';
-
 import 'aboutUs.dart';
 
 class settings extends StatefulWidget {

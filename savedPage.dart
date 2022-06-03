@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:redit/addPost.dart';
 import 'package:redit/post.dart';
 import 'package:redit/postDetails.dart';
 import 'package:redit/user.dart';
-
-import 'group.dart';
 import 'groupPosts.dart';
 
 class savedPage extends StatefulWidget {

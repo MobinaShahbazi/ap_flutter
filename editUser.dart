@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:passwordfield/passwordfield.dart';
 import 'package:redit/post.dart';
-import 'package:redit/settings.dart';
 import 'package:redit/user.dart';
 
 class editUser extends StatefulWidget {

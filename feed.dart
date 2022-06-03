@@ -7,8 +7,6 @@ import 'package:redit/post.dart';
 import 'package:redit/postDetails.dart';
 import 'package:redit/settings.dart';
 import 'package:redit/user.dart';
-
-import 'editPost.dart';
 import 'group.dart';
 import 'groupPosts.dart';
 
