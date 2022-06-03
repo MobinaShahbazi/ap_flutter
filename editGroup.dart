@@ -27,16 +27,14 @@ class _editGroupState extends State<editGroup> {
     nameC.dispose();
     super.dispose();
   }
-  int findIndex(group g){
-    int index=0;
+  List<int> findIndex(group g){
+    List<int> list=[];
     for(int i=0;i<widget.allPosts.length;i++){
-      print(g.name);
-      print(widget.allPosts[i].groupPublisher.name);
       if(g.name==widget.allPosts[i].groupPublisher.name){
-        index=i;
+        list.add(i);
       }
     }
-    return index;
+    return list;
   }
   @override
   Widget build(BuildContext context) {

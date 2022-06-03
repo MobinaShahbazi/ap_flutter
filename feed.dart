@@ -271,9 +271,12 @@ class _feedState extends State<feed> {
       grpNames.add(g.name);
     });
   }
-  void editGrpFromFeed(int index,String name){
+  void editGrpFromFeed(List<int> indexes,String name){
     setState(() {
-      allPosts[index].groupPublisher.setName(name);
+      for(int i=0;i<indexes.length;i++){
+        allPosts[indexes[i]].groupPublisher.setName(name);
+      }
+      //allPosts[index].groupPublisher.setName(name);
     });
   }
   void removePstFeed(int index){
