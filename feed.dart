@@ -32,11 +32,11 @@ class _feedState extends State<feed> {
         ,group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
         [
           post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh','11') ),
+              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh','11'),[] ),
           post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123') ),
+              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123'),[] ),
           post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717')),
+              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),[]),
           ]
     )
     ),
@@ -50,11 +50,11 @@ class _feedState extends State<feed> {
       group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
           [
             post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-                "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh','11') ),
+                "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh','11'),[] ),
             post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-                "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123') ),
+                "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123'),[] ),
             post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-                "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717')),
+                "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),[]),
           ]
       ),
     ),
@@ -68,11 +68,11 @@ class _feedState extends State<feed> {
         group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
             [
               post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-                  "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh','11') ),
+                  "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh','11'),[] ),
               post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-                  "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123') ),
+                  "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123'),[] ),
               post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-                  "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717')),
+                  "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),[]),
             ]
         )
     ),
@@ -86,11 +86,11 @@ class _feedState extends State<feed> {
         ,group("Tourism", user('',''),'assets/tourism/traveller.jpg',
         [
           post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali','12') ),
+              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali','12'),[] ),
           post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
-              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2018-01-27'),user('mmd','400') ),
+              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2018-01-27'),user('mmd','400'),[] ),
           post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
-              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2017-03-16'),user('mbn','123')),
+              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2017-03-16'),user('mbn','123'),[]),
           ]
       ),),
     post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
@@ -195,16 +195,6 @@ class _feedState extends State<feed> {
           ]
       ),
     )
-
-
-
-
-
-
-
-
-
-
   ];
 
   List<group> gList = [
@@ -274,7 +264,6 @@ class _feedState extends State<feed> {
       for(int i=0;i<indexes.length;i++){
         allPosts[indexes[i]].groupPublisher.setName(name);
       }
-      //allPosts[index].groupPublisher.setName(name);
     });
   }
   void removePstFeed(int index){
@@ -308,7 +297,6 @@ class _feedState extends State<feed> {
         if(!gList[i].stared)
           copy.add(gList[i]);
       }
-
       gList.clear();
       gList.addAll(copy);
   }
@@ -414,11 +402,11 @@ void unSaveGrp(post p,group g){
 class feedItem extends StatefulWidget {
   const feedItem({Key key, this.pst, this.savedPst, this.allPst, this.removePst, this.addGrp, this.editGrp, this.currentUser, this.saveFromGrp, this.unSaveFromGrp, this.removePstFeedGlist, this.gList}) : super(key: key);
   final post pst;
-  final List<post> savedPst;//
-  final List<group> gList;//
-  final List<post> allPst;//
-  final Function removePst;//
-  final Function addGrp;//removePstFeed
+  final List<post> savedPst;
+  final List<group> gList;
+  final List<post> allPst;
+  final Function removePst;
+  final Function addGrp;
   final Function editGrp;
   final Function removePstFeedGlist;
   final user currentUser;

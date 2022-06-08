@@ -132,9 +132,7 @@ class _editUserState extends State<editUser> {
 
         ],
       ),
-
         ),
-
       ),
     );
   }

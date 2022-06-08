@@ -87,7 +87,7 @@ class _settingsState extends State<settings> {
                   IconButton(
                       onPressed:(){
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => addGroup(widget.addGrp))//////////////////////
+                            MaterialPageRoute(builder: (context) => addGroup(widget.addGrp,widget.currentUser))//////////////////////
                         );
                   },
                       icon: Icon(Icons.add,color: Colors.deepOrange.shade200,),

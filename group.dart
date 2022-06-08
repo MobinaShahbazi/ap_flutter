@@ -7,7 +7,6 @@ class group{
   String _imageURL;
   user _admin;
   bool _stared=false;
-  //List<user> members=[]; ??
   List<post> posts=[];
 
   group(this._name, this._admin,this._imageURL,[this.posts,this._stared]);

@@ -6,7 +6,7 @@ class user{
   String _userName;
   String _password;
   String _email;
-  //List<post>  saved=[];
+  List<post>  saved=[];
 
   user(this._userName,this._password,[this._email]);
 

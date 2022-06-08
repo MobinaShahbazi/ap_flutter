@@ -6,8 +6,9 @@ import 'package:redit/user.dart';
 import 'group.dart';
 
 class addGroup extends StatefulWidget {
-  const addGroup(this.addGrp);
+  const addGroup(this.addGrp, this.currentUser);
   final Function addGrp;
+  final user currentUser;
 
   @override
   State<addGroup> createState() => _addGroupState();
@@ -51,7 +52,7 @@ class _addGroupState extends State<addGroup> {
                 style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
                 onPressed: (){
                   String name=nameC.text;
-                  group newGroup=group(name, user("newUser","sS777777"), "assets/newg.jpg", [],false);
+                  group newGroup=group(name, widget.currentUser, "assets/newg.jpg", [],false);
                   widget.addGrp(newGroup);
                   nameC.clear();
                   Navigator.pop(context);

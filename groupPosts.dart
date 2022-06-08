@@ -82,14 +82,12 @@ class _groupPostsState extends State<groupPosts> {
                 pst: widget.grp.posts[index],
                 grp: widget.grp,
                 removePst: ()=> removePstGrp(index),
-                //savedPost: widget.savedPost,
                 currentUser: widget.currentUser,
                 saveFromGrp: widget.saveFromGrp,
                 unSaveFromGrp: widget.unSaveFromGrp,
                 unSave1: ()=> unsave1(index),
                 removePstFeed: widget.removePstFeed,
                 allPosts: widget.allPosts,
-
               );
             }),
       ),
@@ -291,7 +289,6 @@ class _postItemState extends State<postItem> {
                         else{
                           widget.unSave1();
                         }
-
                         },
                       ),
                     )
