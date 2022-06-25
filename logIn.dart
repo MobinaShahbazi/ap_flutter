@@ -51,18 +51,22 @@ class LoginState extends State<LoginWidget> {
     else
       return false;
   }
-  Future<String> get(String name,String pass)async{
-    String request="login\nname:$name,,password:$pass\u0000";
+  String validate="";
+  get(String name,String pass)async{
+    String request="login\nuserName:$name,,password:$pass\u0000";
     await Socket.connect("192.168.56.1", 3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
       serverSocket.listen((response) {
-        String str=utf8.decode(response);
-        print("res:$str");
-        //if(){
-          return "";
-        //}
-
+        setState(() {
+          print(String.fromCharCodes(response));
+          validate=String.fromCharCodes(response);
+          print("wrong pass\u0000"==validate);
+          if(validate=="wrong pass\u0000"){
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
+          }
+        });
       });
     });
   }
@@ -154,15 +158,16 @@ class LoginState extends State<LoginWidget> {
                                       //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                       // else if(correctPass(nameController.text,passwordController.text)){
                                       //   currentUser=user(nameController.text, passwordController.text);
-                                        get(nameController.text, passwordController.text);
-                                      if(get(nameController.text, passwordController.text)=="invalid"){
+                                      get(nameController.text, passwordController.text);
+                                       print("get: "+ validate );
+                                      if(validate=="invalid"){
                                         ScaffoldMessenger.of(context).showSnackBar(snackBar2);
                                       }
-                                      else if(get(nameController.text, passwordController.text)=="wrong pass"){
+                                      else if(validate=="wrong pass"){
                                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                       }
                                       else{
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
+                                        //Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
                                       }
                                     }
                                 ),
@@ -290,7 +295,7 @@ class SignUpState extends State<SignUpWidget> {
   }
   send(String name,String pass,String email) async {
     print("sending");
-    String request="signUp\nusername:$name,,password:$pass,,email:$email\u0000";
+    String request="signUp\nuserName:$name,,password:$pass,,email:$email\u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
