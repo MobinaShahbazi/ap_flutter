@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:passwordfield/passwordfield.dart';
 import 'package:email_validator/email_validator.dart';
@@ -46,6 +48,19 @@ class LoginState extends State<LoginWidget> {
       return true;
     else
       return false;
+  }
+  Future<bool> get(String name,String pass)async{
+    String request="login\nname:$name,,password:$pass\u0000";
+    await Socket.connect("192.168.56.1", 8000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        if(response=="true"){
+          return true;
+        }
+      });
+    });
+    return false;
   }
   @override
   Widget build(BuildContext context) {
@@ -135,6 +150,7 @@ class LoginState extends State<LoginWidget> {
                                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                       else if(correctPass(nameController.text,passwordController.text)){
                                         currentUser=user(nameController.text, passwordController.text);
+                                        //if get(nameController.text, passwordController.text);
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
                                       }
                                     }
@@ -261,6 +277,17 @@ class SignUpState extends State<SignUpWidget> {
     else
       return false;
   }
+  send(String name,String pass,String email) async {
+    print("sending");
+    String request="signUp\nusername:$name,,password:$pass,,email:$email\u0000";
+    await Socket.connect("192.168.56.1",8000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -381,7 +408,7 @@ class SignUpState extends State<SignUpWidget> {
                                         if(!addOrNot)
                                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                         if (isValidOrnot(passwordController.text) && addOrNot){
-                                          //widget.currentUser=user(nameController.text, passwordController.text,emailController.text);
+                                          send(nameController.text,passwordController.text,emailController.text);
                                           widget.setCurrentUser(nameController.text,passwordController.text,emailController.text);
                                           Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser,widget.users1,widget.setCurrentUser) ));
                                         }
