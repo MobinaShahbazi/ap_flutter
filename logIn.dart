@@ -289,15 +289,16 @@ class SignUpState extends State<SignUpWidget> {
       return false;
   }
   send(String name,String pass,String email) async {
-    print("sending");
+    final form = formKey.currentState;
     String request="signUp\nuserName:$name,,password:$pass,,email:$email\u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
-      serverSocket.write(request);
+      if (form.validate() && isValidOrnot(pass)) {
+        serverSocket.write(request);
+      }
       serverSocket.flush();
       serverSocket.listen((response) {
         print(String.fromCharCodes(response));
-        final form = formKey.currentState;
-        if (form.validate()&& isValidOrnot(pass))  {
+        if (form.validate() && isValidOrnot(pass))  {
           if (String.fromCharCodes(response) == "new userName\u0000") {
               widget.setCurrentUser(nameController.text, passwordController.text, emailController.text);
               Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser, widget.users1, widget.setCurrentUser)));

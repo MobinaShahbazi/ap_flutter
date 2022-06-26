@@ -146,13 +146,13 @@ class _savedItemState extends State<savedItem> {
       child: Column(
         children: [
           ListTile(
-            onTap: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst,widget.removePstFeed,widget.allPosts))
-              );
-
-            },
+            // onTap: (){
+            //   Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst,widget.removePstFeed,widget.allPosts))
+            //   );
+            //
+            // },
             title: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
             leading: CircleAvatar(backgroundImage: AssetImage(widget.pst.groupPublisher.imageURL),
             ),

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/addGroup.dart';
 import 'package:redit/editUser.dart';
+import 'package:redit/group.dart';
 import 'package:redit/post.dart';
 import 'package:redit/savedPage.dart';
 import 'package:redit/user.dart';
@@ -27,6 +30,7 @@ class settings extends StatefulWidget {
 class _settingsState extends State<settings> {
   String u,p,e;
   List<user> cUser=[];
+  List<post> sPosts=[];
   @override
   void initState() {
     u=widget.currentUser.userName;
@@ -42,6 +46,43 @@ class _settingsState extends State<settings> {
       cUser[index].setEmail(e);
       widget.setCurrentUser(u,p,e);
       print(widget.currentUser.userName);
+    });
+  }
+  Map stringToMap(String str){
+    List<String> arr=str.split(",,");
+    Map<String,String> map = {};
+    for(int i=0;i<arr.length;i++){
+      int colon=arr[i].indexOf(":");
+      String key=arr[i].substring(0,colon);
+      String value=arr[i].substring(colon+1);
+      map[key]=value;
+      // List<String> entry=arr[i].split(":");
+      // map[entry[0].trim()]=entry[1].trim();
+    }
+    return map;
+  }
+  get(String currentUser)async{
+    print("get called");
+    String request="viewSavedPosts\ncurrentUser:$currentUser\u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        String answer=String.fromCharCodes(response);
+        List<String> arr=answer.split("\n");
+        var maps = <Map>[];
+        print(arr.length);
+        for(int i=0;i<arr.length;i++){
+          maps.add(stringToMap(arr[i]));
+        }
+        for(int i=0;i<maps.length;i++){
+          post p=post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]),[],group(maps[i]["groupName"],user(maps[i]["groupAdmin"]),maps[i]["groupImage"]));
+          setState(() {
+            sPosts.add(p);
+          });
+        }
+        //print(sPosts[0].userPublisher.userName);
+      });
     });
   }
   @override
@@ -86,8 +127,7 @@ class _settingsState extends State<settings> {
                 children: [
                   IconButton(
                       onPressed:(){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => addGroup(widget.addGrp,widget.currentUser))//////////////////////
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => addGroup(widget.addGrp,widget.currentUser))//////////////////////
                         );
                   },
                       icon: Icon(Icons.add,color: Colors.deepOrange.shade200,),
@@ -105,8 +145,10 @@ class _settingsState extends State<settings> {
                 children: [
                   IconButton(
                     onPressed:(){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => savedPage(widget.savedPst,widget.saveFromGrp,widget.currentUser,widget.unSaveFromGrp,widget.removePstFeed,widget.allPosts))
+                      get(widget.currentUser.userName);
+                      print("llll: ");
+                      print(sPosts.length);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => savedPage(sPosts,widget.saveFromGrp,widget.currentUser,widget.unSaveFromGrp,widget.removePstFeed,widget.allPosts))
                       );
 
                     },

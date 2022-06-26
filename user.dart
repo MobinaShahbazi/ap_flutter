@@ -8,7 +8,7 @@ class user{
   String _email;
   List<post>  saved=[];
 
-  user(this._userName,this._password,[this._email]);
+  user(this._userName,[this._password,this._email]);
 
   String get userName =>_userName;
   void setUserName(String val){

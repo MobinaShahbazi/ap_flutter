@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,23 +25,57 @@ class _feedState extends State<feed> {
   List<post> savedPosts=[];
   List<post> allPosts=[
     post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-        "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('mbn','123'),
+        "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('mbn'),
         [
-          comment(user('ali', 'asd'), 'masterpiece!!!'),
-          comment(user('maryam','12'), 'bah bah'),
-          comment(user('anxious soul','000'), 'fantastic :))'),
+          comment(user('ali'), 'masterpiece!!!'),
+          comment(user('maryam'), 'bah bah'),
+          comment(user('anxious soul'), 'fantastic :))'),
         ]
-        ,group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+        ,group("IMDb", user("zizi"),'assets/anim/imdb.jpg',
         [
           post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
-              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh','11'),[] ),
-          post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123'),[] ),
-          post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),[]),
+              "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh'),[] ),
+          // post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
+          //     "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123'),[] ),
+          // post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
+          //     "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),[]),
           ]
     )
     ),
+    post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
+        " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('mmd',),
+      [
+        comment(user('amin'), 'great'),
+        comment(user('sahar'), 'nice'),
+        comment(user('ali'), 'masterpiece :))'),
+      ]
+      ,group("Tourism", user('mbn'),'assets/tourism/traveller.jpg',
+          [
+            post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
+                " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali'),[] ),
+            // post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
+            //     " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2018-01-27'),user('mmd','400'),[] ),
+            // post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
+            //     "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2017-03-16'),user('mbn','123'),[]),
+          ]
+      ),),
+    post("A Man Called Ove", "Ove, an ill-tempered, isolated retiree who spends his days enforcing block association rules and visiting his wife's grave, has finally given up on "
+        "life just as an unlikely friendship develops with his boisterous new neighbors.", "assets/book/ove2.jpg" ,DateTime.parse('2020-10-19'), user('mds'),
+      [
+        comment(user('maryam'), 'so cute'),
+        comment(user('ali'), 'my favorite animated film'),
+        comment(user('anxious soul'), 'I love it'),
+      ],
+      group("Novel Novels", new user("user3"),'assets/book/p2.jpg',
+          [
+            //   post("A Man Called Ove", "Ove, an ill-tempered, isolated retiree who spends his days enforcing block association rules and visiting his wife's grave, has finally given up on "
+            //       "life just as an unlikely friendship develops with his boisterous new neighbors.", "assets/book/ove2.jpg" ,DateTime.parse('2020-10-19'), user('mds','1717'),[]),
+            //   post("Me Before You", "Me Before You is a romance novel written by Jojo Moyes. The book was first published on 5 January 2012 in the United Kingdom. A sequel titled After"
+            //       " You was released on 24 September 2015 through Pamela Dorman Books.", "assets/book/me.jpg", DateTime.parse('2015-05-15'), user('mbn','123'),[])
+          ]
+      ),
+    ),
+    /*
     post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
         "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),
       [
@@ -76,23 +112,6 @@ class _feedState extends State<feed> {
             ]
         )
     ),
-    post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('',''),
-        [
-          comment(user('amin','12'), 'great'),
-          comment(user('sahar','000'), 'nice'),
-          comment(user('ali', 'asd'), 'masterpiece :))'),
-        ]
-        ,group("Tourism", user('',''),'assets/tourism/traveller.jpg',
-        [
-          post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
-              " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('ali','12'),[] ),
-          post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
-              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2018-01-27'),user('mmd','400'),[] ),
-          post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
-              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2017-03-16'),user('mbn','123'),[]),
-          ]
-      ),),
     post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
         " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2018-01-27'),user('mmd','400') ,
         [
@@ -130,22 +149,7 @@ class _feedState extends State<feed> {
       ),
     ),
 
-    post("A Man Called Ove", "Ove, an ill-tempered, isolated retiree who spends his days enforcing block association rules and visiting his wife's grave, has finally given up on "
-        "life just as an unlikely friendship develops with his boisterous new neighbors.", "assets/book/ove2.jpg" ,DateTime.parse('2020-10-19'), user('mds','1717'),
-      [
-        comment(user('maryam','12'), 'so cute'),
-        comment(user('ali', 'asd'), 'my favorite animated film'),
-        comment(user('anxious soul','000'), 'I love it'),
-      ],
-      group("Novel Novels", new user("user3", "333"),'assets/book/p2.jpg',
-      [
-        post("A Man Called Ove", "Ove, an ill-tempered, isolated retiree who spends his days enforcing block association rules and visiting his wife's grave, has finally given up on "
-            "life just as an unlikely friendship develops with his boisterous new neighbors.", "assets/book/ove2.jpg" ,DateTime.parse('2020-10-19'), user('mds','1717'),[]),
-        post("Me Before You", "Me Before You is a romance novel written by Jojo Moyes. The book was first published on 5 January 2012 in the United Kingdom. A sequel titled After"
-            " You was released on 24 September 2015 through Pamela Dorman Books.", "assets/book/me.jpg", DateTime.parse('2015-05-15'), user('mbn','123'),[])
-      ]
-      ),
-    ),
+
 
     post("Me Before You", "Me Before You is a romance novel written by Jojo Moyes. The book was first published on 5 January 2012 in the United Kingdom. A sequel titled After"
         " You was released on 24 September 2015 through Pamela Dorman Books.", "assets/book/me.jpg", DateTime.parse('2015-05-15'), user('mbn','123'),
@@ -195,50 +199,51 @@ class _feedState extends State<feed> {
           ]
       ),
     )
+    */
   ];
 
   List<group> gList = [
-    group("Tourism", new user("", ""),'assets/tourism/traveller.jpg',
+    group("Tourism", new user("ali76"),'assets/tourism/traveller.jpg',
         [
           post("Taj Mahal", "An immense mausoleum of white marble, built in Agra between 1631 and 1648 by order of the Mughal emperor"
               " Shah Jahan in memory of his favourite wife.", 'assets/tourism/india.jpg',DateTime.parse('2021-11-10'),user('','') ,[]),
-          post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
-              " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2018-01-27'),user('mmd','400') ,[]),
-          post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
-              "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2017-03-16'),user('mbn','123'),[]),
-         ]
+         //  post("Nasir al-Mulk Mosque", "The Nasir al-Mulk Mosque, also known as the Pink Mosque, is a traditional mosque in Shiraz, Iran."
+         //      " It was built during Qajar dynasty rule of Iran.", 'assets/tourism/nasir.jpg',DateTime.parse('2018-01-27'),user('mmd','400') ,[]),
+         //  post("St. Basil’s Cathedral", "St. Basil’s Cathedral is Moscow’s most famous artistic work of architecture. Also called Pokrovsky "
+         //      "Cathedral or The Cathedral of Intercession of the Virgin by the Moat, it is the most recognizable Russian building.", "assets/tourism/russia.jpg", DateTime.parse('2017-03-16'),user('mbn','123'),[]),
+          ]
         ,false
     ),
-    group("IMDb", user("user1", "Aa111111"),'assets/anim/imdb.jpg',
+    group("IMDb", user("mmd"),'assets/anim/imdb.jpg',
         [
           post("Hotel Transylvania", "Dracula, who operates a high-end resort away from the human world, goes into overprotective mode when a "
               "boy discovers the resort and falls for the count's teenaged daughter.", "assets/anim/hotel.jpg",DateTime.parse('2022-03-10'),user('zrh','11') ,[]),
-          post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
-              "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123'),[] ),
-          post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
-              "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),[]),
-          ]
+          // post("Zootopia", "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work "
+          //     "together to uncover a conspiracy.", "assets/anim/zoo.jpg",DateTime.parse('2018-11-10'),user('mbn','123'),[] ),
+          // post("Big Hero", "A special bond develops between plus-sized inflatable robot Baymax and prodigy Hiro Hamada, who together team up "
+          //     "with a group of friends to form a band of high-tech heroes.", "assets/anim/hero.jpg", DateTime.parse('2016-09-14'),user('mds','1717'),[]),
+           ]
         ,true
     ),
-     group("Novel Novels", new user("user3", "333"),'assets/book/p2.jpg',
+     group("Novel Novels", new user("ghost"),'assets/book/p2.jpg',
          [
            post("A Man Called Ove", "Ove, an ill-tempered, isolated retiree who spends his days enforcing block association rules and visiting his wife's grave, has finally given up on "
                "life just as an unlikely friendship develops with his boisterous new neighbors.", "assets/book/ove2.jpg" ,DateTime.parse('2020-10-19'), user('mds','1717'),[]),
-           post("Me Before You", "Me Before You is a romance novel written by Jojo Moyes. The book was first published on 5 January 2012 in the United Kingdom. A sequel titled After"
-               " You was released on 24 September 2015 through Pamela Dorman Books.", "assets/book/me.jpg", DateTime.parse('2015-05-15'), user('mbn','123'),[])
+           // post("Me Before You", "Me Before You is a romance novel written by Jojo Moyes. The book was first published on 5 January 2012 in the United Kingdom. A sequel titled After"
+           //     " You was released on 24 September 2015 through Pamela Dorman Books.", "assets/book/me.jpg", DateTime.parse('2015-05-15'), user('mbn','123'),[])
          ]
          ,false
      ),
-     group("Best_Painters", new user("user4", "444"),'assets/art/p1.jpg',
+     group("Best_Painters", new user("mbn"),'assets/art/p1.jpg',
          [
-           post("Starry Night", "The Starry Night is an oil-on-canvas painting by the Dutch Post-Impressionist painter Vincent van Gogh. Painted in June 1889, it depicts the view from the"
-               " east-facing window of his asylum room at Saint-Rémy-de-Provence, just before sunrise, with the addition of an imaginary village.", 'assets/art/star2.jpg',  DateTime.parse('2017-11-17'), user('kourosh','123'),[]),
-           post("Abstract Painting", "Abstract art uses visual language of shape, form, color and line to create a composition which may exist with a degree of independence from visual references in the world.[1] Western art had been,"
-               " from the Renaissance up to the middle of the 19th century, underpinned by the logic of perspective and an attempt to reproduce an illusion of visible reality. ",  'assets/art/abs.jpg',  DateTime.parse('1889-09-11'), user('kourosh','123'),[])
+           // post("Starry Night", "The Starry Night is an oil-on-canvas painting by the Dutch Post-Impressionist painter Vincent van Gogh. Painted in June 1889, it depicts the view from the"
+           //     " east-facing window of his asylum room at Saint-Rémy-de-Provence, just before sunrise, with the addition of an imaginary village.", 'assets/art/star2.jpg',  DateTime.parse('2017-11-17'), user('kourosh','123'),[]),
+           // post("Abstract Painting", "Abstract art uses visual language of shape, form, color and line to create a composition which may exist with a degree of independence from visual references in the world.[1] Western art had been,"
+           //     " from the Renaissance up to the middle of the 19th century, underpinned by the logic of perspective and an attempt to reproduce an illusion of visible reality. ",  'assets/art/abs.jpg',  DateTime.parse('1889-09-11'), user('kourosh','123'),[])
          ]
          ,false
      ),
-     group("Soccer", new user("user6", "666"),'assets/football/messi.jpg',[],false),
+     group("Soccer", new user("cutest"),'assets/football/messi.jpg',[],false),
      group("Cookery", new user("user5", "555"),'assets/food/pizza.jpg',[],false),
      group("Luxury Car2022", new user("user5", "555"),'assets/car/Lambor.jpg',[],false),
      group("Animal Photography", new user("user5", "555"),'assets/animals/panda.jpg',[],true),
@@ -325,6 +330,38 @@ void unSaveGrp(post p,group g){
       savedPosts.remove(p2);
     });
 }
+  Map stringToMap(String str){
+    List<String> arr=str.split(",,");
+    Map<String,String> map = {};
+    for(int i=0;i<arr.length;i++){
+      int colon=arr[i].indexOf(":");
+      String key=arr[i].substring(0,colon);
+      String value=arr[i].substring(colon+1);
+      map[key]=value;
+    }
+    return map;
+  }
+  List<group> groupsList=[];
+  get()async{
+    String request="viewGList\n\u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        String str=String.fromCharCodes(response);
+        List<String> arr=str.split('\n');
+        var maps = <Map>[];
+        for(int i=0;i<arr.length;i++){
+          maps.add(stringToMap(arr[i]));
+        }
+        for(int i=0;i<maps.length;i++){
+          group g=group(maps[i]["name"], maps[i]["user"], maps[i]["image"],[],maps[i]["fav"]=='true');
+          groupsList.add(g);
+        }
+        //list groupsList
+      });
+    });
+  }
 
 
   @override
@@ -379,6 +416,7 @@ void unSaveGrp(post p,group g){
               width: 100,
               child: IconButton(
                   onPressed:(){
+                    //getGList();//////////////////////////////////////////////////////
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => groupList(gList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed,removePstFeed))///////////////////////////
                     );
@@ -503,6 +541,17 @@ class _feedItemState extends State<feedItem> {
       return true;
     else
       return false;
+  }
+  send(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ) async {
+    print("sendingggg");
+    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage\u0000";
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+      });
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -630,6 +679,7 @@ class _feedItemState extends State<feedItem> {
                       padding: EdgeInsets.only(left: 350),
                       child: IconButton(icon: Icon(isSaved? Icons.save:Icons.save_outlined, size: 20,),
                         onPressed: (){
+                        send(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL);
                         setState(() {
                           isSaved=!isSaved;
                         });
