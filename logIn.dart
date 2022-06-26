@@ -59,12 +59,16 @@ class LoginState extends State<LoginWidget> {
       serverSocket.flush();
       serverSocket.listen((response) {
         setState(() {
-          print(String.fromCharCodes(response));
           validate=String.fromCharCodes(response);
-          print("wrong pass\u0000"==validate);
-          if(validate=="wrong pass\u0000"){
+          print(validate);
+          if(validate=="invalid\u0000"){
+            ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+          }
+          else if(validate=="wrong pass\u0000"){
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
+          }
+          else{
+            Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
           }
         });
       });
@@ -159,16 +163,7 @@ class LoginState extends State<LoginWidget> {
                                       // else if(correctPass(nameController.text,passwordController.text)){
                                       //   currentUser=user(nameController.text, passwordController.text);
                                       get(nameController.text, passwordController.text);
-                                       print("get: "+ validate );
-                                      if(validate=="invalid"){
-                                        ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-                                      }
-                                      else if(validate=="wrong pass"){
-                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                      }
-                                      else{
-                                        //Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
-                                      }
+
                                     }
                                 ),
                               ),
