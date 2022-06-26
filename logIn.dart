@@ -263,7 +263,7 @@ class SignUpState extends State<SignUpWidget> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  static const snackBar = SnackBar(content: Text('This username has used before',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey));
+  static const snackBar = SnackBar(content: Text('This username has been used before',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey));
   bool addOrNot=false;
   bool usedBefore(String name){
     for(int i=0;i<widget.users1.length;i++)
@@ -296,6 +296,16 @@ class SignUpState extends State<SignUpWidget> {
       serverSocket.flush();
       serverSocket.listen((response) {
         print(String.fromCharCodes(response));
+        final form = formKey.currentState;
+        if (form.validate()&& isValidOrnot(pass))  {
+          if (String.fromCharCodes(response) == "new userName\u0000") {
+              widget.setCurrentUser(nameController.text, passwordController.text, emailController.text);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser, widget.users1, widget.setCurrentUser)));
+          }
+          else if (String.fromCharCodes(response) == "repetitive\u0000") {
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        }
       });
     });
   }
@@ -410,20 +420,21 @@ class SignUpState extends State<SignUpWidget> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      //print(currentUser.email);
-                                      final form = formKey.currentState;
-                                      if (form.validate()) {
-                                        final email = emailController.text;
-                                        if(!usedBefore(nameController.text) && form.validate()&& isValidOrnot(passwordController.text))
-                                          addUser(new user(nameController.text,passwordController.text,emailController.text));
-                                        if(!addOrNot)
-                                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                        if (isValidOrnot(passwordController.text) && addOrNot){
-                                          send(nameController.text,passwordController.text,emailController.text);
-                                          widget.setCurrentUser(nameController.text,passwordController.text,emailController.text);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser,widget.users1,widget.setCurrentUser) ));
-                                        }
-                                      }
+                                      send(nameController.text,passwordController.text,emailController.text);
+
+                                      // final form = formKey.currentState;
+                                      // if (form.validate()) {
+                                      //   if(!usedBefore(nameController.text) && form.validate()&& isValidOrnot(passwordController.text))
+                                      //     addUser(new user(nameController.text,passwordController.text,emailController.text));
+                                      //   if(!addOrNot)
+                                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                      //   if (isValidOrnot(passwordController.text) && addOrNot){
+                                      //     send(nameController.text,passwordController.text,emailController.text);
+                                      //     widget.setCurrentUser(nameController.text,passwordController.text,emailController.text);
+                                      //     Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser,widget.users1,widget.setCurrentUser) ));
+                                      //   }
+                                      // }
+
                                     },
                                   ),
                                 )
