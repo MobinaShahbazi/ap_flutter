@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/post.dart';
@@ -26,7 +28,17 @@ class _addGroupState extends State<addGroup> {
     nameC.dispose();
     super.dispose();
   }
-  
+  sendNewGrp(String name, String user, String image, String fav)async{
+    print("get called");
+    String request="addGroup\nname:$name,,user:$user,,image:$image,,fav:$fav\u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +63,7 @@ class _addGroupState extends State<addGroup> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
                 onPressed: (){
+                  // sendNewGrp(String name, String user, String image, String fav);
                   String name=nameC.text;
                   group newGroup=group(name, widget.currentUser, "assets/newg.jpg", [],false);
                   widget.addGrp(newGroup);

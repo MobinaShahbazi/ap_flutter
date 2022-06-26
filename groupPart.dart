@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/editGroup.dart';
@@ -136,14 +137,48 @@ class _groupItemState extends State<groupItem> {
     else
       return false;
   }
+  Map stringToMap(String str){
+    List<String> arr=str.split(",,");
+    Map<String,String> map = {};
+    for(int i=0;i<arr.length;i++){
+      int colon=arr[i].indexOf(":");
+      String key=arr[i].substring(0,colon);
+      String value=arr[i].substring(colon+1);
+      map[key]=value;
+    }
+    return map;
+  }
+  List<post> gPosts=[];
+  getGroupPosts(String name)async{
+    String request="getGroupPosts\nname:$name\u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        String str=String.fromCharCodes(response);
+        List<String> arr=str.split("\n");
+        var maps = <Map>[];
+        print(arr.length);
+        for(int i=0;i<arr.length;i++){
+          maps.add(stringToMap(arr[i]));
+        }
+        for(int i=0;i<maps.length;i++){
+          post p=post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]),[],group(maps[i]["groupName"],user(maps[i]["groupAdmin"]),maps[i]["groupImage"]));
+          setState(() {
+            gPosts.add(p);
+          });
+        }
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
      children: [
        ListTile(
          onTap: (){
+           // getGroupPosts(widget.grp.name);
            Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost,widget.removePstFeed,widget.allPosts)));
-           //go to groupPosts
          },
          title: Text(widget.grp.name),
          leading: CircleAvatar(
