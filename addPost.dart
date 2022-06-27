@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:redit/group.dart';
@@ -36,7 +38,18 @@ class _addPostState extends State<addPost> {
     super.dispose();
   }
   void add(){
-
+  }
+  sendNewPost(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String score) async {
+    print("sendingggg");
+    String request="addPost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,score:$score\u0000";
+    print("g name: $groupName");
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+      });
+    });
   }
 
   @override
@@ -77,11 +90,14 @@ class _addPostState extends State<addPost> {
                   if(!titleC.text.isEmpty && !captionC.text.isEmpty)
                   {
                   setState(()=> isActive=false );
-                  post p=post(titleC.text,captionC.text,'assets/newpost.jpg',DateTime.now(),widget.currentUser,[],widget.grp);
+                  sendNewPost(widget.currentUser.userName, titleC.text, captionC.text, "assets/newpost.jpg", DateTime.now().toString(), widget.currentUser.userName, widget.grp.name, widget.grp.admin.userName, widget.grp.imageURL,"0");
+                  post p=post(titleC.text,captionC.text,'assets/newpost.jpg',DateTime.now(),widget.currentUser,[],widget.grp,0);
                   widget.addNewPst(p,widget.grp);
                   titleC.clear();
                   captionC.clear();
-                  widget.sortFeed();
+                  setState(() {
+                    widget.sortFeed();
+                  });
                   Navigator.pop(context);
                  }
                   else{

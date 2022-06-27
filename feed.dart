@@ -285,6 +285,7 @@ class _feedState extends State<feed> {
   void addPst(post p,group g){
     setState(() {
       allPosts.add(p);
+      widget.feedPosts.add(p);
       int index=0;
       for(int i=0;i<gList.length;i++){
         if(gList[i].name==g.name)
@@ -307,7 +308,7 @@ class _feedState extends State<feed> {
       gList.addAll(copy);
   }
   void sortFeed(){
-    final DateFormat formatter = DateFormat('yyyyMMdd');
+    final DateFormat formatter = DateFormat('yyyyMMddHHmm');
     for(int i=0;i<widget.feedPosts.length-1;i++){
       for(int j=0;j<widget.feedPosts.length-1-i;j++) {
         if(int.parse(formatter.format(widget.feedPosts[j].date)) < int.parse(formatter.format(widget.feedPosts[j+1].date))){

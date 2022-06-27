@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:redit/post.dart';
 import 'package:redit/postDetails.dart';
 import 'package:redit/user.dart';
+import 'group.dart';
 import 'groupPosts.dart';
 
 class savedPage extends StatefulWidget {
@@ -140,19 +143,58 @@ class _savedItemState extends State<savedItem> {
   void unSave(post p){
       widget.savedPst.remove(p);
   }
+  Map stringToMap(String str){
+    List<String> arr=str.split(",,");
+    Map<String,String> map = {};
+    for(int i=0;i<arr.length;i++){
+      int colon=arr[i].indexOf(":");
+      String key=arr[i].substring(0,colon);
+      String value=arr[i].substring(colon+1);
+      map[key]=value;
+    }
+    return map;
+  }
+  List<post> gPosts=[];
+  getGroupPosts(String name)async{
+    print("to getGroupPosts");
+    String request="getGroupPosts\nname:$name\u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        String str=String.fromCharCodes(response);
+        print("rsponse: $str");
+        if(str!="\u0000") {
+          List<String> arr = str.split("\n");
+          var maps = <Map>[];
+          print(arr.length);
+          for (int i = 0; i < arr.length; i++) {
+            maps.add(stringToMap(arr[i]));
+          }
+          gPosts = [];
+          for (int i = 0; i < maps.length; i++) {
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["score"]));
+            setState(() {
+              gPosts.add(p);
+            });
+          }
+        }
+        else
+          gPosts=[];
+        group chosenGrp=group(name, widget.pst.groupPublisher.admin, widget.pst.groupPublisher.imageURL,gPosts,widget.pst.groupPublisher.stared);
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(chosenGrp,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst,widget.removePstFeed,widget.allPosts)));
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
           ListTile(
-            // onTap: (){
-            //   Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSave,widget.savedPst,widget.removePstFeed,widget.allPosts))
-            //   );
-            //
-            // },
+            onTap: (){
+             getGroupPosts(widget.pst.groupPublisher.name);
+            },
             title: Text(widget.pst.groupPublisher.name,style: TextStyle(fontSize: 22),),
             leading: CircleAvatar(backgroundImage: AssetImage(widget.pst.groupPublisher.imageURL),
             ),
@@ -202,7 +244,7 @@ class _savedItemState extends State<savedItem> {
                       ),
                     ),
                     Container(
-                      child: Text('${widget.pst.likesNum - widget.pst.disLikesNum }'),
+                      child: Text('${widget.pst.score}'),
                     ),
                     Container(
                       child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),

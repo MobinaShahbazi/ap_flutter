@@ -88,7 +88,7 @@ class LoginState extends State<LoginWidget> {
     }
     return map;
   }
-  List feedPosts=[];
+  List<post> feedPosts=[];
   getFeed() async {
     print ("to func1: ");
     String request="viewFeed\n : \u0000";

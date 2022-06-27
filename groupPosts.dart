@@ -269,7 +269,7 @@ class _postItemState extends State<postItem> {
                       ),
                     ),
                     Container(
-                      child: Text('${widget.pst.likesNum - widget.pst.disLikesNum }'),
+                      child: Text('${widget.pst.score }'),
                     ),
                     Container(
                       child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),
