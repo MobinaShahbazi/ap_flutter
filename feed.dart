@@ -305,7 +305,6 @@ class _feedState extends State<feed> {
       gList.clear();
       gList.addAll(copy);
   }
-
   void sortFeed(){
     final DateFormat formatter = DateFormat('yyyyMMdd');
     for(int i=0;i<allPosts.length-1;i++){
@@ -342,23 +341,26 @@ void unSaveGrp(post p,group g){
     return map;
   }
   List<group> groupsList=[];
-  get()async{
-    String request="viewGList\n\u0000";
+  getGList()async{
+    String request="viewGList\n : \u0000";
     await Socket.connect("192.168.56.1", 3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
       serverSocket.listen((response) {
         String str=String.fromCharCodes(response);
+        print("resp: $str");
         List<String> arr=str.split('\n');
         var maps = <Map>[];
         for(int i=0;i<arr.length;i++){
           maps.add(stringToMap(arr[i]));
         }
+        groupsList=[];
         for(int i=0;i<maps.length;i++){
-          group g=group(maps[i]["name"], maps[i]["user"], maps[i]["image"],[],maps[i]["fav"]=='true');
+          group g=group(maps[i]["name"], user(maps[i]["user"]), maps[i]["image"],[],maps[i]["fav"]=='true');
           groupsList.add(g);
         }
-        //list groupsList
+        print("im alive1");
+        Navigator.push(context, MaterialPageRoute(builder: (context) => groupList(groupsList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed,removePstFeed)));
       });
     });
   }
@@ -416,10 +418,8 @@ void unSaveGrp(post p,group g){
               width: 100,
               child: IconButton(
                   onPressed:(){
-                    //getGList();//////////////////////////////////////////////////////
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => groupList(gList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed,removePstFeed))///////////////////////////
-                    );
+                    getGList();
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => groupList(groupsList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed,removePstFeed)));
                   },
                   icon: Icon(Icons.list_outlined)
               ),
@@ -542,7 +542,7 @@ class _feedItemState extends State<feedItem> {
     else
       return false;
   }
-  send(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ) async {
+  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ) async {
     print("sendingggg");
     String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage\u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
@@ -679,7 +679,7 @@ class _feedItemState extends State<feedItem> {
                       padding: EdgeInsets.only(left: 350),
                       child: IconButton(icon: Icon(isSaved? Icons.save:Icons.save_outlined, size: 20,),
                         onPressed: (){
-                        send(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL);
+                        sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL);
                         setState(() {
                           isSaved=!isSaved;
                         });

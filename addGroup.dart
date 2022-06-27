@@ -63,7 +63,7 @@ class _addGroupState extends State<addGroup> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.deepOrange.shade200,onPrimary: Colors.black),
                 onPressed: (){
-                  // sendNewGrp(String name, String user, String image, String fav);
+                  sendNewGrp(nameC.text,widget.currentUser.userName,"assets/newg.jpg","false");
                   String name=nameC.text;
                   group newGroup=group(name, widget.currentUser, "assets/newg.jpg", [],false);
                   widget.addGrp(newGroup);

@@ -79,7 +79,7 @@ class _settingsState extends State<settings> {
             sPosts.add(p);
           });
         }
-        //print(sPosts[0].userPublisher.userName);
+        //print(sPosts[0].userPublisher.userName);  //ok
       });
     });
   }
@@ -141,8 +141,7 @@ class _settingsState extends State<settings> {
                   IconButton(
                     onPressed:(){
                       get(widget.currentUser.userName);
-                      print("llll: ");
-                      print(sPosts.length);
+                      print(sPosts.length); // 0
                       Navigator.push(context, MaterialPageRoute(builder: (context) => savedPage(sPosts,widget.saveFromGrp,widget.currentUser,widget.unSaveFromGrp,widget.removePstFeed,widget.allPosts))
                       );
 

@@ -30,8 +30,21 @@ class groupList extends StatefulWidget {
 class _groupListState extends State<groupList> {
   @override
   void initState() {
-    widget.starSort();
+    starSort();
     super.initState();
+  }
+  void starSort(){
+    List<group> copy=[];
+    for(int i=0;i<widget.gList.length;i++){
+      if(widget.gList[i].stared)
+        copy.add(widget.gList[i]);
+    }
+    for(int i=0;i<widget.gList.length;i++){
+      if(!widget.gList[i].stared)
+        copy.add(widget.gList[i]);
+    }
+    widget.gList.clear();
+    widget.gList.addAll(copy);
   }
   group findGrp(String name){
     for(int i=0;i<widget.gList.length;i++){
@@ -150,24 +163,31 @@ class _groupItemState extends State<groupItem> {
   }
   List<post> gPosts=[];
   getGroupPosts(String name)async{
+    print("to getGroupPosts");
     String request="getGroupPosts\nname:$name\u0000";
     await Socket.connect("192.168.56.1", 3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
       serverSocket.listen((response) {
         String str=String.fromCharCodes(response);
+        print("rsponse: $str");
         List<String> arr=str.split("\n");
         var maps = <Map>[];
         print(arr.length);
         for(int i=0;i<arr.length;i++){
           maps.add(stringToMap(arr[i]));
         }
+        print("np1");
+        gPosts=[];
         for(int i=0;i<maps.length;i++){
           post p=post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]),[],group(maps[i]["groupName"],user(maps[i]["groupAdmin"]),maps[i]["groupImage"]));
           setState(() {
             gPosts.add(p);
           });
         }
+        print("np2");
+        group chosenGrp=group(name, widget.grp.admin, widget.grp.imageURL,gPosts,widget.grp.stared);
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(chosenGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost,widget.removePstFeed,widget.allPosts)));
       });
     });
   }
@@ -177,8 +197,7 @@ class _groupItemState extends State<groupItem> {
      children: [
        ListTile(
          onTap: (){
-           // getGroupPosts(widget.grp.name);
-           Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.grp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost,widget.removePstFeed,widget.allPosts)));
+           getGroupPosts(widget.grp.name);
          },
          title: Text(widget.grp.name),
          leading: CircleAvatar(
