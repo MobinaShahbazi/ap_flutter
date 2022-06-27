@@ -11,10 +11,11 @@ class post{
   DateTime _date;
   int _likesNum=0;
   int _disLikesNum=0;
+  int _score=0;
   int _commentsNum=0;
   List<comment> comments=[];
 
-  post(this._title,this._caption,this._imageURL,this._date,this._userPublisher,[this.comments,this._groupPublisher]);
+  post(this._title,this._caption,this._imageURL,this._date,this._userPublisher,[this.comments,this._groupPublisher,this._score]);
 
   String get imageURL =>_imageURL;
   void setImageURL(String val){
@@ -45,6 +46,11 @@ class post{
   int get likesNum => _likesNum;
   void setlikesNum(int val){
     _likesNum=val;
+  }
+
+  int get score => _score;
+  void setScore(int val){
+    _score=val;
   }
 
   int get disLikesNum => _disLikesNum;

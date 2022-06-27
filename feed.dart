@@ -13,9 +13,10 @@ import 'group.dart';
 import 'groupPosts.dart';
 
 class feed extends StatefulWidget {
-  const feed(this.currentUser, this.users, this.setCurrentUser );
+  const feed(this.currentUser, this.users, this.setCurrentUser, this.feedPosts );
   final user currentUser;
   final List<user> users;
+  final List<post> feedPosts;
   final Function setCurrentUser;
   @override
   State<feed> createState() => _feedState();
@@ -307,13 +308,13 @@ class _feedState extends State<feed> {
   }
   void sortFeed(){
     final DateFormat formatter = DateFormat('yyyyMMdd');
-    for(int i=0;i<allPosts.length-1;i++){
-      for(int j=0;j<allPosts.length-1-i;j++) {
-        if(int.parse(formatter.format(allPosts[j].date)) < int.parse(formatter.format(allPosts[j+1].date))){
+    for(int i=0;i<widget.feedPosts.length-1;i++){
+      for(int j=0;j<widget.feedPosts.length-1-i;j++) {
+        if(int.parse(formatter.format(widget.feedPosts[j].date)) < int.parse(formatter.format(widget.feedPosts[j+1].date))){
           setState( () {
-            post p=allPosts[j];
-            allPosts[j]=allPosts[j+1];
-            allPosts[j+1]=p;
+            post p=widget.feedPosts[j];
+            widget.feedPosts[j]=widget.feedPosts[j+1];
+            widget.feedPosts[j+1]=p;
           });
         }
       }
@@ -374,12 +375,12 @@ void unSaveGrp(post p,group g){
       ),
       body: Center(
         child: ListView.builder(
-            itemCount: allPosts.length,
+            itemCount: widget.feedPosts.length,
             itemBuilder: (contex, index) {
               return feedItem(
-                pst: allPosts[index],
+                pst: widget.feedPosts[index],
                 savedPst:savedPosts,
-                allPst: allPosts,
+                allPst: widget.feedPosts,
                 removePst: () => removePstFeed(index),
                 addGrp: () => addGrp,
                 currentUser: widget.currentUser,
@@ -542,14 +543,57 @@ class _feedItemState extends State<feedItem> {
     else
       return false;
   }
-  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ) async {
+  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String score) async {
     print("sendingggg");
-    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage\u0000";
+    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,score:$score\u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
       serverSocket.listen((response) {
         print(String.fromCharCodes(response));
+      });
+    });
+  }
+  Map stringToMap(String str){
+    List<String> arr=str.split(",,");
+    Map<String,String> map = {};
+    for(int i=0;i<arr.length;i++){
+      int colon=arr[i].indexOf(":");
+      String key=arr[i].substring(0,colon);
+      String value=arr[i].substring(colon+1);
+      map[key]=value;
+    }
+    return map;
+  }
+  List<post> gPosts=[];
+  getGroupPosts(String name)async{
+    print("to getGroupPosts");
+    String request="getGroupPosts\nname:$name\u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        String str=String.fromCharCodes(response);
+        print("rsponse: $str");
+        if(str!="\u0000") {
+          List<String> arr = str.split("\n");
+          var maps = <Map>[];
+          print(arr.length);
+          for (int i = 0; i < arr.length; i++) {
+            maps.add(stringToMap(arr[i]));
+          }
+          gPosts = [];
+          for (int i = 0; i < maps.length; i++) {
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["score"]));
+            setState(() {
+              gPosts.add(p);
+            });
+          }
+        }
+        else
+          gPosts=[];
+        group chosenGrp=group(name, widget.pst.groupPublisher.admin, widget.pst.groupPublisher.imageURL,gPosts,widget.pst.groupPublisher.stared);
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(chosenGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst,widget.removePst,widget.allPst)));
       });
     });
   }
@@ -564,10 +608,8 @@ class _feedItemState extends State<feedItem> {
           Container(
             child: ListTile(
               onTap: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst,widget.removePst,widget.allPst))
-                );
+                getGroupPosts(widget.pst.groupPublisher.name);
+                //Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst,widget.removePst,widget.allPst)));
               },
               title: Column(
                 children: [
@@ -653,7 +695,7 @@ class _feedItemState extends State<feedItem> {
                       ),
                     ),
                     Container(
-                      child: Text('${widget.pst.likesNum - widget.pst.disLikesNum }'),
+                      child: Text('${widget.pst.score}'),
                     ),
                     Container(
                       child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),
@@ -683,7 +725,7 @@ class _feedItemState extends State<feedItem> {
                           isSaved=!isSaved;
                         });
                         if(isSaved){
-                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL);
+                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.score.toString());
                           savePost(widget.pst);
                         }
                         else{

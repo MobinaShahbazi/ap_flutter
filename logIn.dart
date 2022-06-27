@@ -6,9 +6,11 @@ import 'package:passwordfield/passwordfield.dart';
 import 'package:email_validator/email_validator.dart';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:redit/post.dart';
 import 'appColor.dart';
 import 'package:redit/user.dart';
 import 'feed.dart';
+import 'group.dart';
 
 class LoginWidget extends StatefulWidget {
   @override
@@ -69,9 +71,56 @@ class LoginState extends State<LoginWidget> {
           }
           else{
             currentUser.setUserName(name);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser,feedPosts) ));
           }
         });
+      });
+    });
+  }
+  Map stringToMap(String str){
+    List<String> arr=str.split(",,");
+    Map<String,String> map = {};
+    for(int i=0;i<arr.length;i++){
+      int colon=arr[i].indexOf(":");
+      String key=arr[i].substring(0,colon);
+      String value=arr[i].substring(colon+1);
+      map[key]=value;
+    }
+    return map;
+  }
+  List feedPosts=[];
+  getFeed() async {
+    print ("to func1: ");
+    String request="viewFeed\n : \u0000";
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+
+        String str=String.fromCharCodes(response);
+        print("rsponse: $str");
+        if(str!="\u0000") {
+          List<String> arr = str.split("\n");
+          var maps = <Map>[];
+          print(arr.length);
+          for (int i = 0; i < arr.length; i++) {
+            maps.add(stringToMap(arr[i]));
+          }
+          feedPosts = [];
+          for (int i = 0; i < maps.length; i++) {
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["score"]));
+            setState(() {
+              feedPosts.add(p);
+            });
+          }
+        }
+        else {
+          feedPosts = [];
+        }
+        print ("to func1: ");
+        print (feedPosts.length);
+
       });
     });
   }
@@ -302,12 +351,61 @@ class SignUpState extends State<SignUpWidget> {
         if (form.validate() && isValidOrnot(pass))  {
           if (String.fromCharCodes(response) == "new userName\u0000") {
               widget.setCurrentUser(nameController.text, passwordController.text, emailController.text);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser, widget.users1, widget.setCurrentUser)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser, widget.users1, widget.setCurrentUser,feedPosts)));
           }
           else if (String.fromCharCodes(response) == "repetitive\u0000") {
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         }
+        print ("to func2222: ");
+        print (feedPosts.length);
+      });
+    });
+  }
+  Map stringToMap(String str){
+    List<String> arr=str.split(",,");
+    Map<String,String> map = {};
+    for(int i=0;i<arr.length;i++){
+      int colon=arr[i].indexOf(":");
+      String key=arr[i].substring(0,colon);
+      String value=arr[i].substring(colon+1);
+      map[key]=value;
+    }
+    return map;
+  }
+  List<post> feedPosts=[];
+  getFeed() async {
+    print ("to func1: ");
+    String request="viewFeed\n : \u0000";
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+
+        String str=String.fromCharCodes(response);
+        print("rsponse: $str");
+        if(str!="\u0000") {
+          List<String> arr = str.split("\n");
+          var maps = <Map>[];
+          print(arr.length);
+          for (int i = 0; i < arr.length; i++) {
+            maps.add(stringToMap(arr[i]));
+          }
+          feedPosts = [];
+          for (int i = 0; i < maps.length; i++) {
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["score"]));
+            setState(() {
+              feedPosts.add(p);
+            });
+          }
+        }
+        else {
+          feedPosts = [];
+        }
+        print ("to func1: ");
+        print (feedPosts.length);
+
       });
     });
   }
@@ -422,7 +520,11 @@ class SignUpState extends State<SignUpWidget> {
                                       ),
                                     ),
                                     onPressed: () {
+
+                                      getFeed();
                                       send(nameController.text,passwordController.text,emailController.text);
+                                      print ("to onpress: ");
+                                      print (feedPosts.length);
 
                                       // final form = formKey.currentState;
                                       // if (form.validate()) {
