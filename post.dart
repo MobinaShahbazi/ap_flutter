@@ -15,7 +15,7 @@ class post{
   int _commentsNum=0;
   List<comment> comments=[];
 
-  post(this._title,this._caption,this._imageURL,this._date,this._userPublisher,[this.comments,this._groupPublisher,this._score]);
+  post(this._title,this._caption,this._imageURL,this._date,this._userPublisher,[this.comments,this._groupPublisher,this._likesNum,this._disLikesNum]);
 
   String get imageURL =>_imageURL;
   void setImageURL(String val){

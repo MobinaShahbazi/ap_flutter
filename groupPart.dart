@@ -180,7 +180,7 @@ class _groupItemState extends State<groupItem> {
           }
           gPosts = [];
           for (int i = 0; i < maps.length; i++) {
-            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["score"]));
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]));
             setState(() {
               gPosts.add(p);
             });
@@ -190,6 +190,18 @@ class _groupItemState extends State<groupItem> {
           gPosts=[];
         group chosenGrp=group(name, widget.grp.admin, widget.grp.imageURL,gPosts,widget.grp.stared);
         Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(chosenGrp,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPost,widget.removePstFeed,widget.allPosts)));
+      });
+    });
+  }
+  changeFav(String name, String user, String image, String fav)async{
+    print("get called");
+    String request="changeFavorite\nimage:$image,,fav:$fav,,name:$name,,user:$user\u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      print("requ: $request");
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
       });
     });
   }
@@ -212,6 +224,7 @@ class _groupItemState extends State<groupItem> {
            icon: Icon(widget.grp.stared? Icons.star:Icons.star_border,size: 20,color: Colors.white70,),
          onPressed: (){
              setState(() {
+               changeFav(widget.grp.name,widget.grp.admin.userName,widget.grp.imageURL,(!widget.grp.stared).toString()) ;
                widget.grp.setStared(!widget.grp.stared);
                if(widget.grp.stared)
                   widget.insert();

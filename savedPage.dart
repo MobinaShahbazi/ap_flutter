@@ -173,7 +173,7 @@ class _savedItemState extends State<savedItem> {
           }
           gPosts = [];
           for (int i = 0; i < maps.length; i++) {
-            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["score"]));
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]));
             setState(() {
               gPosts.add(p);
             });
@@ -244,7 +244,7 @@ class _savedItemState extends State<savedItem> {
                       ),
                     ),
                     Container(
-                      child: Text('${widget.pst.score}'),
+                      child: Text('${widget.pst.likesNum-widget.pst.disLikesNum}'),
                     ),
                     Container(
                       child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),

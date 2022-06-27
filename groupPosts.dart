@@ -184,9 +184,9 @@ class _postItemState extends State<postItem> {
       return false;
   }
   bool isSaved=false;
-  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String score) async {
+  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
     print("$groupName");
-    String request="savePost\ngroupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,currentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,score:$score\u0000";
+    String request="savePost\nlike:$like,,dislike:$dislike,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,currentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
     print("req: $request");
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
@@ -269,7 +269,7 @@ class _postItemState extends State<postItem> {
                       ),
                     ),
                     Container(
-                      child: Text('${widget.pst.score }'),
+                      child: Text('${widget.pst.likesNum-widget.pst.disLikesNum}'),
                     ),
                     Container(
                       child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),
@@ -298,7 +298,7 @@ class _postItemState extends State<postItem> {
                           isSaved=!isSaved;
                         });
                         if(isSaved){
-                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.score.toString());
+                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
                           widget.saveFromGrp(widget.pst,widget.grp);
                         }
                         else{

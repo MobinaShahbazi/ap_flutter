@@ -344,6 +344,7 @@ void unSaveGrp(post p,group g){
   }
   List<group> groupsList=[];
   getGList()async{
+    print("im alive0");
     String request="viewGList\n : \u0000";
     await Socket.connect("192.168.56.1", 3000).then((serverSocket){
       serverSocket.write(request);
@@ -544,9 +545,9 @@ class _feedItemState extends State<feedItem> {
     else
       return false;
   }
-  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String score) async {
+  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
     print("sendingggg");
-    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,score:$score\u0000";
+    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike\u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
@@ -585,7 +586,7 @@ class _feedItemState extends State<feedItem> {
           }
           gPosts = [];
           for (int i = 0; i < maps.length; i++) {
-            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["score"]));
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]));
             setState(() {
               gPosts.add(p);
             });
@@ -696,7 +697,7 @@ class _feedItemState extends State<feedItem> {
                       ),
                     ),
                     Container(
-                      child: Text('${widget.pst.score}'),
+                      child: Text('${widget.pst.likesNum-widget.pst.disLikesNum}'),
                     ),
                     Container(
                       child: IconButton(icon: Icon(isDisliked?Icons.thumb_down:Icons.thumb_down_alt_outlined, size: 20,),
@@ -726,7 +727,7 @@ class _feedItemState extends State<feedItem> {
                           isSaved=!isSaved;
                         });
                         if(isSaved){
-                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.score.toString());
+                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
                           savePost(widget.pst);
                         }
                         else{
