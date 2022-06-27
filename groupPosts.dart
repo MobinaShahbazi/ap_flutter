@@ -184,9 +184,9 @@ class _postItemState extends State<postItem> {
       return false;
   }
   bool isSaved=false;
-  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ) async {
+  sendSaved(String currentUser,String title,String caption,String image,String date,String user,String groupName,String groupAdmin,String groupImage ) async {
     print("sendingggg");
-    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage\u0000";
+    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$date,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage\u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
@@ -297,6 +297,7 @@ class _postItemState extends State<postItem> {
                           isSaved=!isSaved;
                         });
                         if(isSaved){
+                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL);
                           widget.saveFromGrp(widget.pst,widget.grp);
                         }
                         else{

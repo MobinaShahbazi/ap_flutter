@@ -679,11 +679,11 @@ class _feedItemState extends State<feedItem> {
                       padding: EdgeInsets.only(left: 350),
                       child: IconButton(icon: Icon(isSaved? Icons.save:Icons.save_outlined, size: 20,),
                         onPressed: (){
-                        sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL);
                         setState(() {
                           isSaved=!isSaved;
                         });
                         if(isSaved){
+                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL);
                           savePost(widget.pst);
                         }
                         else{
