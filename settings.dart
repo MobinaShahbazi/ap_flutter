@@ -73,13 +73,16 @@ class _settingsState extends State<settings> {
         for(int i=0;i<arr.length;i++){
           maps.add(stringToMap(arr[i]));
         }
+        print("np3");
+        sPosts=[];
         for(int i=0;i<maps.length;i++){
           post p=post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]),[],group(maps[i]["groupName"],user(maps[i]["groupAdmin"]),maps[i]["groupImage"]));
           setState(() {
             sPosts.add(p);
           });
         }
-        //print(sPosts[0].userPublisher.userName);  //ok
+        print("np4");
+        Navigator.push(context, MaterialPageRoute(builder: (context) => savedPage(sPosts,widget.saveFromGrp,widget.currentUser,widget.unSaveFromGrp,widget.removePstFeed,widget.allPosts)));
       });
     });
   }
@@ -141,10 +144,6 @@ class _settingsState extends State<settings> {
                   IconButton(
                     onPressed:(){
                       get(widget.currentUser.userName);
-                      print(sPosts.length); // 0
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => savedPage(sPosts,widget.saveFromGrp,widget.currentUser,widget.unSaveFromGrp,widget.removePstFeed,widget.allPosts))
-                      );
-
                     },
                     icon: Icon(Icons.save_outlined,color: Colors.deepOrange.shade200,),
                   ),

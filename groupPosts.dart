@@ -184,9 +184,10 @@ class _postItemState extends State<postItem> {
       return false;
   }
   bool isSaved=false;
-  sendSaved(String currentUser,String title,String caption,String image,String date,String user,String groupName,String groupAdmin,String groupImage ) async {
-    print("sendingggg");
-    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$date,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage\u0000";
+  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ) async {
+    print("$groupName");
+    String request="savePost\ngroupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,currentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
+    print("req: $request");
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
