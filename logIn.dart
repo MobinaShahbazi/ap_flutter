@@ -68,6 +68,7 @@ class LoginState extends State<LoginWidget> {
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
           else{
+            currentUser.setUserName(name);
             Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser) ));
           }
         });
