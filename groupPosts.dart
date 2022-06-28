@@ -192,6 +192,18 @@ class _postItemState extends State<postItem> {
       serverSocket.write(request);
       serverSocket.flush();
       serverSocket.listen((response) {
+        print("ans:${String.fromCharCodes(response)}");
+      });
+    });
+  }
+  resetLike(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+    print("sendingggg");
+    String request="likeDislike\ngroupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
+    print("request: $request");
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
         print(String.fromCharCodes(response));
       });
     });
@@ -265,6 +277,7 @@ class _postItemState extends State<postItem> {
                             isLiked = ! isLiked;
                           });
                           like();
+                          resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
                         },
                       ),
                     ),
@@ -278,6 +291,7 @@ class _postItemState extends State<postItem> {
                               isDisliked = ! isDisliked;
                             });
                             dislike();
+                            resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
                           }),
                     ),
                     Container(

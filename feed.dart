@@ -367,6 +367,30 @@ void unSaveGrp(post p,group g){
       });
     });
   }
+  getGListNewPst()async{
+    print("im alive0");
+    String request="viewGList\n : \u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        String str=String.fromCharCodes(response);
+        print("resp: $str");
+        List<String> arr=str.split('\n');
+        var maps = <Map>[];
+        for(int i=0;i<arr.length;i++){
+          maps.add(stringToMap(arr[i]));
+        }
+        groupsList=[];
+        for(int i=0;i<maps.length;i++){
+          group g=group(maps[i]["name"], user(maps[i]["user"]), maps[i]["image"],[],maps[i]["fav"]=='true');
+          groupsList.add(g);
+        }
+        print("im alive1");
+        Navigator.push(context, MaterialPageRoute(builder: (context) => chooseGroup(groupsList,widget.currentUser, addPst,sortFeed)));
+      });
+    });
+  }
 
 
   @override
@@ -411,8 +435,8 @@ void unSaveGrp(post p,group g){
               width: 100,
               child: IconButton(
                   onPressed:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => chooseGroup(gList, widget.currentUser, addPst,sortFeed))/////////////////
-                    );
+                    getGListNewPst();
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => chooseGroup(gList, widget.currentUser, addPst,sortFeed))/////////////////);
                   },
                   icon: Icon(Icons.add)
               ),
@@ -556,6 +580,17 @@ class _feedItemState extends State<feedItem> {
       });
     });
   }
+  resetLike(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+    print("sendingggg");
+    String request="likeDislike\ntitle:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike\u0000";
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+      });
+    });
+  }
   Map stringToMap(String str){
     List<String> arr=str.split(",,");
     Map<String,String> map = {};
@@ -611,7 +646,6 @@ class _feedItemState extends State<feedItem> {
             child: ListTile(
               onTap: (){
                 getGroupPosts(widget.pst.groupPublisher.name);
-                //Navigator.push(context, MaterialPageRoute(builder: (context) =>  groupPosts(widget.pst.groupPublisher,widget.currentUser,widget.saveFromGrp,widget.unSaveFromGrp,widget.savedPst,widget.removePst,widget.allPst)));
               },
               title: Column(
                 children: [
@@ -693,6 +727,7 @@ class _feedItemState extends State<feedItem> {
                             isLiked = ! isLiked;
                           });
                           like();
+                          resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
                         },
                       ),
                     ),
@@ -706,6 +741,7 @@ class _feedItemState extends State<feedItem> {
                               isDisliked = ! isDisliked;
                             });
                             dislike();
+                            resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
                           }),
                     ),
                     Container(
