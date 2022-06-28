@@ -209,6 +209,37 @@ class _savedItemState extends State<savedItem> {
       });
     });
   }
+  List<comment> comments=[];
+  getComments(String title)async{
+    print("to getGroupPosts");
+    String request="getComments\ntitle:$title\u0000";
+    await Socket.connect("192.168.56.1", 3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        String str=String.fromCharCodes(response);
+        print("rsponse: $str");
+        if(str!="\u0000") {
+          List<String> arr = str.split("\n");
+          var maps = <Map>[];
+          print(arr.length);
+          for (int i = 0; i < arr.length; i++) {
+            maps.add(stringToMap(arr[i]));
+          }
+          comments = [];
+          for (int i = 0; i < maps.length; i++) {
+            comment c=comment(user(maps[i]["user"]), maps[i]["content"],int.parse(maps[i]["like"]),maps[i]["dislike"]);
+            setState(() {
+              comments.add(c);
+            });
+          }
+        }
+        else
+          comments=[];
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher,widget.currentUser,isLiked,isDisliked,comments)));
+ });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -283,7 +314,8 @@ class _savedItemState extends State<savedItem> {
                     Container(
                       child: IconButton(
                           onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher,widget.currentUser,isLiked,isDisliked)));
+                            getComments(widget.pst.title);
+                           // Navigator.push(context, MaterialPageRoute(builder: (context) =>  postDetails(widget.pst,widget.pst.groupPublisher,widget.currentUser,isLiked,isDisliked)));
                           },
                           icon: Icon(Icons.comment_outlined, size: 20,)
 

@@ -8,12 +8,13 @@ import 'package:intl/intl.dart';
 import 'commentPart.dart';
 
 class postDetails extends StatefulWidget {
-  const postDetails(this.pst,this.grp, this.currentUser, this.isLiked, this.isDisliked);
+  const postDetails(this.pst,this.grp, this.currentUser, this.isLiked, this.isDisliked, this.comments);
   final post pst;
   final group grp;
   final user currentUser;
   final bool isLiked;
   final bool isDisliked;
+  final List<comment> comments;
   @override
   State<postDetails> createState() => _postDetailsState();
 }
@@ -22,7 +23,7 @@ class _postDetailsState extends State<postDetails> {
   TextEditingController com=TextEditingController();
   void addComment(comment cm){
     setState(() {
-      widget.pst.comments.add(cm);
+      widget.comments.add(cm);
     });
   }
   bool isL=false;
@@ -121,7 +122,7 @@ class _postDetailsState extends State<postDetails> {
                           child:  TextButton.icon(
                             icon: Icon(Icons.comment_outlined, size: 20, color: Colors.white,
                             ),
-                            label: Text(widget.pst.comments.length.toString(),style: TextStyle(color: Colors.white70),),
+                            label: Text(widget.pst.commentsNum.toString(),style: TextStyle(color: Colors.white70),),
                           ),
                         ),
                         Container(
@@ -151,10 +152,10 @@ class _postDetailsState extends State<postDetails> {
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: widget.pst.comments.length,/////////////////////
+                        itemCount: widget.comments.length,/////////////////////
                         itemBuilder:  (context,index){
                           return commentItem(
-                            cmnt: widget.pst.comments[index],//////////////////////
+                            cmnt: widget.comments[index],//////////////////////
                           );
                         }
                     ),
@@ -169,7 +170,7 @@ class _postDetailsState extends State<postDetails> {
             decoration:  InputDecoration(hintText: 'Add a comment',  suffixIcon: IconButton(
               icon: Icon(Icons.add),
               onPressed:(){setState(() {
-                comment cm=comment(new user("you"),com.text);
+                comment cm=comment(new user(widget.currentUser.userName),com.text,0,0);
                 addComment(cm);
                 com.clear();
               });},
