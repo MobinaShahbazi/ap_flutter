@@ -53,6 +53,12 @@ class LoginState extends State<LoginWidget> {
     else
       return false;
   }
+  void removePstFeed(int index){
+    setState(() {
+      feedPosts.remove(feedPosts[index]);
+      print("removeeeeeeeeeeeee");
+    });
+  }
   String validate="";
   get(String name,String pass)async{
     String request="login\nuserName:$name,,password:$pass\u0000";
@@ -71,7 +77,7 @@ class LoginState extends State<LoginWidget> {
           }
           else{
             currentUser.setUserName(name);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser,feedPosts) ));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser,feedPosts,removePstFeed) ));
           }
         });
       });
@@ -90,7 +96,7 @@ class LoginState extends State<LoginWidget> {
   }
   List<post> feedPosts=[];
   getFeed() async {
-    print ("to func1: ");
+    print ("to func00: ");
     String request="viewFeed\n : \u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
@@ -213,6 +219,7 @@ class LoginState extends State<LoginWidget> {
                                       // else if(correctPass(nameController.text,passwordController.text)){
                                       //   currentUser=user(nameController.text, passwordController.text);
                                       get(nameController.text, passwordController.text);
+                                      getFeed();
 
                                     }
                                 ),
@@ -323,6 +330,12 @@ class SignUpState extends State<SignUpWidget> {
     }
     return false;
   }
+  void removePstFeed(int index){
+    setState(() {
+      feedPosts.remove(feedPosts[index]);
+      print("removeeeeeeeeeeeee");
+    });
+  }
   void addUser(user us){
     widget.users1.add(us);
     addOrNot=true;
@@ -351,7 +364,7 @@ class SignUpState extends State<SignUpWidget> {
         if (form.validate() && isValidOrnot(pass))  {
           if (String.fromCharCodes(response) == "new userName\u0000") {
               widget.setCurrentUser(nameController.text, passwordController.text, emailController.text);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser, widget.users1, widget.setCurrentUser,feedPosts)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => feed(widget.currentUser, widget.users1, widget.setCurrentUser,feedPosts,removePstFeed)));
           }
           else if (String.fromCharCodes(response) == "repetitive\u0000") {
             ScaffoldMessenger.of(context).showSnackBar(snackBar);

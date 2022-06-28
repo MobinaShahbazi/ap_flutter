@@ -13,11 +13,12 @@ import 'group.dart';
 import 'groupPosts.dart';
 
 class feed extends StatefulWidget {
-  const feed(this.currentUser, this.users, this.setCurrentUser, this.feedPosts );
+  const feed(this.currentUser, this.users, this.setCurrentUser, this.feedPosts, this.removePstFeed );
   final user currentUser;
   final List<user> users;
   final List<post> feedPosts;
   final Function setCurrentUser;
+  final Function removePstFeed;
   @override
   State<feed> createState() => _feedState();
 }
@@ -272,11 +273,12 @@ class _feedState extends State<feed> {
       }
     });
   }
-  void removePstFeed(int index){
-    setState(() {
-      allPosts.remove(allPosts[index]);
-    });
-  }
+  // void removePstFeed(int index){
+  //   setState(() {
+  //     widget.feedPosts.remove(widget.feedPosts[index]);
+  //     print("removeeeeeeeeeeeee");
+  //   });
+  // }
   void removePstFeedGlist(int gindex,int pindex){
     setState(() {
       gList[gindex].posts.removeAt(pindex);
@@ -363,7 +365,7 @@ void unSaveGrp(post p,group g){
           groupsList.add(g);
         }
         print("im alive1");
-        Navigator.push(context, MaterialPageRoute(builder: (context) => groupList(groupsList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed,removePstFeed)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => groupList(groupsList,savedPosts,widget.currentUser,savefromGrp,unSaveGrp,starSort,grpNames,allPosts,editGrpFromFeed,widget.removePstFeed)));
       });
     });
   }
@@ -407,7 +409,7 @@ void unSaveGrp(post p,group g){
                 pst: widget.feedPosts[index],
                 savedPst:savedPosts,
                 allPst: widget.feedPosts,
-                removePst: () => removePstFeed(index),
+                removePst: () => widget.removePstFeed,
                 addGrp: () => addGrp,
                 currentUser: widget.currentUser,
                 saveFromGrp: savefromGrp,
@@ -425,7 +427,7 @@ void unSaveGrp(post p,group g){
               width: 90,
               child: IconButton(
                   onPressed:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,savefromGrp,unSaveGrp,widget.setCurrentUser,removePstFeed,allPosts))
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => settings(addGrp,savedPosts,widget.currentUser,widget.users,savefromGrp,unSaveGrp,widget.setCurrentUser,widget.removePstFeed,allPosts))
                     );
                   },
                   icon: Icon(Icons.settings)
@@ -679,22 +681,22 @@ class _feedItemState extends State<feedItem> {
                     ),
                   ],
                 ),
-                Positioned(
-                    right: -5,
-                    bottom: 0,
-                    child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
-                      //if usere
-                      onPressed: () {
-                        if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin)){
-                          widget.removePst();
-                          widget.removePstFeedGlist(gIndex(widget.pst),pIndex(widget.pst));
-                        }
-                        else
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                    ),
-                    )
-                ),
+                // Positioned(
+                //     right: -5,
+                //     bottom: 0,
+                //     child: Container(child: IconButton(icon: Icon(Icons.delete, size: 16,),
+                //       //if usere
+                //       onPressed: () {
+                //         if(isEqual(widget.currentUser, widget.pst.groupPublisher.admin)){
+                //           widget.removePst();
+                //           widget.removePstFeedGlist(gIndex(widget.pst),pIndex(widget.pst));
+                //         }
+                //         else
+                //           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                //       },
+                //     ),
+                //     )
+                // ),
               ],
             )
           ),

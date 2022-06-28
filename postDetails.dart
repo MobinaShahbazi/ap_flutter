@@ -1,3 +1,4 @@
+
 import 'package:redit/group.dart';
 import 'package:redit/user.dart';
 import 'package:flutter/cupertino.dart';
@@ -150,10 +151,10 @@ class _postDetailsState extends State<postDetails> {
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: widget.pst.comments.length,
+                        itemCount: widget.pst.comments.length,/////////////////////
                         itemBuilder:  (context,index){
                           return commentItem(
-                            cmnt: widget.pst.comments[index],
+                            cmnt: widget.pst.comments[index],//////////////////////
                           );
                         }
                     ),
@@ -168,7 +169,7 @@ class _postDetailsState extends State<postDetails> {
             decoration:  InputDecoration(hintText: 'Add a comment',  suffixIcon: IconButton(
               icon: Icon(Icons.add),
               onPressed:(){setState(() {
-                comment cm=comment(new user("you", "111"),com.text);
+                comment cm=comment(new user("you"),com.text);
                 addComment(cm);
                 com.clear();
               });},

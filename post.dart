@@ -72,7 +72,7 @@ class comment{
   int _likesNum=0;
   int _disLikesNum=0;
 
-  comment(this._commentOwner,this._content);
+  comment(this._commentOwner,this._content,[this._likesNum,this._disLikesNum]);
 
   String get content =>_content;
   set setContent(String val){

@@ -198,6 +198,17 @@ class _savedItemState extends State<savedItem> {
       });
     });
   }
+  sendUnSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+    print("sendingggg");
+    String request="unSavePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike\u0000";
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -287,7 +298,7 @@ class _savedItemState extends State<savedItem> {
                         onPressed: (){
                         setState(() {
                           widget.unSave();
-                          //unsave();
+                          sendUnSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
                         });
                         },
                       ),

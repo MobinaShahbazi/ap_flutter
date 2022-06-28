@@ -178,7 +178,7 @@ class _postItemState extends State<postItem> {
     }
   }
   bool isEqual(user u1,user u2){
-    if(u1.userName == u2.userName && u1.password==u2.password)
+    if(u1.userName == u2.userName)
       return true;
     else
       return false;
@@ -206,6 +206,24 @@ class _postItemState extends State<postItem> {
       serverSocket.listen((response) {
         print(String.fromCharCodes(response));
       });
+    });
+  }
+  removePost(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+    print("sendingggg");
+    String request="removePost\ngroupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
+    print("request: $request");
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+      });
+    });
+  }
+  void removePstFeed(int index){
+    setState(() {
+      widget.allPosts.remove(widget.allPosts[index]);
+      // print("removeeeeeeeeeeeee");
     });
   }
   @override
@@ -238,8 +256,9 @@ class _postItemState extends State<postItem> {
                     //if usere
                     onPressed: () {
                       if(isEqual(widget.currentUser, widget.grp.admin)){
+                        removePost(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
                         widget.removePst();
-                        widget.removePstFeed(indexOfPdt(widget.pst));
+                        removePstFeed(indexOfPdt(widget.pst));
                       }
                       else
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
