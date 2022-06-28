@@ -184,9 +184,9 @@ class _postItemState extends State<postItem> {
       return false;
   }
   bool isSaved=false;
-  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike,String comment) async {
     print("$groupName");
-    String request="savePost\nlike:$like,,dislike:$dislike,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,currentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
+    String request="savePost\ncomment:$comment,,like:$like,,dislike:$dislike,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,currentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";//comment:$comment,,
     print("req: $request");
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
@@ -196,9 +196,9 @@ class _postItemState extends State<postItem> {
       });
     });
   }
-  resetLike(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+  resetLike(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike,String comment) async {
     print("sendingggg");
-    String request="likeDislike\ngroupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
+    String request="likeDislike\ncomment:$comment,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
     print("request: $request");
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
@@ -208,9 +208,9 @@ class _postItemState extends State<postItem> {
       });
     });
   }
-  removePost(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+  removePost(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike,String comment) async {
     print("sendingggg");
-    String request="removePost\ngroupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
+    String request="removePost\ncomment:$comment,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user\u0000";
     print("request: $request");
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
@@ -256,7 +256,7 @@ class _postItemState extends State<postItem> {
                     //if usere
                     onPressed: () {
                       if(isEqual(widget.currentUser, widget.grp.admin)){
-                        removePost(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
+                        removePost(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString(),widget.pst.commentsNum.toString());
                         widget.removePst();
                         removePstFeed(indexOfPdt(widget.pst));
                       }
@@ -296,7 +296,7 @@ class _postItemState extends State<postItem> {
                             isLiked = ! isLiked;
                           });
                           like();
-                          resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
+                          resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString(),widget.pst.commentsNum.toString());
                         },
                       ),
                     ),
@@ -310,7 +310,7 @@ class _postItemState extends State<postItem> {
                               isDisliked = ! isDisliked;
                             });
                             dislike();
-                            resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
+                            resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString(),widget.pst.commentsNum.toString());
                           }),
                     ),
                     Container(
@@ -331,7 +331,7 @@ class _postItemState extends State<postItem> {
                           isSaved=!isSaved;
                         });
                         if(isSaved){
-                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
+                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString(),widget.pst.commentsNum.toString());
                           widget.saveFromGrp(widget.pst,widget.grp);
                         }
                         else{

@@ -115,7 +115,7 @@ class LoginState extends State<LoginWidget> {
           }
           feedPosts = [];
           for (int i = 0; i < maps.length; i++) {
-            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]));
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]),int.parse(maps[i]["comment"]));
             setState(() {
               feedPosts.add(p);
             });
@@ -407,7 +407,7 @@ class SignUpState extends State<SignUpWidget> {
           }
           feedPosts = [];
           for (int i = 0; i < maps.length; i++) {
-            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]));
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]),int.parse(maps[i]["comment"]));
             setState(() {
               feedPosts.add(p);
             });

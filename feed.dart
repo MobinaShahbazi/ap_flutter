@@ -137,7 +137,7 @@ class _feedState extends State<feed> {
       [
         comment(user('maryam','12'), 'so cute'),
         comment(user('ali', 'asd'), 'my favorite animated film'),
-        comment(user('anxious soul','000'), 'I love it'),
+        comment(user('','000'), 'I love it'),
       ],
       group("Tourism", new user("", ""),'assets/tourism/traveller.jpg',
           [
@@ -571,9 +571,9 @@ class _feedItemState extends State<feedItem> {
     else
       return false;
   }
-  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+  sendSaved(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike,String comment) async {
     print("sendingggg");
-    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike\u0000";
+    String request="savePost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike,,comment:$comment\u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
@@ -582,9 +582,9 @@ class _feedItemState extends State<feedItem> {
       });
     });
   }
-  resetLike(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+  resetLike(String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike,String comment) async {
     print("sendingggg");
-    String request="likeDislike\ntitle:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike\u0000";
+    String request="likeDislike\ntitle:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,comment:$comment\u0000";
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
       serverSocket.flush();
@@ -623,7 +623,7 @@ class _feedItemState extends State<feedItem> {
           }
           gPosts = [];
           for (int i = 0; i < maps.length; i++) {
-            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]));
+            post p = post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]), [], group(maps[i]["groupName"], user(maps[i]["groupAdmin"]), maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]),int.parse(maps[i]["comment"]));
             setState(() {
               gPosts.add(p);
             });
@@ -729,7 +729,7 @@ class _feedItemState extends State<feedItem> {
                             isLiked = ! isLiked;
                           });
                           like();
-                          resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
+                          resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString(),widget.pst.commentsNum.toString());
                         },
                       ),
                     ),
@@ -743,7 +743,7 @@ class _feedItemState extends State<feedItem> {
                               isDisliked = ! isDisliked;
                             });
                             dislike();
-                            resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
+                            resetLike(widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString(),widget.pst.commentsNum.toString());
                           }),
                     ),
                     Container(
@@ -765,7 +765,7 @@ class _feedItemState extends State<feedItem> {
                           isSaved=!isSaved;
                         });
                         if(isSaved){
-                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString());
+                          sendSaved(widget.currentUser.userName, widget.pst.title, widget.pst.caption, widget.pst.imageURL, widget.pst.date.toString(), widget.pst.userPublisher.userName, widget.pst.groupPublisher.name, widget.pst.groupPublisher.admin.userName, widget.pst.groupPublisher.imageURL,widget.pst.likesNum.toString(),widget.pst.disLikesNum.toString(),widget.pst.commentsNum.toString());
                           savePost(widget.pst);
                         }
                         else{

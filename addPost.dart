@@ -39,9 +39,9 @@ class _addPostState extends State<addPost> {
   }
   void add(){
   }
-  sendNewPost(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike) async {
+  sendNewPost(String currentUser,String title,String caption,String image,String data,String user,String groupName,String groupAdmin,String groupImage ,String like,String dislike,String comment) async {
     print("sendingggg");
-    String request="addPost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike\u0000";
+    String request="addPost\ncurrentUser:$currentUser,,title:$title,,caption:$caption,,image:$image,,date:$data,,user:$user,,groupName:$groupName,,groupAdmin:$groupAdmin,,groupImage:$groupImage,,like:$like,,dislike:$dislike,,comment:$comment\u0000";
     print("g name: $groupName");
     await Socket.connect("192.168.56.1",3000).then((serverSocket){
       serverSocket.write(request);
@@ -90,7 +90,7 @@ class _addPostState extends State<addPost> {
                   if(!titleC.text.isEmpty && !captionC.text.isEmpty)
                   {
                   setState(()=> isActive=false );
-                  sendNewPost(widget.currentUser.userName, titleC.text, captionC.text, "assets/newpost.jpg", DateTime.now().toString(), widget.currentUser.userName, widget.grp.name, widget.grp.admin.userName, widget.grp.imageURL,"0","0");
+                  sendNewPost(widget.currentUser.userName, titleC.text, captionC.text, "assets/newpost.jpg", DateTime.now().toString(), widget.currentUser.userName, widget.grp.name, widget.grp.admin.userName, widget.grp.imageURL,"0","0","0");
                   post p=post(titleC.text,captionC.text,'assets/newpost.jpg',DateTime.now(),widget.currentUser,[],widget.grp,0,0);
                   widget.addNewPst(p,widget.grp);
                   titleC.clear();
