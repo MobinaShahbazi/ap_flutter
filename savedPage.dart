@@ -228,7 +228,7 @@ class _savedItemState extends State<savedItem> {
           }
           comments = [];
           for (int i = 0; i < maps.length; i++) {
-            comment c=comment(user(maps[i]["user"]), maps[i]["content"],int.parse(maps[i]["like"]),maps[i]["dislike"]);
+            comment c=comment(user(maps[i]["user"]), maps[i]["content"],int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]));
             setState(() {
               comments.add(c);
             });

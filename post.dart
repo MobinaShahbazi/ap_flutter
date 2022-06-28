@@ -59,9 +59,10 @@ class post{
   }
 
   int get commentsNum => _commentsNum;
-  set setCommentsNum(int val){
+  void setCommentsNum(int val){
     _commentsNum=val;
   }
+
 
 
 
