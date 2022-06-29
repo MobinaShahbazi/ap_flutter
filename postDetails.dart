@@ -170,6 +170,7 @@ class _postDetailsState extends State<postDetails> {
             decoration:  InputDecoration(hintText: 'Add a comment',  suffixIcon: IconButton(
               icon: Icon(Icons.add),
               onPressed:(){setState(() {
+                //addComment(
                 widget.pst.setCommentsNum(widget.pst.commentsNum+1);
                 comment cm=comment(new user(widget.currentUser.userName),com.text,0,0);
                 addComment(cm);
