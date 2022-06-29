@@ -77,6 +77,8 @@ class LoginState extends State<LoginWidget> {
           }
           else{
             currentUser.setUserName(name);
+            currentUser.setPassword(pass);
+            //currentUser.setEmail(e)
             Navigator.push(context, MaterialPageRoute(builder: (context) => feed(currentUser,users,setCurrentUser,feedPosts,removePstFeed) ));
           }
         });
