@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:redit/group.dart';
 import 'package:redit/user.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,6 +86,30 @@ class _postDetailsState extends State<postDetails> {
     }
   }
 
+  Map stringToMap(String str){
+    List<String> arr=str.split(",,");
+    Map<String,String> map = {};
+    for(int i=0;i<arr.length;i++){
+      int colon=arr[i].indexOf(":");
+      String key=arr[i].substring(0,colon);
+      String value=arr[i].substring(colon+1);
+      map[key]=value;
+    }
+    return map;
+  }
+  List<comment> postComments=[];
+  addNewComment(String title, String user, String content, String like, String dislike) async {
+    print ("to func1: ");
+    String request="addComment\ntitle:$title,,user:$user,,content:$content,,like:$like,,dislike:$dislike\u0000";
+    await Socket.connect("192.168.56.1",3000).then((serverSocket){
+      serverSocket.write(request);
+      serverSocket.flush();
+      serverSocket.listen((response) {
+        print(String.fromCharCodes(response));
+        String str=String.fromCharCodes(response);
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,7 +196,7 @@ class _postDetailsState extends State<postDetails> {
             decoration:  InputDecoration(hintText: 'Add a comment',  suffixIcon: IconButton(
               icon: Icon(Icons.add),
               onPressed:(){setState(() {
-                //addComment(
+                addNewComment(widget.pst.title,widget.currentUser.userName,com.text,"0","0");
                 widget.pst.setCommentsNum(widget.pst.commentsNum+1);
                 comment cm=comment(new user(widget.currentUser.userName),com.text,0,0);
                 addComment(cm);
