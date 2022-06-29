@@ -145,7 +145,7 @@ class _groupItemState extends State<groupItem> {
   static const snackBar = SnackBar(content: Text('Access denied',style: TextStyle(fontSize: 16),), backgroundColor: (Colors.grey),);
 
   bool isEqual(user u1,user u2){
-    if(u1.userName == u2.userName && u1.password==u2.password)
+    if(u1.userName == u2.userName )
       return true;
     else
       return false;
@@ -239,7 +239,7 @@ class _groupItemState extends State<groupItem> {
            child: IconButton(
              icon: Icon(Icons.edit,size: 15,color: Colors.white70,),
              onPressed: (){
-               if(!isEqual(widget.currentUser, widget.grp.admin)){
+               if(widget.currentUser.userName!= widget.grp.admin.userName){
                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                }
                else

@@ -106,7 +106,6 @@ class _postDetailsState extends State<postDetails> {
       serverSocket.flush();
       serverSocket.listen((response) {
         print(String.fromCharCodes(response));
-        String str=String.fromCharCodes(response);
       });
     });
   }
@@ -182,6 +181,7 @@ class _postDetailsState extends State<postDetails> {
                         itemBuilder:  (context,index){
                           return commentItem(
                             cmnt: widget.comments[index],
+                            pst: widget.pst,
                           );
                         }
                     ),
