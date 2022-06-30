@@ -254,7 +254,7 @@ class _feedState extends State<feed> {
      group("News", new user("user5", "555"),'assets/news/p1.jpg',[],false),
      group("Amazing Nature", new user("user5", "555"),'assets/Nature/Italy.jpg',[],false),
   ];
-  List<String> grpNames=["Tourism","IMDb","Novel Novels","Best_Painters","Soccer","Cookery","Luxury Car2022","Animal Photography","Moder Architecture","Digimoviez","News","Amazing Nature",];
+  List<String> grpNames=["Tourism","IMDb","Novel Novels","Best_Painters","Soccer"];
   @override
   void initState() {
     sortFeed();

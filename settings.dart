@@ -67,20 +67,35 @@ class _settingsState extends State<settings> {
       serverSocket.flush();
       serverSocket.listen((response) {
         String answer=String.fromCharCodes(response);
-        List<String> arr=answer.split("\n");
-        var maps = <Map>[];
-        print(arr.length);
-        for(int i=0;i<arr.length;i++){
-          maps.add(stringToMap(arr[i]));
+        if(answer!="\u0000") {
+          List<String> arr = answer.split("\n");
+          var maps = <Map>[];
+          print(arr.length);
+          for (int i = 0; i < arr.length; i++) {
+            maps.add(stringToMap(arr[i]));
+          }
+          print("np3");
+          sPosts = [];
+          for (int i = 0; i < maps.length; i++) {
+            post p = post(
+                maps[i]["title"],
+                maps[i]["caption"],
+                maps[i]["image"],
+                DateTime.parse(maps[i]["date"]),
+                user(maps[i]["user"]),
+                [],
+                group(maps[i]["groupName"], user(maps[i]["groupAdmin"]),
+                    maps[i]["groupImage"]),
+                int.parse(maps[i]["like"]),
+                int.parse(maps[i]["dislike"]),
+                int.parse(maps[i]["comment"]));
+            setState(() {
+              sPosts.add(p);
+            });
+          }
         }
-        print("np3");
-        sPosts=[];
-        for(int i=0;i<maps.length;i++){
-          post p=post(maps[i]["title"], maps[i]["caption"], maps[i]["image"], DateTime.parse(maps[i]["date"]), user(maps[i]["user"]),[],group(maps[i]["groupName"],user(maps[i]["groupAdmin"]),maps[i]["groupImage"]),int.parse(maps[i]["like"]),int.parse(maps[i]["dislike"]),int.parse(maps[i]["comment"]));
-          setState(() {
-            sPosts.add(p);
-          });
-        }
+        else
+          sPosts=[];
         print("np4");
         Navigator.push(context, MaterialPageRoute(builder: (context) => savedPage(sPosts,widget.saveFromGrp,widget.currentUser,widget.unSaveFromGrp,widget.removePstFeed,widget.allPosts)));
       });
